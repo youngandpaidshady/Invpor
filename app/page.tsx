@@ -1,5 +1,7 @@
 import Hero from "@/components/hero";
 import ChallengeCard from "@/components/challenge-card";
+import StatsSection from "@/components/stats-section";
+import ComparisonTable from "@/components/comparison-table";
 
 export default function Home() {
   const challenges = [
@@ -53,6 +55,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StatsSection />
+      <ComparisonTable />
     </>
   );
 }
