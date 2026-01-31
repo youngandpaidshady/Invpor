@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Investment Platform Design System - Light Mode */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    /* Metallic Gold Primary - #C5A059 converted to HSL */
+    --primary: 40 47% 55%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Accent matches primary gold */
+    --accent: 40 47% 55%;
+    --accent-foreground: 222 47% 11%;
+
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 14% 40%;
+
+    --border: 220 13% 82%;
+    --input: 220 13% 78%;
+    --ring: 40 47% 55%;
+
+    --radius: 0.75rem;
+
+    /* Gold and Charcoal references */
+    --gold: 40 47% 55%;
+    --charcoal: 222 47% 11%;
+  }
+
+  .dark {
+    /* Investment Platform Design System - Dark Mode */
+    --background: 0 0% 4%;
+    /* Near-black #0a0a0a equivalent */
+    --foreground: 210 36% 96%;
+
+    /* Metallic Gold Primary */
+    --primary: 40 50% 56%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 210 36% 96%;
+
+    --accent: 40 50% 56%;
+    --accent-foreground: 0 0% 4%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 40 50% 56%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background-color: hsl(var(--background));
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 769px) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.16);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: #C5A059;
+  }
+
+  .bg-gold {
+    background-color: #C5A059;
+  }
+
+  .border-gold {
+    border-color: #C5A059;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #C5A059 0%, #E8C97A 50%, #C5A059 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
