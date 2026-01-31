@@ -10,23 +10,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary: Metallic Gold - Professional investment platform gold
+        // Modern Noir Theme - AlphaTrader
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        // Secondary: Brushed Concrete - Warm, light grey for backgrounds
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        // Accent: Metallic Gold - Sophisticated gold accent
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        // Dark Mode: Deep Charcoal backgrounds
         background: "hsl(var(--background))",
+        surface: "hsl(var(--surface))",
         foreground: "hsl(var(--foreground))",
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -35,6 +33,10 @@ const config: Config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        // Brand colors
+        profit: "hsl(var(--profit))",
+        "electric-violet": "hsl(var(--electric-violet))",
+        "neon-lime": "hsl(var(--neon-lime))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -42,16 +44,17 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-manrope)", "var(--font-geist-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-playfair-display)", "Playfair Display", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
-        display: ["var(--font-oswald)", "Oswald", "system-ui", "sans-serif"],
-        body: ["var(--font-manrope)", "Manrope", "system-ui", "sans-serif"],
+        display: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
         "slide-up": "slideUp 0.5s ease-out",
         "slide-down": "slideDown 0.5s ease-out",
+        "mesh-gradient": "meshGradient 15s ease infinite",
+        "shimmer": "shimmer 2s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -65,6 +68,14 @@ const config: Config = {
         slideDown: {
           "0%": { transform: "translateY(-20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        meshGradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-1000px 0" },
+          "100%": { backgroundPosition: "1000px 0" },
         },
       },
     },

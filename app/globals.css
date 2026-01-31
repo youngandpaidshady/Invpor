@@ -4,57 +4,41 @@
 
 @layer base {
   :root {
-    /* Investment Platform Design System - Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Modern Noir Theme - AlphaTrader */
+    /* Background: Deep black #020202 */
+    --background: 0 0% 1%;
+    /* Surface: Slightly lighter #0A0A0A */
+    --surface: 0 0% 4%;
+    --foreground: 0 0% 98%;
 
-    /* Metallic Gold Primary - #C5A059 converted to HSL */
-    --primary: 40 47% 55%;
-    --primary-foreground: 222 47% 11%;
-
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-
-    /* Accent matches primary gold */
-    --accent: 40 47% 55%;
-    --accent-foreground: 222 47% 11%;
-
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 14% 40%;
-
-    --border: 220 13% 82%;
-    --input: 220 13% 78%;
-    --ring: 40 47% 55%;
-
-    --radius: 0.75rem;
-
-    /* Gold and Charcoal references */
-    --gold: 40 47% 55%;
-    --charcoal: 222 47% 11%;
-  }
-
-  .dark {
-    /* Investment Platform Design System - Dark Mode */
-    --background: 0 0% 4%;
-    /* Near-black #0a0a0a equivalent */
-    --foreground: 210 36% 96%;
-
-    /* Metallic Gold Primary */
-    --primary: 40 50% 56%;
-    --primary-foreground: 0 0% 4%;
+    /* Accent: Neon Lime #A8FF00 */
+    --primary: 72 100% 50%;
+    --primary-foreground: 0 0% 1%;
 
     --secondary: 0 0% 8%;
-    --secondary-foreground: 210 36% 96%;
+    --secondary-foreground: 0 0% 98%;
 
-    --accent: 40 50% 56%;
-    --accent-foreground: 0 0% 4%;
+    /* Accent matches primary */
+    --accent: 72 100% 50%;
+    --accent-foreground: 0 0% 1%;
+
+    /* Profit: Emerald Green */
+    --profit: 142 76% 36%;
+
+    /* Electric Violet for branding */
+    --electric-violet: 271 81% 56%;
+
+    /* Neon Lime accent */
+    --neon-lime: 72 100% 50%;
 
     --muted: 0 0% 12%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 0 0% 65%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 40 50% 56%;
+    --ring: 72 100% 50%;
+
+    --radius: 0.5rem;
   }
 
   * {
@@ -68,12 +52,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-  }
-
-  @media (min-width: 769px) {
-    html {
-      scroll-behavior: smooth;
-    }
+    scroll-behavior: smooth;
   }
 
   body {
@@ -89,28 +68,87 @@
   }
 
   ::selection {
-    background-color: hsl(var(--primary) / 0.16);
+    background-color: hsl(var(--primary) / 0.2);
     color: hsl(var(--foreground));
   }
 }
 
 @layer utilities {
-  .text-gold {
-    color: #C5A059;
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .bg-gold {
-    background-color: #C5A059;
+  .glass-strong {
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .border-gold {
-    border-color: #C5A059;
+  /* Hover glow effect */
+  .hover-glow {
+    transition: all 0.3s ease;
   }
 
-  .text-gradient-gold {
-    background: linear-gradient(135deg, #C5A059 0%, #E8C97A 50%, #C5A059 100%);
+  .hover-glow:hover {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.4);
+    border-color: hsl(var(--accent));
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--electric-violet)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Mesh gradient background */
+  .mesh-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(var(--surface)) 25%,
+      hsl(var(--electric-violet) / 0.1) 50%,
+      hsl(var(--surface)) 75%,
+      hsl(var(--background)) 100%
+    );
+    background-size: 400% 400%;
+    animation: meshGradient 15s ease infinite;
+  }
+
+  /* Shimmer loader */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--surface)) 0%,
+      hsl(var(--muted)) 50%,
+      hsl(var(--surface)) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Profit/Positive color */
+  .text-profit {
+    color: hsl(var(--profit));
+  }
+
+  .bg-profit {
+    background-color: hsl(var(--profit));
+  }
+
+  /* Touch target optimization */
+  @media (max-width: 768px) {
+    button,
+    a,
+    [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Manrope, GeistSans, GeistMono, Playfair_Display, Oswald } from "next/font/google";
+import { Inter, GeistSans, GeistMono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { QueryProvider } from "@/components/query-provider";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -19,21 +22,26 @@ const geistMono = GeistMono({
   subsets: ["latin"],
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const oswald = Oswald({
-  variable: "--font-oswald",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 export const metadata: Metadata = {
-  title: "Investment Platform",
-  description: "A modern investment platform built with Next.js",
+  title: "AlphaTrader - Premier Prop Trading Platform",
+  description: "Trade demo or live accounts, complete challenges, and receive profit splits. Join the elite trading community.",
+  keywords: ["prop trading", "forex", "trading challenges", "funded accounts"],
+  authors: [{ name: "AlphaTrader" }],
+  openGraph: {
+    title: "AlphaTrader - Premier Prop Trading Platform",
+    description: "Trade demo or live accounts, complete challenges, and receive profit splits.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AlphaTrader - Premier Prop Trading Platform",
+    description: "Trade demo or live accounts, complete challenges, and receive profit splits.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -42,17 +50,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       <body
-        className={`${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} ${oswald.variable} font-body`}
+        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} font-body bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <QueryProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
