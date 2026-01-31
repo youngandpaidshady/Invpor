@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/query-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import PromoBanner from "@/components/promo-banner";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -59,6 +60,7 @@ export default function RootLayout({
         >
           <QueryProvider>
             <div className="flex min-h-screen flex-col">
+              <PromoBanner />
               <Navbar />
               <main className="flex-1">{children}</main>
               <Footer />
