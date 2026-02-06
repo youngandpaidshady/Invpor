@@ -2,27 +2,21 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { TrendingUp, Users, DollarSign, Award } from "lucide-react";
+import { DollarSign, Users, Award, TrendingUp } from "lucide-react";
 
-interface Stat {
+interface StatItemProps {
   icon: React.ElementType;
   value: number;
   suffix: string;
+  prefix?: string;
   label: string;
-  color: string;
+  delay: number;
 }
 
-const stats: Stat[] = [
-  { icon: DollarSign, value: 50, suffix: "M+", label: "Total Payouts", color: "text-profit" },
-  { icon: Users, value: 10, suffix: "K+", label: "Active Traders", color: "text-primary" },
-  { icon: TrendingUp, value: 85, suffix: "%", label: "Success Rate", color: "text-profit" },
-  { icon: Award, value: 500, suffix: "+", label: "Funded Accounts", color: "text-electric-violet" },
-];
-
-function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
+function StatItem({ icon: Icon, value, suffix, prefix = "", label, delay }: StatItemProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
@@ -45,71 +39,114 @@ function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
     return () => clearInterval(timer);
   }, [isInView, value]);
 
-  const formatValue = (val: number) => {
-    if (val >= 1000) {
-      return (val / 1000).toFixed(1);
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1);
     }
-    return val.toString();
+    if (num >= 1000) {
+      return (num / 1000).toFixed(0);
+    }
+    return num.toString();
   };
 
   return (
-    <span ref={ref} className="text-5xl font-bold">
-      {formatValue(count)}{suffix}
-    </span>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay }}
+      className="relative group"
+    >
+      <div className="relative p-8 bg-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-colors">
+        {/* Glow Effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity" />
+
+        {/* Content */}
+        <div className="relative text-center">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 mb-4">
+            <Icon className="w-7 h-7 text-primary" />
+          </div>
+          <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
+            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              {prefix}
+              {formatNumber(count)}
+              {suffix}
+            </span>
+          </div>
+          <p className="text-foreground/60">{label}</p>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
-export default function StatsSection() {
+const stats = [
+  {
+    icon: DollarSign,
+    value: 12500000,
+    suffix: "M+",
+    prefix: "$",
+    label: "Total Payouts",
+  },
+  {
+    icon: Users,
+    value: 15000,
+    suffix: "+",
+    label: "Active Traders",
+  },
+  {
+    icon: Award,
+    value: 5200,
+    suffix: "+",
+    label: "Funded Accounts",
+  },
+  {
+    icon: TrendingUp,
+    value: 90,
+    suffix: "%",
+    label: "Average Profit Split",
+  },
+];
+
+export function StatsSection() {
   return (
-    <section className="py-24 bg-surface relative overflow-hidden">
-      {/* Subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-electric-violet/5 pointer-events-none" />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-20 lg:py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-surface/30 to-background" />
+
+      <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 lg:mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-            Platform Statistics
+          <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
+            Trusted by{" "}
+            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              Thousands
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of traders building their futures with AlphaTrader
+          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+            Join a growing community of successful traders who have achieved
+            their financial goals with AlphaTrader.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative"
-              >
-                {/* Glowing pulse effect */}
-                <div className={`absolute inset-0 ${stat.color} opacity-20 blur-2xl rounded-lg`} />
-                
-                <div className="relative glass p-8 rounded-lg border border-border text-center hover-glow">
-                  <div className="flex justify-center mb-4">
-                    <div className={`p-3 rounded-lg bg-surface ${stat.color} bg-opacity-10`}>
-                      <Icon className={`h-8 w-8 ${stat.color}`} />
-                    </div>
-                  </div>
-                  <div className={`mb-2 ${stat.color}`}>
-                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {stats.map((stat, index) => (
+            <StatItem
+              key={index}
+              icon={stat.icon}
+              value={stat.value}
+              suffix={stat.suffix}
+              prefix={stat.prefix}
+              label={stat.label}
+              delay={index * 0.1}
+            />
+          ))}
         </div>
       </div>
     </section>

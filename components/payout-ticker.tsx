@@ -1,78 +1,60 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { CheckCircle } from "lucide-react";
 
-const names = [
-  "Jose", "Matej", "Artur", "Johnny", "Chibane", "John", "Shiva", 
-  "Siddhant", "Florin", "Tewodros", "Vigen", "Steven", "Maria", 
-  "Alex", "David", "Emma", "Michael", "Lisa", "James", "Anna"
+const payouts = [
+  { name: "Michael K.", amount: "$12,450", country: "🇺🇸" },
+  { name: "Sarah L.", amount: "$8,200", country: "🇬🇧" },
+  { name: "David M.", amount: "$15,750", country: "🇩🇪" },
+  { name: "Emma R.", amount: "$6,890", country: "🇫🇷" },
+  { name: "James W.", amount: "$22,100", country: "🇦🇺" },
+  { name: "Lisa T.", amount: "$9,450", country: "🇨🇦" },
+  { name: "Robert H.", amount: "$18,300", country: "🇳🇱" },
+  { name: "Anna P.", amount: "$11,670", country: "🇪🇸" },
+  { name: "Chris B.", amount: "$7,890", country: "🇮🇹" },
+  { name: "Maria G.", amount: "$14,200", country: "🇧🇷" },
 ];
 
-const countries = ["🇺🇸", "🇬🇧", "🇩🇪", "🇫🇷", "🇪🇸", "🇮🇹", "🇳🇱", "🇦🇪", "🇸🇬", "🇦🇺"];
-
-interface Payout {
-  id: number;
-  name: string;
-  amount: string;
-  country: string;
-}
-
-function generatePayout(id: number): Payout {
-  const name = names[Math.floor(Math.random() * names.length)];
-  const amount = ((Math.floor(Math.random() * 400) + 10) * 100).toLocaleString();
-  const country = countries[Math.floor(Math.random() * countries.length)];
-  return { id, name, amount: `$${amount}`, country };
-}
-
-export default function PayoutTicker() {
-  const [payouts, setPayouts] = useState<Payout[]>([]);
-
-  useEffect(() => {
-    // Generate initial payouts
-    const initial = Array.from({ length: 20 }, (_, i) => generatePayout(i));
-    setPayouts(initial);
-  }, []);
-
+export function PayoutTicker() {
   return (
-    <section className="py-6 bg-surface border-y border-border overflow-hidden">
-      <div className="flex items-center">
-        {/* Label */}
-        <div className="flex-shrink-0 px-6 border-r border-border">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-profit"></span>
-            </span>
-            <span className="text-sm font-semibold text-foreground whitespace-nowrap">
-              Recent Payouts
-            </span>
-          </div>
-        </div>
+    <section className="py-6 bg-surface/50 border-y border-white/10 overflow-hidden">
+      <div className="flex items-center gap-2 mb-4 px-4 lg:px-6">
+        <div className="w-2 h-2 rounded-full bg-profit animate-pulse" />
+        <span className="text-sm font-medium text-foreground/60">
+          Live Payouts
+        </span>
+      </div>
 
-        {/* Scrolling ticker */}
-        <div className="flex-1 overflow-hidden">
-          <motion.div
-            className="flex gap-8"
-            animate={{ x: [0, -2000] }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            {[...payouts, ...payouts].map((payout, index) => (
-              <div
-                key={`${payout.id}-${index}`}
-                className="flex items-center gap-2 whitespace-nowrap"
-              >
-                <span className="text-lg">{payout.country}</span>
-                <span className="text-sm text-muted-foreground">{payout.name}</span>
-                <span className="text-sm font-bold text-profit">{payout.amount}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+      <div className="relative">
+        {/* Gradient Masks */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+
+        {/* Ticker */}
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="flex gap-6"
+        >
+          {[...payouts, ...payouts].map((payout, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 px-4 py-2 bg-background/50 border border-white/10 rounded-full whitespace-nowrap"
+            >
+              <span className="text-lg">{payout.country}</span>
+              <span className="font-medium text-foreground/80">
+                {payout.name}
+              </span>
+              <span className="font-bold text-profit">{payout.amount}</span>
+              <CheckCircle className="w-4 h-4 text-profit" />
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

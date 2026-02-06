@@ -1,175 +1,121 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { TrendingUp, DollarSign, Award, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { TrendingUp, TrendingDown, Activity } from "lucide-react";
+import { useEffect, useState } from "react";
 
-interface FeedItem {
+interface Trade {
   id: number;
-  type: "payout" | "funded" | "achievement" | "trade";
-  name: string;
-  amount?: string;
-  achievement?: string;
+  trader: string;
+  pair: string;
+  type: "buy" | "sell";
+  profit: number;
   time: string;
 }
 
-const names = [
-  "John D.", "Sarah M.", "Alex K.", "Maria L.", "David R.", "Emma S.",
-  "Michael T.", "Lisa P.", "James W.", "Anna B.", "Robert H.", "Sophie C.",
+const initialTrades: Trade[] = [
+  { id: 1, trader: "Mike T.", pair: "EUR/USD", type: "buy", profit: 450, time: "2m ago" },
+  { id: 2, trader: "Sarah K.", pair: "GBP/JPY", type: "sell", profit: 890, time: "5m ago" },
+  { id: 3, trader: "David L.", pair: "XAU/USD", type: "buy", profit: 1250, time: "8m ago" },
+  { id: 4, trader: "Emma R.", pair: "USD/CAD", type: "sell", profit: 320, time: "12m ago" },
+  { id: 5, trader: "James W.", pair: "EUR/GBP", type: "buy", profit: 670, time: "15m ago" },
 ];
 
-const achievements = [
-  "reached Elite status", "completed 100 trades", "hit 10% profit target",
-  "maintained 0% drawdown", "funded for $100K account", "first payout received",
-];
+const pairs = ["EUR/USD", "GBP/JPY", "XAU/USD", "USD/CAD", "EUR/GBP", "AUD/USD", "NZD/USD", "USD/CHF"];
+const names = ["Mike T.", "Sarah K.", "David L.", "Emma R.", "James W.", "Lisa P.", "Robert H.", "Anna G."];
 
-function generateFeedItem(id: number): FeedItem {
-  const types: FeedItem["type"][] = ["payout", "funded", "achievement", "trade"];
-  const type = types[Math.floor(Math.random() * types.length)];
-  const name = names[Math.floor(Math.random() * names.length)];
-
-  switch (type) {
-    case "payout":
-      return {
-        id,
-        type,
-        name,
-        amount: `$${(Math.floor(Math.random() * 50) + 1) * 100}`,
-        time: "Just now",
-      };
-    case "funded":
-      return {
-        id,
-        type,
-        name,
-        amount: `$${[5000, 25000, 50000, 100000][Math.floor(Math.random() * 4)].toLocaleString()}`,
-        time: "Just now",
-      };
-    case "achievement":
-      return {
-        id,
-        type,
-        name,
-        achievement: achievements[Math.floor(Math.random() * achievements.length)],
-        time: "Just now",
-      };
-    case "trade":
-      return {
-        id,
-        type,
-        name,
-        amount: `+$${(Math.floor(Math.random() * 20) + 1) * 50}`,
-        time: "Just now",
-      };
-  }
-}
-
-function FeedIcon({ type }: { type: FeedItem["type"] }) {
-  switch (type) {
-    case "payout":
-      return <DollarSign className="h-4 w-4 text-profit" />;
-    case "funded":
-      return <CheckCircle className="h-4 w-4 text-primary" />;
-    case "achievement":
-      return <Award className="h-4 w-4 text-electric-violet" />;
-    case "trade":
-      return <TrendingUp className="h-4 w-4 text-profit" />;
-  }
-}
-
-function FeedMessage({ item }: { item: FeedItem }) {
-  switch (item.type) {
-    case "payout":
-      return (
-        <span>
-          <span className="font-medium text-foreground">{item.name}</span>
-          <span className="text-muted-foreground"> received a payout of </span>
-          <span className="font-medium text-profit">{item.amount}</span>
-        </span>
-      );
-    case "funded":
-      return (
-        <span>
-          <span className="font-medium text-foreground">{item.name}</span>
-          <span className="text-muted-foreground"> got funded with </span>
-          <span className="font-medium text-primary">{item.amount}</span>
-        </span>
-      );
-    case "achievement":
-      return (
-        <span>
-          <span className="font-medium text-foreground">{item.name}</span>
-          <span className="text-muted-foreground"> {item.achievement}</span>
-        </span>
-      );
-    case "trade":
-      return (
-        <span>
-          <span className="font-medium text-foreground">{item.name}</span>
-          <span className="text-muted-foreground"> closed a trade </span>
-          <span className="font-medium text-profit">{item.amount}</span>
-        </span>
-      );
-  }
-}
-
-export default function LiveFeed() {
-  const [feed, setFeed] = useState<FeedItem[]>([]);
-  const [counter, setCounter] = useState(0);
+export function LiveFeed() {
+  const [trades, setTrades] = useState<Trade[]>(initialTrades);
 
   useEffect(() => {
-    // Initial feed
-    const initial = Array.from({ length: 5 }, (_, i) => generateFeedItem(i));
-    setFeed(initial);
-    setCounter(5);
-
-    // Add new items periodically
     const interval = setInterval(() => {
-      setCounter((prev) => {
-        const newId = prev + 1;
-        setFeed((prevFeed) => [generateFeedItem(newId), ...prevFeed.slice(0, 4)]);
-        return newId;
-      });
-    }, 3000);
+      const newTrade: Trade = {
+        id: Date.now(),
+        trader: names[Math.floor(Math.random() * names.length)],
+        pair: pairs[Math.floor(Math.random() * pairs.length)],
+        type: Math.random() > 0.5 ? "buy" : "sell",
+        profit: Math.floor(Math.random() * 2000) + 100,
+        time: "Just now",
+      };
+
+      setTrades((prev) => [newTrade, ...prev.slice(0, 4)]);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="py-16 bg-surface">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center space-x-3">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-profit opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-profit"></span>
-            </span>
-            <h3 className="text-lg font-semibold text-foreground">Live Activity</h3>
+    <section className="py-20 lg:py-32 relative">
+      <div className="container mx-auto px-4 lg:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-profit/10 border border-profit/20 rounded-full mb-6">
+            <Activity className="w-4 h-4 text-profit" />
+            <span className="text-sm font-medium text-profit">Live Trading Activity</span>
           </div>
-          <p className="text-sm text-muted-foreground">Real-time platform updates</p>
-        </div>
+          <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
+            Watch Traders{" "}
+            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              Win Live
+            </span>
+          </h2>
+          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+            Real-time feed of profitable trades from our funded community.
+          </p>
+        </motion.div>
 
-        <div className="space-y-3">
-          <AnimatePresence initial={false}>
-            {feed.map((item) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: -20, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="glass rounded-lg p-4 flex items-center space-x-4"
+        <div className="max-w-3xl mx-auto space-y-3">
+          {trades.map((trade, index) => (
+            <motion.div
+              key={trade.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+              className="flex items-center gap-4 p-4 bg-surface/50 backdrop-blur-sm border border-white/10 rounded-xl hover:border-primary/30 transition-colors"
+            >
+              {/* Icon */}
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  trade.type === "buy"
+                    ? "bg-profit/20 text-profit"
+                    : "bg-violet-500/20 text-violet-400"
+                }`}
               >
-                <div className="w-8 h-8 rounded-full bg-surface flex items-center justify-center flex-shrink-0">
-                  <FeedIcon type={item.type} />
+                {trade.type === "buy" ? (
+                  <TrendingUp className="w-5 h-5" />
+                ) : (
+                  <TrendingDown className="w-5 h-5" />
+                )}
+              </div>
+
+              {/* Trader & Pair */}
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold">{trade.trader}</span>
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full ${
+                      trade.type === "buy"
+                        ? "bg-profit/20 text-profit"
+                        : "bg-violet-500/20 text-violet-400"
+                    }`}
+                  >
+                    {trade.type.toUpperCase()}
+                  </span>
                 </div>
-                <div className="flex-1 text-sm">
-                  <FeedMessage item={item} />
-                </div>
-                <span className="text-xs text-muted-foreground flex-shrink-0">{item.time}</span>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                <div className="text-sm text-foreground/60">{trade.pair}</div>
+              </div>
+
+              {/* Profit */}
+              <div className="text-right">
+                <div className="font-bold text-profit">+${trade.profit.toLocaleString()}</div>
+                <div className="text-xs text-foreground/60">{trade.time}</div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

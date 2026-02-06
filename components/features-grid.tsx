@@ -2,116 +2,122 @@
 
 import { motion } from "framer-motion";
 import {
-  Zap,
-  Shield,
-  TrendingUp,
-  Clock,
-  Globe,
-  Headphones,
-  BarChart3,
   Wallet,
+  LineChart,
+  Shield,
+  Clock,
+  TrendingUp,
+  Headphones,
+  Globe,
+  Zap,
+  Award,
 } from "lucide-react";
 
 const features = [
   {
-    icon: Zap,
-    title: "Instant Funding",
-    description: "Get funded within minutes of passing your evaluation. No waiting periods.",
-    color: "text-primary",
-    bg: "bg-primary/10",
+    icon: Wallet,
+    title: "Instant Payouts",
+    description:
+      "Get your profits within 24 hours. No waiting, no hassle. Crypto and bank transfers available.",
+  },
+  {
+    icon: LineChart,
+    title: "Real Market Data",
+    description:
+      "Trade with live market conditions. Experience real spreads and execution speeds.",
   },
   {
     icon: Shield,
-    title: "No Risk Capital",
-    description: "Trade with our money. Your only risk is the evaluation fee.",
-    color: "text-profit",
-    bg: "bg-profit/10",
-  },
-  {
-    icon: TrendingUp,
-    title: "Up to 90% Profit Split",
-    description: "Keep the majority of your profits. You earned it.",
-    color: "text-electric-violet",
-    bg: "bg-electric-violet/10",
+    title: "Risk Management",
+    description:
+      "Built-in drawdown protection and risk tools to help you trade responsibly.",
   },
   {
     icon: Clock,
     title: "No Time Limits",
-    description: "Take your time. There's no deadline to pass the evaluation.",
-    color: "text-primary",
-    bg: "bg-primary/10",
+    description:
+      "Take your time to pass the challenge. No pressure, no rushing. Trade at your own pace.",
   },
   {
-    icon: Globe,
-    title: "Trade Any Market",
-    description: "Forex, indices, commodities, crypto—your strategy, your choice.",
-    color: "text-profit",
-    bg: "bg-profit/10",
+    icon: TrendingUp,
+    title: "Scaling Program",
+    description:
+      "Scale your account up to $2M based on consistent performance and profitability.",
   },
   {
     icon: Headphones,
     title: "24/7 Support",
-    description: "Our team is always here to help you succeed.",
-    color: "text-electric-violet",
-    bg: "bg-electric-violet/10",
+    description:
+      "Our expert team is available around the clock to help you with any questions.",
   },
   {
-    icon: BarChart3,
-    title: "Real-Time Analytics",
-    description: "Track your performance with professional-grade dashboards.",
-    color: "text-primary",
-    bg: "bg-primary/10",
+    icon: Globe,
+    title: "Trade Anywhere",
+    description:
+      "Access your account from anywhere in the world. Mobile-friendly dashboard included.",
   },
   {
-    icon: Wallet,
-    title: "Fast Payouts",
-    description: "Withdraw your profits within 24 hours. Crypto or bank transfer.",
-    color: "text-profit",
-    bg: "bg-profit/10",
+    icon: Zap,
+    title: "Fast Execution",
+    description:
+      "Lightning-fast order execution with minimal slippage on all major pairs.",
+  },
+  {
+    icon: Award,
+    title: "Up to 90% Profit",
+    description:
+      "Keep up to 90% of your trading profits. One of the highest splits in the industry.",
   },
 ];
 
-export default function FeaturesGrid() {
+export function FeaturesGrid() {
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 lg:py-32 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-surface/30 to-background" />
+
+      <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-sm text-primary font-semibold uppercase tracking-widest mb-4">
-            Why Choose Us
-          </p>
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-            Built for Serious Traders
+          <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
+            Why Choose{" "}
+            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              AlphaTrader
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to succeed as a professional funded trader
+          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+            We provide everything you need to succeed as a funded trader.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="group glass rounded-xl p-6 hover:border-primary/30 border border-transparent transition-all hover:-translate-y-1"
-              >
-                <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icon className={`h-6 w-6 ${feature.color}`} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              className="group relative p-6 bg-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-primary/30 transition-all"
+            >
+              {/* Hover Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+
+              <div className="relative">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <feature.icon className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
-              </motion.div>
-            );
-          })}
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-foreground/60 text-sm leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

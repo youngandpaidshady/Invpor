@@ -1,111 +1,81 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Copy, Check, Sparkles } from "lucide-react";
-import { toast } from "sonner";
+import { X, Clock, Tag, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export default function PromoBanner() {
+export function PromoBanner() {
   const [isVisible, setIsVisible] = useState(true);
-  const [copied, setCopied] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
     minutes: 59,
     seconds: 59,
   });
 
-  const promoCode = "ALPHA35";
-
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev.seconds > 0) {
           return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
+        }
+        if (prev.minutes > 0) {
           return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        } else if (prev.hours > 0) {
+        }
+        if (prev.hours > 0) {
           return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
         }
-        return { hours: 23, minutes: 59, seconds: 59 }; // Reset
+        return prev;
       });
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
-  const copyCode = () => {
-    navigator.clipboard.writeText(promoCode);
-    setCopied(true);
-    toast.success("Promo code copied!", {
-      description: `Use code ${promoCode} at checkout for 35% off`,
-    });
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  if (!isVisible) return null;
+  const formatTime = (num: number) => num.toString().padStart(2, "0");
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: "auto", opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
-        className="relative bg-gradient-to-r from-primary via-profit to-electric-violet"
-      >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center">
-            {/* Promo Text */}
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary-foreground animate-pulse" />
-              <span className="text-sm font-bold text-primary-foreground">
-                BOGO + 35% OFF
-              </span>
-              <span className="text-sm text-primary-foreground/80">
-                Limited Time Offer
-              </span>
-            </div>
-
-            {/* Countdown */}
-            <div className="flex items-center gap-1 text-primary-foreground">
-              <div className="bg-black/20 rounded px-2 py-1 text-xs font-mono font-bold">
-                {String(timeLeft.hours).padStart(2, "0")}
-              </div>
-              <span className="font-bold">:</span>
-              <div className="bg-black/20 rounded px-2 py-1 text-xs font-mono font-bold">
-                {String(timeLeft.minutes).padStart(2, "0")}
-              </div>
-              <span className="font-bold">:</span>
-              <div className="bg-black/20 rounded px-2 py-1 text-xs font-mono font-bold">
-                {String(timeLeft.seconds).padStart(2, "0")}
-              </div>
-            </div>
-
-            {/* Promo Code */}
-            <button
-              onClick={copyCode}
-              className="flex items-center gap-2 bg-black/20 hover:bg-black/30 transition-colors rounded-full px-4 py-1.5"
-            >
-              <span className="text-sm font-mono font-bold text-primary-foreground">
-                {promoCode}
-              </span>
-              {copied ? (
-                <Check className="h-4 w-4 text-primary-foreground" />
-              ) : (
-                <Copy className="h-4 w-4 text-primary-foreground" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Close button */}
-        <button
-          onClick={() => setIsVisible(false)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-black/20 rounded-full transition-colors"
-          aria-label="Close banner"
+      {isVisible && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="relative bg-gradient-to-r from-primary via-amber-500 to-primary bg-[length:200%_auto] animate-gradient overflow-hidden"
         >
-          <X className="h-4 w-4 text-primary-foreground" />
-        </button>
-      </motion.div>
+          <div className="container mx-auto px-4 lg:px-6">
+            <div className="flex items-center justify-center gap-4 py-3 text-background">
+              <div className="hidden sm:flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
+                <span className="font-semibold">FLASH SALE</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Tag className="w-4 h-4" />
+                <span className="font-medium">
+                  Use code <span className="font-bold">ALPHA25</span> for 25% off
+                </span>
+              </div>
+
+              <div className="hidden md:flex items-center gap-2 bg-background/20 px-3 py-1 rounded-full">
+                <Clock className="w-4 h-4" />
+                <span className="font-mono font-bold">
+                  {formatTime(timeLeft.hours)}:{formatTime(timeLeft.minutes)}:
+                  {formatTime(timeLeft.seconds)}
+                </span>
+              </div>
+
+              <button
+                onClick={() => setIsVisible(false)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-background/20 rounded transition-colors"
+                aria-label="Close banner"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }

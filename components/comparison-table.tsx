@@ -1,145 +1,106 @@
 "use client";
 
-import { useState } from "react";
+import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
-interface Plan {
-  name: string;
-  accountSize: string;
-  price: string;
-  profitTarget: string;
-  maxDrawdown: string;
-  profitSplit: string;
-  timeLimit: string;
-  tradingDays: string;
-  scaling: boolean;
-  resetOption: boolean;
-}
-
-const plans: Plan[] = [
-  {
-    name: "Starter",
-    accountSize: "$5,000",
-    price: "$49",
-    profitTarget: "8%",
-    maxDrawdown: "5%",
-    profitSplit: "Up to 80%",
-    timeLimit: "Unlimited",
-    tradingDays: "5 minimum",
-    scaling: false,
-    resetOption: true,
-  },
-  {
-    name: "Professional",
-    accountSize: "$25,000",
-    price: "$199",
-    profitTarget: "8%",
-    maxDrawdown: "5%",
-    profitSplit: "Up to 90%",
-    timeLimit: "Unlimited",
-    tradingDays: "5 minimum",
-    scaling: true,
-    resetOption: true,
-  },
-  {
-    name: "Elite",
-    accountSize: "$100,000",
-    price: "$699",
-    profitTarget: "8%",
-    maxDrawdown: "5%",
-    profitSplit: "Up to 90%",
-    timeLimit: "Unlimited",
-    tradingDays: "5 minimum",
-    scaling: true,
-    resetOption: true,
-  },
+const plans = [
+  { name: "Starter", price: "$49" },
+  { name: "Standard", price: "$179" },
+  { name: "Professional", price: "$499" },
 ];
 
 const features = [
-  { key: "accountSize", label: "Account Size" },
-  { key: "price", label: "Price" },
-  { key: "profitTarget", label: "Profit Target" },
-  { key: "maxDrawdown", label: "Max Drawdown" },
-  { key: "profitSplit", label: "Profit Split" },
-  { key: "timeLimit", label: "Time Limit" },
-  { key: "tradingDays", label: "Minimum Trading Days" },
-  { key: "scaling", label: "Account Scaling" },
-  { key: "resetOption", label: "Reset Option" },
+  { name: "Account Size", values: ["$5,000", "$25,000", "$100,000"] },
+  { name: "Profit Target", values: ["8%", "8%", "8%"] },
+  { name: "Max Drawdown", values: ["10%", "10%", "10%"] },
+  { name: "Daily Drawdown", values: ["5%", "5%", "5%"] },
+  { name: "Profit Split", values: ["80%", "85%", "90%"] },
+  { name: "Free Retry", values: [true, true, true] },
+  { name: "No Time Limit", values: [true, true, true] },
+  { name: "Scaling Plan", values: [false, true, true] },
+  { name: "Priority Support", values: [false, true, true] },
+  { name: "Personal Manager", values: [false, false, true] },
+  { name: "Same-day Payouts", values: [false, false, true] },
+  { name: "Crypto Withdrawals", values: [true, true, true] },
 ];
 
-export default function ComparisonTable() {
-  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+export function ComparisonTable() {
+  const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="pricing" className="py-20 lg:py-32 bg-surface/30">
+      <div className="container mx-auto px-4 lg:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-            Plan Comparison
+          <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
+            Compare{" "}
+            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              Plans
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Compare all plans side-by-side to find the perfect fit for your trading style
+          <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
+            Find the perfect plan that matches your trading goals and experience
+            level.
           </p>
         </motion.div>
 
         {/* Desktop Table */}
-        <div className="hidden lg:block overflow-x-auto">
-          <div className="inline-block min-w-full">
-            <table className="w-full">
-              <thead className="sticky top-0 z-10 glass-strong border-b border-border">
-                <tr>
-                  <th className="text-left p-4 font-semibold text-foreground">Feature</th>
-                  {plans.map((plan, index) => (
-                    <th
-                      key={plan.name}
-                      className={`text-center p-4 font-semibold ${
-                        index === 1 ? "bg-primary/10 text-primary" : "text-foreground"
-                      }`}
+        <div className="hidden lg:block overflow-hidden rounded-2xl border border-white/10 bg-surface/50 backdrop-blur-sm">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="sticky left-0 bg-surface/80 backdrop-blur-sm p-6 text-left font-semibold">
+                  Features
+                </th>
+                {plans.map((plan, index) => (
+                  <th
+                    key={plan.name}
+                    className={`p-6 text-center ${index === 1 ? "bg-primary/10" : ""}`}
+                  >
+                    <div className="font-display font-bold text-xl mb-1">
+                      {plan.name}
+                    </div>
+                    <div className="text-2xl font-bold text-primary">
+                      {plan.price}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {features.map((feature, featureIndex) => (
+                <tr
+                  key={feature.name}
+                  className={`border-b border-white/5 ${featureIndex % 2 === 0 ? "bg-white/[0.02]" : ""}`}
+                >
+                  <td className="sticky left-0 bg-surface/80 backdrop-blur-sm p-4 font-medium">
+                    {feature.name}
+                  </td>
+                  {feature.values.map((value, valueIndex) => (
+                    <td
+                      key={valueIndex}
+                      className={`p-4 text-center ${valueIndex === 1 ? "bg-primary/5" : ""}`}
                     >
-                      <div>
-                        <div className="text-xl font-bold">{plan.name}</div>
-                        <div className="text-sm text-muted-foreground mt-1">{plan.accountSize}</div>
-                      </div>
-                    </th>
+                      {typeof value === "boolean" ? (
+                        value ? (
+                          <Check className="w-5 h-5 text-profit mx-auto" />
+                        ) : (
+                          <X className="w-5 h-5 text-foreground/30 mx-auto" />
+                        )
+                      ) : (
+                        <span className="font-semibold">{value}</span>
+                      )}
+                    </td>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
-                {features.map((feature, rowIndex) => (
-                  <tr
-                    key={feature.key}
-                    className={`border-b border-border ${
-                      rowIndex % 2 === 0 ? "bg-surface/50" : "bg-background"
-                    }`}
-                  >
-                    <td className="p-4 font-medium text-foreground">{feature.label}</td>
-                    {plans.map((plan) => {
-                      const value = plan[feature.key as keyof Plan];
-                      return (
-                        <td key={plan.name} className="p-4 text-center text-muted-foreground">
-                          {typeof value === "boolean" ? (
-                            value ? (
-                              <Check className="h-5 w-5 text-profit mx-auto" />
-                            ) : (
-                              <X className="h-5 w-5 text-muted-foreground/50 mx-auto" />
-                            )
-                          ) : (
-                            value
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         {/* Mobile Accordion */}
@@ -151,27 +112,32 @@ export default function ComparisonTable() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: planIndex * 0.1 }}
-              className="glass rounded-lg border border-border overflow-hidden"
+              className="bg-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden"
             >
               <button
-                onClick={() => setOpenAccordion(openAccordion === planIndex ? null : planIndex)}
-                className={`w-full p-4 flex items-center justify-between ${
-                  planIndex === 1 ? "bg-primary/10" : ""
-                }`}
+                onClick={() =>
+                  setExpandedFeature(
+                    expandedFeature === plan.name ? null : plan.name
+                  )
+                }
+                className="w-full p-6 flex items-center justify-between"
               >
-                <div className="text-left">
-                  <div className="text-lg font-bold text-foreground">{plan.name}</div>
-                  <div className="text-sm text-muted-foreground">{plan.accountSize}</div>
+                <div>
+                  <div className="font-display font-bold text-xl">
+                    {plan.name}
+                  </div>
+                  <div className="text-2xl font-bold text-primary">
+                    {plan.price}
+                  </div>
                 </div>
-                <motion.div
-                  animate={{ rotate: openAccordion === planIndex ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
+                <div
+                  className={`w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transition-transform ${expandedFeature === plan.name ? "rotate-180" : ""}`}
                 >
                   <svg
-                    className="w-5 h-5 text-foreground"
+                    className="w-4 h-4"
                     fill="none"
-                    stroke="currentColor"
                     viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
                     <path
                       strokeLinecap="round"
@@ -180,43 +146,35 @@ export default function ComparisonTable() {
                       d="M19 9l-7 7-7-7"
                     />
                   </svg>
-                </motion.div>
+                </div>
               </button>
-              <AnimatePresence>
-                {openAccordion === planIndex && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 space-y-3 border-t border-border">
-                      {features.map((feature) => {
-                        const value = plan[feature.key as keyof Plan];
-                        return (
-                          <div key={feature.key} className="flex justify-between items-center">
-                            <span className="text-sm font-medium text-foreground">
-                              {feature.label}
-                            </span>
-                            <span className="text-sm text-muted-foreground">
-                              {typeof value === "boolean" ? (
-                                value ? (
-                                  <Check className="h-4 w-4 text-profit" />
-                                ) : (
-                                  <X className="h-4 w-4 text-muted-foreground/50" />
-                                )
-                              ) : (
-                                value
-                              )}
-                            </span>
-                          </div>
-                        );
-                      })}
+
+              {expandedFeature === plan.name && (
+                <div className="px-6 pb-6 space-y-3">
+                  {features.map((feature) => (
+                    <div
+                      key={feature.name}
+                      className="flex items-center justify-between py-2 border-b border-white/5"
+                    >
+                      <span className="text-foreground/60">{feature.name}</span>
+                      <span className="font-semibold">
+                        {typeof feature.values[planIndex] === "boolean" ? (
+                          feature.values[planIndex] ? (
+                            <Check className="w-5 h-5 text-profit" />
+                          ) : (
+                            <X className="w-5 h-5 text-foreground/30" />
+                          )
+                        ) : (
+                          feature.values[planIndex]
+                        )}
+                      </span>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ))}
+                  <button className="w-full mt-4 py-3 bg-primary text-background font-semibold rounded-xl">
+                    Get Started
+                  </button>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
