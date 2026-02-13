@@ -96,35 +96,35 @@ const documentTypes: {
   icon: typeof FileText;
   acceptedFormats: string;
 }[] = [
-  {
-    type: "id_front",
-    label: "ID Front",
-    description: "Front side of your government-issued ID (passport, driver's license, or national ID)",
-    icon: FileText,
-    acceptedFormats: "image/jpeg,image/png,image/webp",
-  },
-  {
-    type: "id_back",
-    label: "ID Back",
-    description: "Back side of your ID (skip if using passport)",
-    icon: FileText,
-    acceptedFormats: "image/jpeg,image/png,image/webp",
-  },
-  {
-    type: "selfie",
-    label: "Selfie with ID",
-    description: "Take a clear selfie while holding your ID next to your face",
-    icon: Camera,
-    acceptedFormats: "image/jpeg,image/png,image/webp",
-  },
-  {
-    type: "address_proof",
-    label: "Proof of Address",
-    description: "Utility bill, bank statement, or official letter (issued within last 3 months)",
-    icon: Home,
-    acceptedFormats: "image/jpeg,image/png,image/webp,application/pdf",
-  },
-];
+    {
+      type: "id_front",
+      label: "ID Front",
+      description: "Front side of your government-issued ID (passport, driver's license, or national ID)",
+      icon: FileText,
+      acceptedFormats: "image/jpeg,image/png,image/webp",
+    },
+    {
+      type: "id_back",
+      label: "ID Back",
+      description: "Back side of your ID (skip if using passport)",
+      icon: FileText,
+      acceptedFormats: "image/jpeg,image/png,image/webp",
+    },
+    {
+      type: "selfie",
+      label: "Selfie with ID",
+      description: "Take a clear selfie while holding your ID next to your face",
+      icon: Camera,
+      acceptedFormats: "image/jpeg,image/png,image/webp",
+    },
+    {
+      type: "address_proof",
+      label: "Proof of Address",
+      description: "Utility bill, bank statement, or official letter (issued within last 3 months)",
+      icon: Home,
+      acceptedFormats: "image/jpeg,image/png,image/webp,application/pdf",
+    },
+  ];
 
 export default function KYCPage() {
   const [kycState, setKYCState] = useState<KYCState>(initialKYCState);
@@ -389,22 +389,20 @@ export default function KYCPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`bg-foreground/[0.02] border rounded-xl overflow-hidden transition-colors ${
-                    upload.status === "uploaded"
+                  className={`bg-foreground/[0.02] border rounded-xl overflow-hidden transition-colors ${upload.status === "uploaded"
                       ? "border-green-400/50"
                       : "border-border"
-                  }`}
+                    }`}
                 >
                   {/* Card Header */}
                   <div className="p-4 border-b border-border">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div
-                          className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                            upload.status === "uploaded"
+                          className={`w-10 h-10 rounded-lg flex items-center justify-center ${upload.status === "uploaded"
                               ? "bg-green-400/10"
                               : "bg-foreground/5"
-                          }`}
+                            }`}
                         >
                           {upload.status === "uploaded" ? (
                             <CheckCircle className="w-5 h-5 text-green-400" />
@@ -454,8 +452,7 @@ export default function KYCPage() {
                       <div
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => handleDrop(doc.type, e)}
-                        className="relative border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 hover:bg-primary/5 transition-colors cursor-pointer"
-                        onClick={() => fileInputRefs.current[doc.type]?.click()}
+                        className="relative border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2"
                       >
                         <input
                           ref={(el) => {
@@ -466,12 +463,24 @@ export default function KYCPage() {
                           onChange={(e) => handleFileChange(doc.type, e)}
                           className="hidden"
                         />
-                        <Upload className="w-8 h-8 mx-auto mb-2 text-foreground/40" />
-                        <p className="text-sm text-foreground/60 mb-1">
-                          Drag and drop or{" "}
-                          <span className="text-primary">browse</span>
-                        </p>
-                        <p className="text-xs text-foreground/40">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                          <Upload className="w-6 h-6 text-primary" />
+                        </div>
+                        <div className="space-y-1">
+                          <p className="font-medium">
+                            Drag & drop your file here
+                          </p>
+                          <p className="text-sm text-foreground/60">
+                            or
+                          </p>
+                          <button
+                            onClick={() => fileInputRefs.current[doc.type]?.click()}
+                            className="px-4 py-2 bg-background border border-border rounded-lg text-sm font-semibold hover:bg-muted transition-colors shadow-sm"
+                          >
+                            Browse Files
+                          </button>
+                        </div>
+                        <p className="text-xs text-foreground/40 mt-2">
                           Max file size: 10MB
                         </p>
                       </div>

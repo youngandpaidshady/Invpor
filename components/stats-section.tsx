@@ -60,7 +60,7 @@ function StatItem({ icon: Icon, value, suffix, prefix = "", label, delay }: Stat
     >
       <div className="relative p-8 bg-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-colors">
         {/* Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F97316]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity" />
 
         {/* Content */}
@@ -69,7 +69,7 @@ function StatItem({ icon: Icon, value, suffix, prefix = "", label, delay }: Stat
             <Icon className="w-7 h-7 text-primary" />
           </div>
           <div className="text-4xl lg:text-5xl font-display font-bold mb-2">
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               {prefix}
               {formatNumber(count)}
               {suffix}
@@ -114,7 +114,7 @@ export function StatsSection() {
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-surface/30 to-background" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.05)_0%,transparent_60%)]" />
 
       <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
@@ -125,7 +125,7 @@ export function StatsSection() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Trusted by{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Thousands
             </span>
           </h2>

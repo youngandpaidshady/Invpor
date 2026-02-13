@@ -196,7 +196,7 @@ export function ChallengeTabs() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Choose Your{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Challenge
             </span>
           </h2>
@@ -212,21 +212,19 @@ export function ChallengeTabs() {
             <button
               key={type.id}
               onClick={() => setActiveTab(type.id)}
-              className={`relative flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${
-                activeTab === type.id
+              className={`relative flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all ${activeTab === type.id
                   ? "bg-primary text-background"
                   : "bg-surface/50 border border-white/10 text-foreground/70 hover:text-foreground hover:border-white/20"
-              }`}
+                }`}
             >
               <type.icon className="w-5 h-5" />
               <span>{type.label}</span>
               {type.badge && (
                 <span
-                  className={`text-xs px-2 py-0.5 rounded-full ${
-                    activeTab === type.id
+                  className={`text-xs px-2 py-0.5 rounded-full ${activeTab === type.id
                       ? "bg-background/20 text-background"
                       : "bg-primary/20 text-primary"
-                  }`}
+                    }`}
                 >
                   {type.badge}
                 </span>

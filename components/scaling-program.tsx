@@ -17,7 +17,7 @@ export function ScalingProgram() {
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden bg-surface/30">
       {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,255,0,0.05)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.05)_0%,transparent_50%)]" />
 
       <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
@@ -34,7 +34,7 @@ export function ScalingProgram() {
           </div>
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Scaling{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Program
             </span>
           </h2>
@@ -47,7 +47,7 @@ export function ScalingProgram() {
         {/* Timeline */}
         <div className="relative max-w-4xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-accent/50 to-transparent" />
+          <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#F97316] via-[#F97316]/50 to-transparent" />
 
           <div className="space-y-6">
             {scales.map((scale, index) => (
@@ -61,11 +61,10 @@ export function ScalingProgram() {
               >
                 {/* Dot */}
                 <div
-                  className={`absolute left-8 lg:left-1/2 w-4 h-4 rounded-full -translate-x-1/2 z-10 ${
-                    scale.highlight
-                      ? "bg-primary shadow-lg shadow-primary/50"
-                      : "bg-surface border-2 border-primary"
-                  }`}
+                  className={`absolute left-8 lg:left-1/2 w-4 h-4 rounded-full -translate-x-1/2 z-10 ${scale.highlight
+                    ? "bg-primary shadow-lg shadow-primary/50"
+                    : "bg-surface border-2 border-primary"
+                    }`}
                 />
 
                 {/* Card */}
@@ -73,11 +72,10 @@ export function ScalingProgram() {
                   className={`ml-16 lg:ml-0 ${index % 2 === 0 ? "lg:mr-auto lg:pr-12" : "lg:ml-auto lg:pl-12"} lg:w-[calc(50%-2rem)]`}
                 >
                   <div
-                    className={`p-6 rounded-2xl border transition-all ${
-                      scale.highlight
-                        ? "bg-primary/10 border-primary/30"
-                        : "bg-surface/50 border-white/10 hover:border-primary/30"
-                    }`}
+                    className={`p-6 rounded-2xl border transition-all ${scale.highlight
+                      ? "bg-primary/10 border-primary/30"
+                      : "bg-surface/50 border-white/10 hover:border-primary/30"
+                      }`}
                   >
                     <div className="flex items-center gap-4 mb-3">
                       <span className="text-sm font-medium text-foreground/60">

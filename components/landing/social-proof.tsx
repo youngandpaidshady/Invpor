@@ -1,66 +1,127 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
 /**
- * Social Proof - Clean Testimonials
- * Zero framer-motion, pure CSS
+ * Social Proof — Magma Theme
+ * Orange accents for funded amounts, framer-motion entrance
  */
 
 const testimonials = [
   {
-    quote: "Straightforward. No games. Got funded in 11 days.",
-    author: "Marcus R.",
-    location: "London",
-    profit: "$18,420",
+    quote: "Withdrew $12K in my first month. No games, no delays.",
+    author: "Alex K.",
+    handle: "@alexk_trades",
+    funded: "$100K",
+    withdrawn: "$12,400",
   },
   {
-    quote: "Finally a prop firm that doesn't try to fail you.",
-    author: "Sarah K.",
-    location: "New York",
-    profit: "$32,100",
+    quote: "Finally a prop firm that pays. Processed my withdrawal in 4 hours.",
+    author: "Sam R.",
+    handle: "@samr_fx",
+    funded: "$50K",
+    withdrawn: "$8,200",
   },
   {
-    quote: "Three payouts in two months. All processed same day.",
-    author: "James L.",
-    location: "Sydney",
-    profit: "$45,890",
+    quote: "The evaluation rules actually make sense. Passed in 3 weeks.",
+    author: "Jordan T.",
+    handle: "@jordan_trades",
+    funded: "$200K",
+    withdrawn: "$24,600",
   },
 ];
 
-export function SocialProof() {
-  return (
-    <section className="py-24 lg:py-40 bg-[#050505]">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <span className="text-xs text-white/30 uppercase tracking-[0.4em] font-mono block mb-6">
-            Trader Stories
-          </span>
-          <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight">
-            Real traders.<br />
-            <span className="text-[#ff6b35]">Real payouts.</span>
-          </h2>
-        </div>
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+};
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {testimonials.map((t) => (
-            <div
-              key={t.author}
-              className="p-8 lg:p-10 border border-white/5 hover:border-white/10 transition-colors"
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
+export function SocialProof() {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section ref={ref} className="section bg-[#09090B]">
+      <div className="container-wide">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mb-16 lg:mb-24"
+        >
+          <p className="eyebrow mb-4">TRADERS</p>
+          <h2 className="heading-lg text-white">
+            WHAT THEY<br />
+            <span className="text-[#F97316]">SAY</span>
+          </h2>
+        </motion.div>
+
+        {/* Testimonials grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="grid lg:grid-cols-3 gap-px bg-[#3F3F46]"
+        >
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              className="bg-[#09090B] p-8 lg:p-10"
             >
-              <blockquote className="text-xl lg:text-2xl text-white/80 font-light leading-relaxed mb-8">
+              <blockquote className="text-lg text-white/70 leading-relaxed mb-8">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
-              <div className="flex items-end justify-between">
+
+              <div className="flex items-center justify-between pt-6 border-t border-[#27272A]">
                 <div>
-                  <div className="text-white font-bold">{t.author}</div>
-                  <div className="text-white/30 text-sm">{t.location}</div>
+                  <div className="font-medium text-white">{t.author}</div>
+                  <div className="text-xs text-[#71717A] font-mono">
+                    {t.handle}
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[#ff6b35] font-mono font-bold text-lg">+{t.profit}</div>
-                  <div className="text-white/20 text-xs uppercase tracking-wider">earned</div>
+                  <div className="text-xs text-[#71717A] mb-1">FUNDED</div>
+                  <div className="font-mono text-[#F97316]">{t.funded}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
+        </motion.div>
+
+        {/* Stats bar */}
+        <div className="mt-12 pt-8 border-t border-[#27272A] flex flex-wrap justify-center gap-8 lg:gap-16 text-center">
+          <div>
+            <div className="font-mono text-xl text-white">4.9/5</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A] mt-1">
+              TRUSTPILOT
+            </div>
+          </div>
+          <div>
+            <div className="font-mono text-xl text-white">2,847</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A] mt-1">
+              REVIEWS
+            </div>
+          </div>
+          <div>
+            <div className="font-mono text-xl text-[#F97316]">$12.8M</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A] mt-1">
+              TOTAL PAID
+            </div>
+          </div>
         </div>
       </div>
     </section>

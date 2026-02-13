@@ -10,136 +10,125 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // ═══════════════════════════════════════
+        // MAGMA DESIGN SYSTEM
+        // Orange-500 on Zinc-950. No white BGs.
+        // ═══════════════════════════════════════
+
+        // Brand accent
+        magma: "#F97316",
+
         // Core
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#09090B",
+        foreground: "#FAFAFA",
 
-        // Brand - Metallic Gold
+        // Surfaces
+        surface: {
+          DEFAULT: "#18181B",
+          2: "#27272A",
+        },
+
+        // Primary — Orange accent
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "#F97316",
+          foreground: "#000000",
         },
 
-        // Accent
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+        // Signal Colors — semantic data only
+        signal: {
+          green: "#00FF88",
+          red: "#FF3366",
+          blue: "#3B82F6",
         },
 
         // Semantic
-        profit: "hsl(var(--profit))",
-        loss: "hsl(var(--loss))",
-        warning: "hsl(var(--warning))",
+        profit: "#00FF88",
+        loss: "#FF3366",
 
         // UI
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#27272A",
+          foreground: "#A1A1AA",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#FF3366",
+          foreground: "#FFFFFF",
         },
 
-        // Surface
+        // Cards
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#111113",
+          foreground: "#FAFAFA",
         },
-        surface: "hsl(var(--surface))",
 
         // Borders
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
+        border: "#3F3F46",
+        "border-subtle": "#27272A",
+        input: "#3F3F46",
+        ring: "#F97316",
       },
       fontFamily: {
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        serif: ["var(--font-playfair)", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         display: ["var(--font-oswald)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       fontSize: {
-        "display-xl": ["5rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        "display-lg": ["4rem", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        "display-md": ["3rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
-        "display-sm": ["2.25rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        "display-2xl": ["clamp(4rem, 12vw, 10rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
+        "display-xl": ["clamp(3rem, 10vw, 8rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
+        "display-lg": ["clamp(2rem, 6vw, 4rem)", { lineHeight: "0.95", letterSpacing: "-0.02em" }],
+        "display-md": ["clamp(1.5rem, 4vw, 2.5rem)", { lineHeight: "1", letterSpacing: "-0.01em" }],
+        "display-sm": ["clamp(1.25rem, 3vw, 1.75rem)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
+        "data-xl": ["3rem", { lineHeight: "1", letterSpacing: "0" }],
+        "data-lg": ["2rem", { lineHeight: "1", letterSpacing: "0" }],
+        "data-md": ["1.5rem", { lineHeight: "1", letterSpacing: "0" }],
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        "2xl": "1rem",
-        "3xl": "1.5rem",
+        DEFAULT: "0px",
+        none: "0px",
+        sm: "2px",
+        md: "4px",
+        lg: "6px",
       },
       boxShadow: {
-        "sm": "0 1px 2px rgba(0, 0, 0, 0.05)",
-        "DEFAULT": "0 4px 6px rgba(0, 0, 0, 0.1)",
-        "md": "0 4px 12px rgba(0, 0, 0, 0.1)",
-        "lg": "0 10px 40px rgba(0, 0, 0, 0.15)",
-        "xl": "0 20px 60px rgba(0, 0, 0, 0.2)",
-        "glow": "0 0 40px rgba(197, 160, 89, 0.15)",
-        "glow-lg": "0 0 60px rgba(197, 160, 89, 0.2)",
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-primary": "linear-gradient(135deg, hsl(40 50% 56%) 0%, hsl(40 47% 45%) 100%)",
+        sm: "0 1px 2px rgba(0, 0, 0, 0.1)",
+        DEFAULT: "0 2px 8px rgba(0, 0, 0, 0.15)",
+        md: "0 4px 16px rgba(0, 0, 0, 0.2)",
+        lg: "0 8px 32px rgba(0, 0, 0, 0.25)",
+        // Magma glow
+        "glow-magma": "0 0 25px rgba(249, 115, 22, 0.5)",
+        "glow-magma-sm": "0 0 12px rgba(249, 115, 22, 0.3)",
+        "glow-magma-lg": "0 0 50px rgba(249, 115, 22, 0.3)",
+        // Semantic
+        "glow-green": "0 0 20px rgba(0, 255, 136, 0.3)",
+        "glow-red": "0 0 20px rgba(255, 51, 102, 0.3)",
       },
       animation: {
-        "fade-in": "fade-in 0.5s ease-in-out",
-        "slide-up": "slide-up 0.5s ease-out",
-        "slide-down": "slide-down 0.5s ease-out",
-        "float": "float 6s ease-in-out infinite",
-        "spin-slow": "spin 20s linear infinite",
-        "shimmer": "shimmer 3s ease-in-out infinite",
-        "shine": "shine 4s ease-in-out infinite",
-        "gradient": "gradient-shift 4s ease-in-out infinite",
-        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        "blob": "blob 7s infinite",
+        "fade-in": "fade-in 200ms ease-out",
+        "fade-up": "fade-up 400ms ease-out",
+        "ticker": "ticker 40s linear infinite",
+        "pulse-live": "pulse-live 2s ease-in-out infinite",
       },
       keyframes: {
         "fade-in": {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        "slide-up": {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(12px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "slide-down": {
-          "0%": { transform: "translateY(-20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+        "ticker": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
+        "pulse-live": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
         },
-        "shimmer": {
-          "0%": { backgroundPosition: "200% center" },
-          "100%": { backgroundPosition: "-200% center" },
-        },
-        "shine": {
-          "from": { transform: "translateX(-100%) skewX(-12deg)" },
-          "to": { transform: "translateX(200%) skewX(-12deg)" },
-        },
-        "gradient-shift": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { opacity: "0.5", transform: "scale(1)" },
-          "50%": { opacity: "0.8", transform: "scale(1.05)" },
-        },
-        "blob": {
-          "0%": { transform: "translate(0px, 0px) scale(1)" },
-          "33%": { transform: "translate(30px, -50px) scale(1.1)" },
-          "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
-          "100%": { transform: "translate(0px, 0px) scale(1)" },
-        },
+      },
+      spacing: {
+        "18": "4.5rem",
+        "22": "5.5rem",
       },
     },
   },

@@ -25,7 +25,7 @@ export function PromoCode({ onApply, currentDiscount }: PromoCodeProps) {
     if (!code.trim()) return;
 
     setStatus("loading");
-    
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -77,8 +77,8 @@ export function PromoCode({ onApply, currentDiscount }: PromoCodeProps) {
               status === "success"
                 ? "border-primary/50 focus:ring-primary/30"
                 : status === "error"
-                ? "border-red-500/50 focus:ring-red-500/30"
-                : "border-border focus:ring-primary/30"
+                  ? "border-red-500/50 focus:ring-red-500/30"
+                  : "border-border focus:ring-primary/30"
             )}
             disabled={status === "success"}
           />
@@ -131,7 +131,7 @@ export function PromoCode({ onApply, currentDiscount }: PromoCodeProps) {
       {currentDiscount > 0 && (
         <div className="mt-4 p-3 rounded-lg bg-primary/5 border border-primary/20 text-center">
           <span className="text-sm text-primary font-medium">
-            🎉 You&apos;re saving {currentDiscount}% on all plans!
+            You&apos;re saving {currentDiscount}% on all plans!
           </span>
         </div>
       )}

@@ -16,6 +16,7 @@ import {
   Wallet,
   ArrowRight,
   Loader2,
+  Lock,
 } from "lucide-react";
 
 type PayoutStatus = "pending" | "processing" | "completed" | "rejected";
@@ -104,6 +105,9 @@ const fundedAccounts = [
   { id: "fa-002", name: "$25K Funded Account", availableBalance: 1450 },
 ];
 
+import { MOCK_USER_STATE } from "@/lib/mock-data";
+import Link from "next/link";
+
 export default function PayoutsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState("");
@@ -111,6 +115,38 @@ export default function PayoutsPage() {
   const [paymentMethod, setPaymentMethod] = useState<"bank" | "crypto">("bank");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [filterStatus, setFilterStatus] = useState<PayoutStatus | "all">("all");
+
+  // If user is not funded, show Locked View
+  if (MOCK_USER_STATE.account.status !== 'funded') {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-bold">Payouts</h1>
+          <p className="text-foreground/60">
+            Request and track your withdrawals
+          </p>
+        </div>
+
+        <div className="min-h-[400px] flex flex-col items-center justify-center p-8 border border-dashed border-border rounded-2xl bg-foreground/[0.02] text-center">
+          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-6">
+            <Lock className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h2 className="text-xl font-bold mb-2">Payouts Locked</h2>
+          <p className="text-foreground/60 max-w-md mb-8">
+            Payouts are only available for funded traders. Complete your evaluation phase to unlock withdrawals and keep up to 90% of your profits.
+          </p>
+          <div className="flex gap-4">
+            <Link href="/dashboard" className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors">
+              Return to Dashboard
+            </Link>
+            <Link href="/rules" className="px-6 py-3 border border-border font-semibold rounded-lg hover:bg-muted transition-colors">
+              View Trading Rules
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const filteredPayouts = mockPayouts.filter(
     (payout) => filterStatus === "all" || payout.status === filterStatus
@@ -406,25 +442,22 @@ export default function PayoutsPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("bank")}
-                      className={`p-4 rounded-lg border transition-all flex flex-col items-center gap-2 ${
-                        paymentMethod === "bank"
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-foreground/30"
-                      }`}
+                      className={`p-4 rounded-lg border transition-all flex flex-col items-center gap-2 ${paymentMethod === "bank"
+                        ? "border-primary bg-primary/10"
+                        : "border-border hover:border-foreground/30"
+                        }`}
                     >
                       <Building2
-                        className={`w-6 h-6 ${
-                          paymentMethod === "bank"
-                            ? "text-primary"
-                            : "text-foreground/60"
-                        }`}
+                        className={`w-6 h-6 ${paymentMethod === "bank"
+                          ? "text-primary"
+                          : "text-foreground/60"
+                          }`}
                       />
                       <span
-                        className={`text-sm font-medium ${
-                          paymentMethod === "bank"
-                            ? "text-primary"
-                            : "text-foreground/60"
-                        }`}
+                        className={`text-sm font-medium ${paymentMethod === "bank"
+                          ? "text-primary"
+                          : "text-foreground/60"
+                          }`}
                       >
                         Bank Transfer
                       </span>
@@ -432,25 +465,22 @@ export default function PayoutsPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("crypto")}
-                      className={`p-4 rounded-lg border transition-all flex flex-col items-center gap-2 ${
-                        paymentMethod === "crypto"
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-foreground/30"
-                      }`}
+                      className={`p-4 rounded-lg border transition-all flex flex-col items-center gap-2 ${paymentMethod === "crypto"
+                        ? "border-primary bg-primary/10"
+                        : "border-border hover:border-foreground/30"
+                        }`}
                     >
                       <Wallet
-                        className={`w-6 h-6 ${
-                          paymentMethod === "crypto"
-                            ? "text-primary"
-                            : "text-foreground/60"
-                        }`}
+                        className={`w-6 h-6 ${paymentMethod === "crypto"
+                          ? "text-primary"
+                          : "text-foreground/60"
+                          }`}
                       />
                       <span
-                        className={`text-sm font-medium ${
-                          paymentMethod === "crypto"
-                            ? "text-primary"
-                            : "text-foreground/60"
-                        }`}
+                        className={`text-sm font-medium ${paymentMethod === "crypto"
+                          ? "text-primary"
+                          : "text-foreground/60"
+                          }`}
                       >
                         Crypto
                       </span>

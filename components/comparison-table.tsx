@@ -39,7 +39,7 @@ export function ComparisonTable() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Compare{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Plans
             </span>
           </h2>

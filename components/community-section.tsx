@@ -52,7 +52,7 @@ export function CommunitySection() {
           >
             <h2 className="text-3xl lg:text-5xl font-display font-bold mb-6">
               Join Our{" "}
-              <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+              <span className="text-[#F97316]">
                 Trading Community
               </span>
             </h2>

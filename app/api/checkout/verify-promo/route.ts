@@ -25,13 +25,13 @@ export async function POST(request: Request) {
     // Try database first
     try {
       const supabase = await createClient();
-      
+
       const { data, error } = await supabase
         .rpc("verify_promo_code", { code_input: upperCode });
 
       if (!error && data && data.length > 0) {
         const result = data[0];
-        
+
         if (result.is_valid) {
           return NextResponse.json({
             valid: true,
@@ -46,9 +46,8 @@ export async function POST(request: Request) {
           });
         }
       }
-    } catch (dbError) {
+    } catch {
       // Database not configured, fall through to fallback
-      console.log("Database promo check failed, using fallback:", dbError);
     }
 
     // Fallback to hardcoded promo codes

@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { Search, ChevronDown, HelpCircle, ArrowRight, MessageCircle, Zap, Sparkles, Target, Wallet, Settings } from "lucide-react";
+import { Search, ChevronDown, HelpCircle, ArrowRight, MessageCircle, Sparkles, Target, Wallet, Settings } from "lucide-react";
 import { FloatingParticles, GlowingOrb, Marquee } from "@/components/ui/advanced-effects";
 
 type Category = "all" | "getting-started" | "trading" | "payouts" | "technical";
@@ -59,8 +59,8 @@ function FAQItem({ faq, index, isOpen, onToggle }: { faq: typeof faqs[0]; index:
       <motion.button
         onClick={onToggle}
         className={`w-full flex items-center justify-between p-6 text-left transition-all duration-300 border ${isOpen
-            ? "bg-white/[0.03] border-[#ff6b35]/30"
-            : "border-white/10 hover:bg-white/[0.02] hover:border-white/20"
+          ? "bg-white/[0.03] border-[#ff6b35]/30"
+          : "border-white/10 hover:bg-white/[0.02] hover:border-white/20"
           }`}
       >
         <span className={`font-medium pr-4 transition-colors ${isOpen ? "text-[#ff6b35]" : ""}`}>{faq.q}</span>
@@ -222,8 +222,8 @@ export default function FAQPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={`flex items-center gap-2 px-5 py-3 border transition-all duration-300 ${activeCategory === cat.id
-                    ? "bg-white text-black border-white"
-                    : "border-white/10 hover:border-white/30"
+                  ? "bg-white text-black border-white"
+                  : "border-white/10 hover:border-white/30"
                   }`}
               >
                 <cat.icon className={`w-4 h-4 ${activeCategory === cat.id ? "text-black" : "text-[#ff6b35]"}`} />

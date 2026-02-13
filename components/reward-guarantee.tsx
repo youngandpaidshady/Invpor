@@ -30,7 +30,7 @@ export function RewardGuarantee() {
   return (
     <section className="py-16 lg:py-24 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-accent/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#F97316]/10 via-transparent to-[#F97316]/10" />
 
       <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
@@ -41,7 +41,7 @@ export function RewardGuarantee() {
         >
           <h2 className="text-3xl lg:text-4xl font-display font-bold mb-4">
             Our{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Guarantees
             </span>
           </h2>

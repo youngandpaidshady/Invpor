@@ -13,144 +13,108 @@ import { NextResponse } from "next/server";
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2023-10-16' });
 // const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+import { createClient } from "@/lib/supabase/server";
+
 export async function POST(request: Request) {
   try {
     const body = await request.text();
+    const signature = request.headers.get("stripe-signature") as string;
 
-    // Demo mode - just log and acknowledge
-    console.log("[DEMO] Stripe webhook received (not processed)");
-
-    // Parse the event (in demo mode, we skip signature verification)
     let event;
-    try {
-      event = JSON.parse(body);
-    } catch {
-      return NextResponse.json(
-        { error: "Invalid JSON", demo: true },
-        { status: 400 }
-      );
+    const stripeSecret = process.env.STRIPE_SECRET_KEY;
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (stripeSecret && webhookSecret) {
+      const Stripe = require('stripe');
+      const stripe = new Stripe(stripeSecret);
+      try {
+        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+      } catch (err: any) {
+        console.error(`Webhook signature verification failed.`, err.message);
+        return NextResponse.json({ error: "Webhook signature verification failed" }, { status: 400 });
+      }
+    } else {
+      // Fallback to basic JSON parse if no secrets (DEMO MODE)
+      // In production this should be disallowed
+      try {
+        event = JSON.parse(body);
+      } catch {
+        return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+      }
     }
+
+    const supabase = await createClient();
 
     // Handle different event types
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
-        
+
         // Extract metadata
         const {
           orderId,
           planId,
-          challengeType,
-          accountSize,
-          promoCode,
+          userId,
+          //   challengeType,
+          //   accountSize,
+          //   promoCode,
         } = session.metadata || {};
 
-        const customerEmail = session.customer_email;
-        const amountPaid = session.amount_total / 100; // Convert from cents
+        console.log("Processing completed session for order:", orderId);
 
-        console.log("Payment successful:", {
-          orderId,
-          planId,
-          challengeType,
-          accountSize,
-          customerEmail,
-          amountPaid,
-          promoCode,
-        });
+        if (orderId) {
+          // 1. Update Order Status
+          const { error: updateError } = await supabase
+            .from("orders")
+            .update({
+              payment_status: "paid",
+              stripe_session_id: session.id,
+              stripe_payment_intent: session.payment_intent
+            })
+            .eq("id", orderId);
 
-        // In production, do the following:
-        // 1. Create order record in database
-        // 2. Create challenge/account record
-        // 3. Generate trading credentials
-        // 4. Send confirmation email with credentials
-        // 5. Update promo code usage count
+          if (updateError) console.error("Error updating order:", updateError);
 
-        /*
-        // Example database operations:
-        await db.orders.create({
-          data: {
-            id: orderId,
-            userId: session.client_reference_id,
-            planId,
-            challengeType,
-            accountSize: parseInt(accountSize),
-            amount: amountPaid,
-            promoCode,
-            stripeSessionId: session.id,
-            stripePaymentIntentId: session.payment_intent,
-            status: 'completed',
-          },
-        });
+          // 2. Fetch Order Details to create Challenge
+          const { data: order } = await supabase.from("orders").eq("id", orderId).single();
 
-        const challenge = await db.challenges.create({
-          data: {
-            orderId,
-            userId: session.client_reference_id,
-            type: challengeType,
-            accountSize: parseInt(accountSize),
-            balance: parseInt(accountSize),
-            status: 'active',
-            phase: 1,
-          },
-        });
+          if (order) {
+            // 3. Create Challenge
+            // We need to determine challenge parameters based on plan
+            // For now, we use what's in the order record or defaults
 
-        // Send email with credentials
-        await sendEmail({
-          to: customerEmail,
-          subject: 'Your AlphaTrader Challenge is Ready!',
-          template: 'challenge-credentials',
-          data: {
-            challengeId: challenge.id,
-            // ... credentials
-          },
-        });
-        */
+            const { error: challengeError } = await supabase
+              .from("challenges")
+              .insert({
+                user_id: order.user_id, // If null (guest), we might need to create user first? Or user created account during checkout?
+                // Assuming user_id is present. If guest checkout, this might fail or we assign to a temp user.
+                order_id: order.id,
+                type: order.challenge_type || "2-step",
+                account_size: order.account_size || 25000,
+                status: "active",
+                phase: 1,
+                start_balance: order.account_size || 25000,
+                current_balance: order.account_size || 25000,
+                profit_target: 8, // Default
+                max_drawdown: 10, // Default
+                daily_drawdown: 5, // Default
+                trading_days: 0,
+                platform_login: `ACC${Math.floor(Math.random() * 1000000)}`,
+                platform_password: Math.random().toString(36).slice(-8),
+              });
 
-        break;
-      }
-
-      case "checkout.session.expired": {
-        const session = event.data.object;
-        console.log("Checkout session expired:", session.id);
-        
-        // Optionally send abandoned cart email
-        break;
-      }
-
-      case "payment_intent.payment_failed": {
-        const paymentIntent = event.data.object;
-        console.log("Payment failed:", paymentIntent.id);
-        
-        // Log failure for analytics
-        // Optionally notify customer
-        break;
-      }
-
-      case "charge.refunded": {
-        const charge = event.data.object;
-        console.log("Charge refunded:", charge.id);
-        
-        // In production:
-        // 1. Update order status to refunded
-        // 2. Deactivate associated challenge
-        // 3. Send refund confirmation email
-        break;
-      }
-
-      case "customer.subscription.created":
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        // Handle subscription events if you have recurring billing
-        const subscription = event.data.object;
-        console.log(`Subscription ${event.type}:`, subscription.id);
+            if (challengeError) console.error("Error creating challenge:", challengeError);
+            else console.log("Challenge created successfully for order:", orderId);
+          }
+        }
         break;
       }
 
       default:
-        console.log(`[DEMO] Unhandled event type: ${event.type}`);
+        console.log(`Unhandled event type: ${event.type}`);
     }
 
-    return NextResponse.json({ received: true, demo: true });
+    return NextResponse.json({ received: true });
   } catch (error) {
     console.error("Webhook error:", error);
     return NextResponse.json(

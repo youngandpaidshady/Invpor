@@ -20,7 +20,7 @@ import {
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<
-    "profile" | "security" | "notifications"
+    "profile" | "security" | "notifications" | "dev"
   >("profile");
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -104,6 +104,7 @@ export default function SettingsPage() {
     { id: "profile", label: "Profile", icon: User },
     { id: "security", label: "Security", icon: Shield },
     { id: "notifications", label: "Notifications", icon: Bell },
+    { id: "dev", label: "Developer", icon: AlertCircle },
   ] as const;
 
   return (
@@ -126,11 +127,10 @@ export default function SettingsPage() {
               setSuccess(null);
               setError(null);
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === tab.id
-                ? "bg-primary text-primary-foreground"
-                : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${activeTab === tab.id
+              ? "bg-primary text-primary-foreground"
+              : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
+              }`}
           >
             <tab.icon className="w-4 h-4" />
             {tab.label}
@@ -448,11 +448,10 @@ export default function SettingsPage() {
               </div>
               <button
                 onClick={() => setIs2FAEnabled(!is2FAEnabled)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  is2FAEnabled
-                    ? "bg-destructive/10 text-destructive hover:bg-destructive/20"
-                    : "bg-primary text-primary-foreground hover:bg-primary/90"
-                }`}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${is2FAEnabled
+                  ? "bg-destructive/10 text-destructive hover:bg-destructive/20"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+                  }`}
               >
                 {is2FAEnabled ? "Disable" : "Enable"}
               </button>
@@ -609,6 +608,49 @@ export default function SettingsPage() {
               Save Preferences
             </button>
           </form>
+        </motion.div>
+      )}
+
+      {/* Developer Tab */}
+      {activeTab === "dev" && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-foreground/[0.02] border border-border rounded-xl p-6"
+        >
+          <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
+            <code className="bg-muted px-2 py-0.5 rounded text-sm">DEV</code>
+            Developer Settings
+          </h2>
+
+          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 mb-6">
+            <h3 className="font-semibold text-amber-500 mb-2 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4" />
+              Demo Mode
+            </h3>
+            <p className="text-sm text-foreground/70">
+              Toggle between "Challenge" and "Funded" states to verify UI behavior.
+              Note: This is a client-side simulation. Real persistence requires a backend update.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-4 bg-background border border-border rounded-lg">
+              <div>
+                <p className="font-medium">Account Status</p>
+                <p className="text-sm text-foreground/60">Current: Challenge (Unfunded)</p>
+              </div>
+              <button
+                onClick={() => {
+                  // In a real app, this would call a server action to update the user's status
+                  alert("To toggle state: Edit `lib/mock-data.ts` and change `status` to 'funded'. (Hot-reload will update the UI)");
+                }}
+                className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
+              >
+                Toggle Status
+              </button>
+            </div>
+          </div>
         </motion.div>
       )}
     </div>

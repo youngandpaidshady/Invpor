@@ -100,11 +100,10 @@ export function ChallengeCard({
 
       {/* Card */}
       <div
-        className={`relative p-6 lg:p-8 bg-surface/80 backdrop-blur-sm rounded-2xl border transition-all duration-500 ${
-          isPopular
+        className={`relative p-6 lg:p-8 bg-surface/80 backdrop-blur-sm rounded-2xl border transition-all duration-500 ${isPopular
             ? "border-primary/50 shadow-xl shadow-primary/10"
             : "border-white/10 hover:border-primary/30"
-        }`}
+          }`}
       >
         {/* Lens Flare Effect */}
         <motion.div
@@ -122,7 +121,7 @@ export function ChallengeCard({
           {/* Header */}
           <div className="text-center mb-6">
             <p className="text-sm text-foreground/60 mb-2">{name}</p>
-            <h3 className="text-4xl lg:text-5xl font-display font-bold bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <h3 className="text-4xl lg:text-5xl font-display font-bold text-[#F97316]">
               {accountSize}
             </h3>
           </div>
@@ -181,11 +180,10 @@ export function ChallengeCard({
 
           {/* CTA */}
           <button
-            className={`w-full py-4 rounded-xl font-semibold transition-all hover:scale-105 ${
-              isPopular
+            className={`w-full py-4 rounded-xl font-semibold transition-all hover:scale-105 ${isPopular
                 ? "bg-primary text-background hover:shadow-lg hover:shadow-primary/25"
                 : "bg-white/10 text-foreground hover:bg-white/20"
-            }`}
+              }`}
           >
             {isInstant ? "Get Instant Funding" : "Start Challenge"}
           </button>

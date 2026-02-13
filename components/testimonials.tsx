@@ -70,7 +70,7 @@ export function Testimonials() {
   return (
     <section className="py-20 lg:py-32 relative overflow-hidden bg-surface/30">
       {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(168,255,0,0.03)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(249,115,22,0.03)_0%,transparent_70%)]" />
 
       <div className="container mx-auto px-4 lg:px-6 relative">
         <motion.div
@@ -81,7 +81,7 @@ export function Testimonials() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Trader{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Success Stories
             </span>
           </h2>
@@ -118,7 +118,7 @@ export function Testimonials() {
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-amber-500 flex items-center justify-center text-background font-bold">
+                <div className="w-12 h-12 rounded-full bg-[#F97316] flex items-center justify-center text-black font-bold">
                   {testimonial.name
                     .split(" ")
                     .map((n) => n[0])

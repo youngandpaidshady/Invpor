@@ -49,7 +49,7 @@ export function TradingPlatforms() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Trading{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Platforms
             </span>
           </h2>
@@ -67,11 +67,10 @@ export function TradingPlatforms() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`relative p-6 rounded-2xl border transition-all ${
-                platform.popular
+              className={`relative p-6 rounded-2xl border transition-all ${platform.popular
                   ? "bg-primary/10 border-primary/30"
                   : "bg-surface/50 border-white/10 hover:border-primary/30"
-              }`}
+                }`}
             >
               {platform.popular && (
                 <div className="absolute -top-3 left-4 px-3 py-1 bg-primary text-background text-xs font-semibold rounded-full">

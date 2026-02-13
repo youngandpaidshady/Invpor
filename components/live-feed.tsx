@@ -59,7 +59,7 @@ export function LiveFeed() {
           </div>
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Watch Traders{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Win Live
             </span>
           </h2>
@@ -79,11 +79,10 @@ export function LiveFeed() {
             >
               {/* Icon */}
               <div
-                className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  trade.type === "buy"
+                className={`w-10 h-10 rounded-lg flex items-center justify-center ${trade.type === "buy"
                     ? "bg-profit/20 text-profit"
                     : "bg-violet-500/20 text-violet-400"
-                }`}
+                  }`}
               >
                 {trade.type === "buy" ? (
                   <TrendingUp className="w-5 h-5" />
@@ -97,11 +96,10 @@ export function LiveFeed() {
                 <div className="flex items-center gap-2">
                   <span className="font-semibold">{trade.trader}</span>
                   <span
-                    className={`text-xs px-2 py-0.5 rounded-full ${
-                      trade.type === "buy"
+                    className={`text-xs px-2 py-0.5 rounded-full ${trade.type === "buy"
                         ? "bg-profit/20 text-profit"
                         : "bg-violet-500/20 text-violet-400"
-                    }`}
+                      }`}
                   >
                     {trade.type.toUpperCase()}
                   </span>

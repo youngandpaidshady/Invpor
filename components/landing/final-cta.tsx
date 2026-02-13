@@ -1,61 +1,60 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
 /**
- * Final CTA - Clean Closing Section
- * Zero framer-motion, pure CSS
+ * Final CTA — Magma Theme
+ * Orange radial spotlight, magma glow CTA, framer-motion entrance
  */
 
 export function FinalCTA() {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
-    <section className="relative py-32 lg:py-48 bg-[#050505] overflow-hidden">
-      {/* Static gradient */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#ff6b35]/10 rounded-full blur-[200px]" />
-      </div>
+    <section ref={ref} className="relative py-32 lg:py-40 bg-[#09090B] overflow-hidden">
+      {/* Orange spotlight */}
+      <div className="absolute inset-0 magma-spotlight" />
 
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-xs text-white/30 uppercase tracking-[0.4em] font-mono block mb-8">
-            Your Move
-          </span>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative z-10 container-wide"
+      >
+        <div className="max-w-3xl">
+          <p className="eyebrow mb-6">READY?</p>
 
-          <h2 className="text-5xl sm:text-6xl lg:text-8xl font-black leading-[0.85] tracking-tighter mb-10">
-            <span className="text-white">STOP</span>
-            <br />
-            <span className="text-[#ff6b35]">WAITING.</span>
+          <h2 className="font-display text-display-xl font-bold uppercase leading-[0.85] tracking-[-0.03em] text-white mb-8">
+            START<br />
+            <span className="text-[#F97316]">TRADING</span>
           </h2>
 
-          <p className="text-xl lg:text-2xl text-white/40 max-w-2xl mx-auto mb-14 font-light">
-            15,000+ traders already took the leap.<br />
-            Your funded account is a few clicks away.
+          <p className="text-xl text-[#A1A1AA] max-w-lg mb-10 leading-relaxed">
+            $200K capital. 90% profit split.<br />
+            24-hour payouts. No games.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/pricing"
-              className="px-14 py-6 bg-white text-black font-bold text-lg tracking-wider hover:bg-[#ff6b35] transition-colors"
-            >
-              GET FUNDED NOW →
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link href="/pricing" className="btn-primary">
+              GET FUNDED NOW
             </Link>
-            <Link
-              href="/contact"
-              className="px-10 py-6 border border-white/20 text-white/60 font-medium tracking-wider hover:text-white hover:border-white/40 transition-colors"
-            >
-              TALK TO US
+            <Link href="/faq" className="btn-secondary">
+              READ THE RULES
             </Link>
           </div>
 
-          <div className="mt-20 flex flex-wrap items-center justify-center gap-8 lg:gap-12">
-            {["Instant Access", "24H Payouts", "No Hidden Fees", "Free Retry Policy"].map((text) => (
-              <span key={text} className="text-xs text-white/20 uppercase tracking-widest">
-                {text}
-              </span>
-            ))}
+          <div className="mt-12 pt-8 border-t border-[#27272A]">
+            <div className="flex flex-wrap gap-8 text-xs text-[#71717A] font-mono">
+              <span>15,247 traders funded</span>
+              <span>$12.8M paid out</span>
+              <span>4.9/5 Trustpilot</span>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

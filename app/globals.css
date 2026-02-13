@@ -3,416 +3,394 @@
 @tailwind utilities;
 
 /* ===========================================
-   ALPHATRADER - BRAXLEY DESIGN SYSTEM
-   Sophisticated, Minimal, Professional
+   ALPHATRADER — MAGMA DESIGN SYSTEM
+   Dark Mode Institutional. Orange on Black.
    =========================================== */
 
 @layer base {
-  /* ═══════════════════════════════════════════════════════════
-     LIGHT MODE - Clean & Elegant
-     ═══════════════════════════════════════════════════════════ */
-  :root {
-    /* Core Colors */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    
-    /* Brand Colors - Metallic Gold #C5A059 */
-    --primary: 40 47% 55%;
-    --primary-foreground: 222 47% 11%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-    
-    /* Accent Colors */
-    --accent: 40 47% 55%;
-    --accent-foreground: 222 47% 11%;
-    
-    /* Semantic Colors */
-    --profit: 142 71% 35%;
-    --loss: 0 72% 45%;
-    --warning: 38 92% 45%;
-    
-    /* UI Colors */
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 14% 40%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    
-    /* Border & Input */
-    --border: 220 13% 82%;
-    --input: 220 13% 78%;
-    --ring: 40 47% 55%;
-    
-    /* Card & Surface */
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --surface: 220 14% 98%;
-    
-    /* Radius */
-    --radius: 0.75rem;
-  }
 
-  /* ═══════════════════════════════════════════════════════════
-     DARK MODE - Premium Near-Black
-     ═══════════════════════════════════════════════════════════ */
-  .dark {
-    /* Core Colors - Near black like Braxley */
+  :root {
+    /* Core */
     --background: 0 0% 4%;
-    --foreground: 210 36% 96%;
-    
-    /* Brand Colors - Metallic Gold */
-    --primary: 40 50% 56%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 210 36% 96%;
-    
-    /* Accent Colors */
-    --accent: 40 50% 56%;
-    --accent-foreground: 0 0% 4%;
-    
-    /* Semantic Colors */
-    --profit: 142 71% 45%;
-    --loss: 0 84% 60%;
-    --warning: 38 92% 50%;
-    
-    /* UI Colors */
-    --muted: 0 0% 12%;
-    --muted-foreground: 215 20% 65%;
-    --destructive: 0 84% 60%;
+    --foreground: 0 0% 98%;
+
+    /* Surfaces */
+    --surface: 240 6% 10%;
+    --surface-2: 240 4% 16%;
+
+    /* Text */
+    --text-primary: 0 0% 98%;
+    --text-secondary: 240 4% 66%;
+    --text-tertiary: 240 4% 40%;
+
+    /* Primary — Orange Magma */
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 0%;
+
+    /* Signal Colors — semantic only */
+    --signal-green: 152 100% 50%;
+    --signal-red: 346 100% 60%;
+    --signal-blue: 217 91% 60%;
+
+    /* Semantic */
+    --profit: var(--signal-green);
+    --loss: var(--signal-red);
+
+    /* UI */
+    --border: 240 4% 26%;
+    --border-subtle: 240 4% 16%;
+    --input: 240 4% 26%;
+    --ring: 25 95% 53%;
+
+    /* Cards */
+    --card: 240 6% 7%;
+    --card-foreground: 0 0% 98%;
+
+    /* Muted */
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+
+    /* Destructive */
+    --destructive: 346 100% 60%;
     --destructive-foreground: 0 0% 100%;
-    
-    /* Border & Input */
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 40 50% 56%;
-    
-    /* Card & Surface */
-    --card: 0 0% 6%;
-    --card-foreground: 210 36% 96%;
-    --surface: 0 0% 8%;
+
+    --radius: 0px;
   }
 
   * {
-    @apply border-border;
+    border-color: #3F3F46;
   }
-  
+
   html {
-    background-color: hsl(var(--background));
+    background-color: #09090B;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
     min-height: 100vh;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
   ::selection {
-    background-color: hsl(var(--primary) / 0.16);
-    color: hsl(var(--foreground));
+    background-color: #F97316;
+    color: #000000;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .font-data {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
   }
 }
 
 /* ===========================================
-   COMPONENT STYLES - Minimal & Clean
+   COMPONENT STYLES — Magma System
    =========================================== */
 
 @layer components {
-  /* ═══════════════════════════════════════════════════════════
-     GRADIENT TEXT
-     ═══════════════════════════════════════════════════════════ */
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(40 50% 56%) 0%, hsl(40 47% 45%) 100%);
+
+  /* ═══════════════════════════════════════
+     BUTTONS — Orange Glow
+     ═══════════════════════════════════════ */
+  .btn {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-1 focus:ring-magma focus:ring-offset-1 focus:ring-offset-background;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     CARDS - Clean Glassmorphism
-     ═══════════════════════════════════════════════════════════ */
-  .glass-card {
-    @apply relative overflow-hidden rounded-2xl bg-card border border-border;
-    backdrop-filter: blur(20px);
-  }
-  
-  .dark .glass-card {
-    background: rgba(10, 10, 10, 0.8);
-    border-color: hsl(0 0% 18%);
-  }
-
-  .glow-card {
-    @apply relative rounded-2xl bg-card border border-border transition-all duration-300;
-  }
-  
-  .glow-card:hover {
-    @apply border-primary/30;
-    transform: translateY(-2px);
-  }
-  
-  .dark .glow-card:hover {
-    box-shadow: 0 0 40px rgba(197, 160, 89, 0.1);
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     BUTTONS - Sophisticated
-     ═══════════════════════════════════════════════════════════ */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl overflow-hidden transition-all duration-300;
-    background: linear-gradient(135deg, hsl(40 50% 56%) 0%, hsl(40 47% 45%) 100%);
-    color: hsl(0 0% 4%);
+    @apply btn px-6 py-3 bg-magma text-black font-bold uppercase tracking-wider text-sm;
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(197, 160, 89, 0.25);
+    @apply shadow-glow-magma;
   }
 
   .btn-secondary {
-    @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl overflow-hidden transition-all duration-300;
-    @apply bg-transparent border border-border text-foreground;
+    @apply btn px-6 py-3 bg-transparent border border-magma/30 text-white uppercase tracking-wider text-sm;
   }
-  
+
   .btn-secondary:hover {
-    @apply border-primary/50 text-primary;
+    @apply border-magma text-magma;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     BADGES
-     ═══════════════════════════════════════════════════════════ */
-  .badge-primary {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider;
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
-    border: 1px solid hsl(var(--primary) / 0.2);
-  }
-  
-  .badge-profit {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-    background: rgba(74, 222, 128, 0.1);
-    color: hsl(var(--profit));
-    border: 1px solid rgba(74, 222, 128, 0.2);
+  .btn-ghost {
+    @apply btn px-4 py-2 bg-transparent text-white/60 text-sm;
   }
 
-  .badge-loss {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-    background: rgba(248, 113, 113, 0.1);
-    color: hsl(var(--loss));
-    border: 1px solid rgba(248, 113, 113, 0.2);
+  .btn-ghost:hover {
+    @apply text-magma;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     STATS
-     ═══════════════════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════
+     CARDS — Glassmorphic Dark
+     ═══════════════════════════════════════ */
+  .card {
+    @apply bg-card border border-border;
+  }
+
+  .card:hover {
+    @apply border-magma/50;
+  }
+
+  .card-elevated {
+    @apply bg-surface border border-border;
+  }
+
+  /* ═══════════════════════════════════════
+     DATA DISPLAY
+     ═══════════════════════════════════════ */
   .stat-value {
-    @apply text-4xl font-bold tracking-tight;
+    @apply text-4xl font-mono font-light tracking-tight;
     font-variant-numeric: tabular-nums;
   }
 
-  .stat-value-primary {
-    @apply stat-value text-primary;
+  .stat-label {
+    @apply text-xs uppercase tracking-[0.2em] text-white/40;
   }
 
-  .stat-value-profit {
-    @apply stat-value;
-    color: hsl(var(--profit));
+  .value-positive {
+    color: #00FF88;
   }
 
-  .stat-value-loss {
-    @apply stat-value;
-    color: hsl(var(--loss));
+  .value-negative {
+    color: #FF3366;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     SECTION DIVIDER
-     ═══════════════════════════════════════════════════════════ */
-  .section-divider {
-    @apply w-full h-px bg-border;
+  /* ═══════════════════════════════════════
+     BADGES
+     ═══════════════════════════════════════ */
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     INPUT FOCUS
-     ═══════════════════════════════════════════════════════════ */
-  .input-focus:focus {
-    @apply outline-none ring-2 ring-primary/50 border-primary;
+  .badge-default {
+    @apply badge border border-white/20 text-white/60;
+  }
+
+  .badge-success {
+    @apply badge border text-magma border-magma/30;
+  }
+
+  .badge-error {
+    @apply badge border text-[#FF3366] border-[#FF3366]/30;
+  }
+
+  /* ═══════════════════════════════════════
+     LAYOUT
+     ═══════════════════════════════════════ */
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-6;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 lg:px-12;
+  }
+
+  .container-full {
+    @apply w-full px-6 lg:px-12;
+  }
+
+  .margin-editorial {
+    margin-left: 8%;
+    margin-right: 8%;
+  }
+
+  .section {
+    @apply py-24 lg:py-32;
+  }
+
+  .section-sm {
+    @apply py-16 lg:py-24;
+  }
+
+  /* ═══════════════════════════════════════
+     TYPOGRAPHY
+     ═══════════════════════════════════════ */
+  .heading-display {
+    @apply font-display font-bold uppercase tracking-[-0.02em];
+  }
+
+  .heading-xl {
+    @apply font-display font-bold uppercase tracking-[-0.02em] leading-[0.9];
+    font-size: clamp(3rem, 10vw, 8rem);
+  }
+
+  .heading-lg {
+    @apply font-display font-bold uppercase tracking-[-0.02em] leading-[0.95];
+    font-size: clamp(2rem, 6vw, 4rem);
+  }
+
+  .heading-md {
+    @apply font-display font-bold uppercase tracking-[-0.02em] leading-[1];
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .text-muted {
+    @apply text-white/40;
+  }
+
+  .text-secondary {
+    @apply text-white/60;
+  }
+
+  .eyebrow {
+    @apply text-[10px] uppercase tracking-[0.3em] text-magma font-medium;
+  }
+
+  /* ═══════════════════════════════════════
+     DIVIDERS
+     ═══════════════════════════════════════ */
+  .divider {
+    @apply w-full h-px bg-white/10;
+  }
+
+  .divider-vertical {
+    @apply w-px h-full bg-white/10;
+  }
+
+  /* ═══════════════════════════════════════
+     MAGMA UTILITIES
+     ═══════════════════════════════════════ */
+  .magma-spotlight {
+    background: radial-gradient(circle at 50% -20%, rgba(249, 115, 22, 0.15) 0%, #09090B 70%);
+  }
+
+  .magma-glow {
+    box-shadow: 0 0 25px rgba(249, 115, 22, 0.5);
+  }
+
+  .magma-border-glow {
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.2), inset 0 0 12px rgba(249, 115, 22, 0.05);
   }
 }
 
 /* ===========================================
-   ANIMATIONS - Subtle & Professional
+   ANIMATIONS
    =========================================== */
 
 @layer utilities {
+
   @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes slide-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes slide-down {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes confetti-fall {
-    0% {
-      transform: translateY(0) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(100vh) rotate(720deg);
+    from {
       opacity: 0;
     }
-  }
 
-  /* Premium shimmer/shine animation */
-  @keyframes shimmer {
-    0% {
-      background-position: 200% center;
-    }
-    100% {
-      background-position: -200% center;
-    }
-  }
-
-  @keyframes shine {
-    from {
-      transform: translateX(-100%) skewX(-12deg);
-    }
     to {
-      transform: translateX(200%) skewX(-12deg);
+      opacity: 1;
     }
   }
 
-  @keyframes gradient-shift {
-    0%, 100% {
-      background-position: 0% 50%;
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
     }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
 
-  @keyframes pulse-glow {
-    0%, 100% {
-      opacity: 0.5;
-      transform: scale(1);
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-
-  .animate-confetti-fall {
-    animation: confetti-fall var(--confetti-duration, 2s) ease-out var(--confetti-delay, 0s) forwards;
   }
 
   .animate-fade-in {
-    animation: fade-in 0.5s ease-in-out;
+    animation: fade-in 200ms ease-out;
   }
 
-  .animate-slide-up {
-    animation: slide-up 0.5s ease-out;
+  .animate-fade-up {
+    animation: fade-up 400ms ease-out;
   }
 
-  .animate-slide-down {
-    animation: slide-down 0.5s ease-out;
+  .delay-1 {
+    animation-delay: 50ms;
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .delay-2 {
+    animation-delay: 100ms;
   }
 
-  .animate-spin-slow {
-    animation: spin-slow 20s linear infinite;
+  .delay-3 {
+    animation-delay: 150ms;
   }
 
-  .animate-shimmer {
-    animation: shimmer 3s ease-in-out infinite;
+  .delay-4 {
+    animation-delay: 200ms;
   }
 
-  .animate-shine {
-    animation: shine 2s ease-in-out infinite;
+  .delay-5 {
+    animation-delay: 250ms;
   }
 
-  .animate-gradient {
-    animation: gradient-shift 4s ease-in-out infinite;
-    background-size: 200% 200%;
+  @keyframes ticker {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
+  .animate-ticker {
+    animation: ticker 40s linear infinite;
   }
 
-  /* Stagger animations */
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
+  .animate-ticker:hover {
+    animation-play-state: paused;
+  }
 
-  /* Hide scrollbar */
+  @keyframes pulse-live {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse-live {
+    animation: pulse-live 2s ease-in-out infinite;
+  }
+
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-  /* Touch targets */
-  .touch-target {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  /* Safe area for iOS */
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top, 0px);
-  }
-
-  /* Grid pattern - subtle */
   .grid-pattern {
-    background-image: 
-      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-image:
+      linear-gradient(rgba(249, 115, 22, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249, 115, 22, 0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
   }
 
-  /* Premium glow effects */
-  .glow-primary {
-    box-shadow: 0 0 40px rgba(197, 160, 89, 0.15);
-  }
-
-  .glow-primary-lg {
-    box-shadow: 0 0 60px rgba(197, 160, 89, 0.2);
-  }
-
-  .text-glow {
-    text-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+  .writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 }
 
 /* ===========================================
-   MOBILE OPTIMIZATIONS
+   MOBILE
    =========================================== */
 
 @media (max-width: 768px) {
@@ -425,93 +403,34 @@
     overscroll-behavior-y: contain;
   }
 
-  /* Better touch targets */
-  button, a[role="button"] {
+  button,
+  a[role="button"] {
     min-height: 44px;
     min-width: 44px;
   }
 
-  /* Optimize typography */
-  h1 {
-    font-size: clamp(2rem, 6vw, 3.5rem) !important;
-  }
-
-  h2 {
-    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
-  }
-
-  /* Container padding */
-  .container {
+  .container,
+  .container-wide,
+  .container-narrow {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
+
+  .margin-editorial {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 }
 
 /* ===========================================
-   MARQUEE ANIMATIONS
+   FOCUS STATES
    =========================================== */
 
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+:focus-visible {
+  outline: 1px solid #F97316;
+  outline-offset: 2px;
 }
 
-@keyframes marquee-slow {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 25s linear infinite;
-}
-
-.animate-marquee-slow {
-  animation: marquee-slow 60s linear infinite;
-}
-
-/* Pause on hover */
-.animate-marquee:hover,
-.animate-marquee-slow:hover {
-  animation-play-state: paused;
-}
-
-/* ===========================================
-   BRUTALIST UTILITIES
-   =========================================== */
-
-.writing-vertical {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-/* Film grain animation */
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
-}
-
-.animate-grain {
-  animation: grain 8s steps(10) infinite;
-}
-
-/* Selection override for dark sections */
-.bg-\\[\\#0a0a0a\\] ::selection {
-  background-color: rgba(255, 107, 53, 0.3);
-  color: white;
+:focus:not(:focus-visible) {
+  outline: none;
 }

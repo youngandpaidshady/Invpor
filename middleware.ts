@@ -1,28 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { RateLimiter } from "@/lib/rate-limit";
 
-// Simple in-memory rate limiter (use Redis in production)
-const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX = 100; // Max requests per window
-
-function rateLimit(ip: string): boolean {
-  const now = Date.now();
-  const record = rateLimitMap.get(ip);
-
-  if (!record || now - record.timestamp > RATE_LIMIT_WINDOW) {
-    rateLimitMap.set(ip, { count: 1, timestamp: now });
-    return true;
-  }
-
-  if (record.count >= RATE_LIMIT_MAX) {
-    return false;
-  }
-
-  record.count++;
-  return true;
-}
+// Define limiters
+const limiters = {
+  global: new RateLimiter({ interval: 60 * 1000 }), // 1 minute
+  sensitive: new RateLimiter({ interval: 60 * 60 * 1000 }), // 1 hour for contact form
+};
 
 // Routes that require authentication
 const protectedRoutes = ["/dashboard"];
@@ -31,6 +16,7 @@ const protectedRoutes = ["/dashboard"];
 const authRoutes = ["/login", "/signup", "/forgot-password", "/reset-password"];
 
 export async function middleware(request: NextRequest) {
+  console.log("Middleware starting for:", request.nextUrl.pathname);
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -43,14 +29,40 @@ export async function middleware(request: NextRequest) {
     request.headers.get("x-real-ip") ??
     "unknown";
 
-  // Rate limiting for API routes
-  if (request.nextUrl.pathname.startsWith("/api/")) {
-    if (!rateLimit(ip)) {
-      return new NextResponse(JSON.stringify({ error: "Too many requests" }), {
+  const { pathname } = request.nextUrl;
+
+  // Rate Limiting Logic
+  if (pathname.startsWith("/api/")) {
+    let limitResult;
+
+    // Strict limit for Checkout: 10 req / min
+    if (pathname.startsWith("/api/checkout")) {
+      limitResult = limiters.global.check(ip + "_checkout", 10);
+    }
+    // Very strict limit for Contact: 5 req / hour
+    else if (pathname.startsWith("/api/contact")) {
+      limitResult = limiters.sensitive.check(ip + "_contact", 5);
+    }
+    // General API limit: 100 req / min
+    else {
+      limitResult = limiters.global.check(ip, 100);
+    }
+
+    if (!limitResult.success) {
+      return new NextResponse(JSON.stringify({ error: "Too many requests. Please try again later." }), {
         status: 429,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-RateLimit-Limit": limitResult.limit.toString(),
+          "X-RateLimit-Remaining": limitResult.remaining.toString(),
+          "X-RateLimit-Reset": limitResult.reset.toString()
+        },
       });
     }
+
+    // Add Rate Limit headers to successful responses (optional but good practice)
+    response.headers.set("X-RateLimit-Limit", limitResult.limit.toString());
+    response.headers.set("X-RateLimit-Remaining", limitResult.remaining.toString());
   }
 
   // Create Supabase client
@@ -82,8 +94,6 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { pathname } = request.nextUrl;
-
   // Check if route is protected
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
@@ -114,11 +124,14 @@ export async function middleware(request: NextRequest) {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()"
   );
+  // Removed 'unsafe-eval' requirement if possible, but Next.js dev mode often needs it. 
+  // keeping it for now to avoid breaking dev, but in prod ideally remove 'unsafe-eval'
   response.headers.set(
     "Content-Security-Policy",
     "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;"
   );
 
+  console.log("Middleware finishing for:", request.nextUrl.pathname);
   return response;
 }
 

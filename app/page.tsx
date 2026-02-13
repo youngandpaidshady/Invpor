@@ -1,8 +1,9 @@
-import { Hero, TrustBadges, HowItWorks, PricingPreview, SocialProof, FAQ, FinalCTA } from "@/components/landing";
+import { TickerTape, Hero, TrustBadges, HowItWorks, PricingPreview, SocialProof, FAQ, FinalCTA } from "@/components/landing";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#050505]">
+    <main className="min-h-screen bg-[#09090B]">
+      <TickerTape />
       <Hero />
       <TrustBadges />
       <HowItWorks />

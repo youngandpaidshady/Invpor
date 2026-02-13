@@ -15,6 +15,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BottomTabBar } from "@/components/ui/bottom-tab-bar";
+import { MOCK_USER_STATE } from "@/lib/mock-data";
 
 const sidebarLinks = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -69,8 +70,8 @@ export default function DashboardLayout({
                 key={link.href}
                 href={link.href}
                 className={`group flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${isActive
-                    ? "bg-primary/10 text-primary border border-primary/20"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  ? "bg-primary/10 text-primary border border-primary/20"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   } ${isCollapsed ? "justify-center" : ""}`}
               >
                 <link.icon className={`w-5 h-5 flex-shrink-0 transition-colors ${isActive ? "text-primary" : "group-hover:text-foreground"}`} />
@@ -104,8 +105,10 @@ export default function DashboardLayout({
             <div className="hidden sm:block">
               <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">Account Status</div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-bold text-emerald-500 text-sm">Active & Funded</span>
+                <span className={`w-2 h-2 rounded-full animate-pulse ${MOCK_USER_STATE.account.status === 'funded' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                <span className={`font-bold text-sm ${MOCK_USER_STATE.account.status === 'funded' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  {MOCK_USER_STATE.account.phaseName}
+                </span>
               </div>
             </div>
           </div>
@@ -118,11 +121,11 @@ export default function DashboardLayout({
             <div className="h-8 w-px bg-border/50" />
             <div className="hidden sm:flex items-center gap-3">
               <div className="text-right hidden md:block">
-                <div className="font-medium text-sm">John Doe</div>
-                <div className="text-xs text-muted-foreground">$25,000 Challenge</div>
+                <div className="font-medium text-sm">{MOCK_USER_STATE.profile.name}</div>
+                <div className="text-xs text-muted-foreground">${MOCK_USER_STATE.account.accountSize.toLocaleString()} Challenge</div>
               </div>
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#E8C878] flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg shadow-primary/20">
-                JD
+                {MOCK_USER_STATE.profile.avatarInitials}
               </div>
             </div>
             {/* Mobile Menu Trigger would go here */}

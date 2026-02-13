@@ -143,7 +143,7 @@ export default function RiskPage() {
             className="max-w-3xl bg-red-500/5 border border-red-500/20 p-6"
           >
             <p className="text-white/80 font-medium leading-relaxed">
-              ⚠️ <strong>Important:</strong> Trading involves substantial risk of loss. You should carefully consider whether trading is appropriate for you given your financial situation. Most retail traders lose money.
+              <strong>Important:</strong> Trading involves substantial risk of loss. You should carefully consider whether trading is appropriate for you given your financial situation. Most retail traders lose money.
             </p>
           </motion.div>
         </div>

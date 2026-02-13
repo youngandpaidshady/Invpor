@@ -85,7 +85,7 @@ export function FeaturesGrid() {
         >
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Why Choose{" "}
-            <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               AlphaTrader
             </span>
           </h2>
@@ -105,7 +105,7 @@ export function FeaturesGrid() {
               className="group relative p-6 bg-surface/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-primary/30 transition-all"
             >
               {/* Hover Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#F97316]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
 
               <div className="relative">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">

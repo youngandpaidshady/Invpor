@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   TrendingUp,
@@ -18,7 +18,9 @@ import {
   Target,
   ArrowUpRight,
   ArrowDownRight,
+  Loader2,
 } from "lucide-react";
+import { fetchTradeHistory } from "@/lib/services/mock-api";
 
 type TradeType = "buy" | "sell";
 
@@ -38,188 +40,40 @@ interface Trade {
   challengeName: string;
 }
 
-const mockTrades: Trade[] = [
-  {
-    id: "tr-001",
-    symbol: "EUR/USD",
-    type: "buy",
-    openPrice: 1.0845,
-    closePrice: 1.0892,
-    volume: 1.0,
-    profitLoss: 470,
-    openTime: "2026-01-30T09:15:00",
-    closeTime: "2026-01-30T14:32:00",
-    duration: "5h 17m",
-    pips: 47,
+// Convert API trade to UI trade format
+function mapApiTrade(apiTrade: {
+  id: string;
+  symbol: string;
+  type: "buy" | "sell";
+  lot_size: number;
+  entry_price: number;
+  exit_price?: number;
+  profit_loss?: number;
+  opened_at: string;
+  closed_at?: string;
+}): Trade {
+  const openTime = new Date(apiTrade.opened_at);
+  const closeTime = apiTrade.closed_at ? new Date(apiTrade.closed_at) : openTime;
+  const duration = Math.floor((closeTime.getTime() - openTime.getTime()) / 60000);
+  const hours = Math.floor(duration / 60);
+  const mins = duration % 60;
+
+  return {
+    id: apiTrade.id,
+    symbol: apiTrade.symbol,
+    type: apiTrade.type,
+    openPrice: apiTrade.entry_price,
+    closePrice: apiTrade.exit_price || apiTrade.entry_price,
+    volume: apiTrade.lot_size,
+    profitLoss: apiTrade.profit_loss || 0,
+    openTime: apiTrade.opened_at,
+    closeTime: apiTrade.closed_at || apiTrade.opened_at,
+    duration: `${hours}h ${mins}m`,
+    pips: Math.round((apiTrade.profit_loss || 0) / (apiTrade.lot_size * 10)),
     challengeId: "ch-001",
     challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-002",
-    symbol: "GBP/USD",
-    type: "sell",
-    openPrice: 1.2715,
-    closePrice: 1.2680,
-    volume: 0.5,
-    profitLoss: 175,
-    openTime: "2026-01-30T08:00:00",
-    closeTime: "2026-01-30T11:45:00",
-    duration: "3h 45m",
-    pips: 35,
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-003",
-    symbol: "XAU/USD",
-    type: "buy",
-    openPrice: 2025.5,
-    closePrice: 2018.3,
-    volume: 0.2,
-    profitLoss: -144,
-    openTime: "2026-01-29T13:20:00",
-    closeTime: "2026-01-29T16:10:00",
-    duration: "2h 50m",
-    pips: -72,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-  {
-    id: "tr-004",
-    symbol: "USD/JPY",
-    type: "sell",
-    openPrice: 147.85,
-    closePrice: 147.42,
-    volume: 1.5,
-    profitLoss: 430,
-    openTime: "2026-01-29T04:30:00",
-    closeTime: "2026-01-29T09:15:00",
-    duration: "4h 45m",
-    pips: 43,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-  {
-    id: "tr-005",
-    symbol: "EUR/GBP",
-    type: "buy",
-    openPrice: 0.8525,
-    closePrice: 0.8548,
-    volume: 0.8,
-    profitLoss: 184,
-    openTime: "2026-01-28T10:00:00",
-    closeTime: "2026-01-28T15:30:00",
-    duration: "5h 30m",
-    pips: 23,
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-006",
-    symbol: "NAS100",
-    type: "buy",
-    openPrice: 17485.2,
-    closePrice: 17612.8,
-    volume: 0.5,
-    profitLoss: 638,
-    openTime: "2026-01-28T14:30:00",
-    closeTime: "2026-01-28T20:00:00",
-    duration: "5h 30m",
-    pips: 127.6,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-  {
-    id: "tr-007",
-    symbol: "EUR/USD",
-    type: "sell",
-    openPrice: 1.0912,
-    closePrice: 1.0858,
-    volume: 1.2,
-    profitLoss: 648,
-    openTime: "2026-01-27T08:45:00",
-    closeTime: "2026-01-27T16:20:00",
-    duration: "7h 35m",
-    pips: 54,
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-008",
-    symbol: "GBP/JPY",
-    type: "buy",
-    openPrice: 187.45,
-    closePrice: 186.92,
-    volume: 0.4,
-    profitLoss: -212,
-    openTime: "2026-01-27T02:15:00",
-    closeTime: "2026-01-27T06:45:00",
-    duration: "4h 30m",
-    pips: -53,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-  {
-    id: "tr-009",
-    symbol: "US30",
-    type: "sell",
-    openPrice: 38245.5,
-    closePrice: 38125.0,
-    volume: 0.3,
-    profitLoss: 361.5,
-    openTime: "2026-01-26T15:00:00",
-    closeTime: "2026-01-26T20:30:00",
-    duration: "5h 30m",
-    pips: 120.5,
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-010",
-    symbol: "AUD/USD",
-    type: "buy",
-    openPrice: 0.6585,
-    closePrice: 0.6612,
-    volume: 2.0,
-    profitLoss: 540,
-    openTime: "2026-01-26T00:30:00",
-    closeTime: "2026-01-26T08:15:00",
-    duration: "7h 45m",
-    pips: 27,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-  {
-    id: "tr-011",
-    symbol: "USD/CAD",
-    type: "sell",
-    openPrice: 1.3542,
-    closePrice: 1.3498,
-    volume: 1.0,
-    profitLoss: 325,
-    openTime: "2026-01-25T12:00:00",
-    closeTime: "2026-01-25T18:30:00",
-    duration: "6h 30m",
-    pips: 44,
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
-  },
-  {
-    id: "tr-012",
-    symbol: "XAU/USD",
-    type: "sell",
-    openPrice: 2035.8,
-    closePrice: 2042.5,
-    volume: 0.3,
-    profitLoss: -201,
-    openTime: "2026-01-25T08:00:00",
-    closeTime: "2026-01-25T13:45:00",
-    duration: "5h 45m",
-    pips: -67,
-    challengeId: "ch-002",
-    challengeName: "$50K Funded",
-  },
-];
+  };
+}
 
 const challenges = [
   { id: "all", name: "All Challenges" },
@@ -244,6 +98,8 @@ const symbols = [
 const ITEMS_PER_PAGE = 8;
 
 export default function TradesPage() {
+  const [trades, setTrades] = useState<Trade[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChallenge, setSelectedChallenge] = useState("all");
   const [selectedSymbol, setSelectedSymbol] = useState("All Symbols");
@@ -252,8 +108,26 @@ export default function TradesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
 
+  // Load trades from API
+  useEffect(() => {
+    const loadTrades = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchTradeHistory({ limit: 100 });
+        if (response.data) {
+          setTrades(response.data.map(mapApiTrade));
+        }
+      } catch (error) {
+        console.error("Failed to load trades:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadTrades();
+  }, []);
+
   // Filter trades
-  const filteredTrades = mockTrades.filter((trade) => {
+  const filteredTrades = trades.filter((trade: Trade) => {
     const matchesSearch =
       trade.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
       trade.id.toLowerCase().includes(searchQuery.toLowerCase());
@@ -282,8 +156,8 @@ export default function TradesPage() {
 
   // Stats
   const totalTrades = filteredTrades.length;
-  const winningTrades = filteredTrades.filter((t) => t.profitLoss > 0).length;
-  const totalProfit = filteredTrades.reduce((sum, t) => sum + t.profitLoss, 0);
+  const winningTrades = filteredTrades.filter((t: Trade) => t.profitLoss > 0).length;
+  const totalProfit = filteredTrades.reduce((sum: number, t: Trade) => sum + t.profitLoss, 0);
   const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
   const averageTrade =
     totalTrades > 0 ? totalProfit / totalTrades : 0;
@@ -304,7 +178,7 @@ export default function TradesPage() {
       "Duration",
       "Challenge",
     ];
-    const rows = filteredTrades.map((t) => [
+    const rows = filteredTrades.map((t: Trade) => [
       t.id,
       t.symbol,
       t.type,
@@ -319,7 +193,7 @@ export default function TradesPage() {
       t.challengeName,
     ]);
 
-    const csvContent = [headers.join(","), ...rows.map((r) => r.join(","))].join(
+    const csvContent = [headers.join(","), ...rows.map((r: (string | number)[]) => r.join(","))].join(
       "\n"
     );
     const blob = new Blob([csvContent], { type: "text/csv" });
@@ -530,14 +404,14 @@ export default function TradesPage() {
             selectedSymbol !== "All Symbols" ||
             dateFrom ||
             dateTo) && (
-            <button
-              onClick={clearFilters}
-              className="px-4 py-2.5 text-foreground/60 hover:text-foreground transition-colors flex items-center gap-2"
-            >
-              <X className="w-4 h-4" />
-              Clear
-            </button>
-          )}
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2.5 text-foreground/60 hover:text-foreground transition-colors flex items-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Clear
+              </button>
+            )}
         </div>
       </div>
 
@@ -584,11 +458,10 @@ export default function TradesPage() {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full ${
-                          trade.type === "buy"
-                            ? "bg-green-400/20 text-green-400"
-                            : "bg-red-400/20 text-red-400"
-                        }`}
+                        className={`inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full ${trade.type === "buy"
+                          ? "bg-green-400/20 text-green-400"
+                          : "bg-red-400/20 text-red-400"
+                          }`}
                       >
                         {trade.type === "buy" ? (
                           <ArrowUpRight className="w-3 h-3" />
@@ -661,11 +534,10 @@ export default function TradesPage() {
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`w-10 h-10 rounded-lg font-medium transition-colors ${
-                    currentPage === page
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-foreground/5"
-                  }`}
+                  className={`w-10 h-10 rounded-lg font-medium transition-colors ${currentPage === page
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-foreground/5"
+                    }`}
                 >
                   {page}
                 </button>
@@ -720,11 +592,10 @@ export default function TradesPage() {
                 {/* Type and P/L */}
                 <div className="flex items-center justify-between">
                   <span
-                    className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-full ${
-                      selectedTrade.type === "buy"
-                        ? "bg-green-400/20 text-green-400"
-                        : "bg-red-400/20 text-red-400"
-                    }`}
+                    className={`inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium rounded-full ${selectedTrade.type === "buy"
+                      ? "bg-green-400/20 text-green-400"
+                      : "bg-red-400/20 text-red-400"
+                      }`}
                   >
                     {selectedTrade.type === "buy" ? (
                       <ArrowUpRight className="w-4 h-4" />

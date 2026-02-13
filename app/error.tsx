@@ -43,7 +43,8 @@ export default function Error({
         </h1>
 
         <p className="text-white/40 mb-10 font-light">
-          We apologize for the inconvenience. An unexpected error has occurred.
+          {error.message || "An unexpected error has occurred."}
+          {error.digest && <br /> && <span className="text-xs font-mono text-white/20">Digest: {error.digest}</span>}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

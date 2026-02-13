@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -23,7 +24,9 @@ export default function AuthLayout({
 
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-4">
-        {children}
+        <React.Suspense fallback={<div className="w-10 h-10 border-2 border-[#ff6b35] border-t-transparent rounded-full animate-spin" />}>
+          {children}
+        </React.Suspense>
       </main>
 
       {/* Minimal Footer */}

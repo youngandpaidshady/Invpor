@@ -114,3 +114,34 @@ export interface PurchaseFormData {
   email: string;
   promo_code?: string;
 }
+
+// ===========================================
+// Dashboard Types
+// ===========================================
+
+export interface DashboardStats {
+  accountBalance: number;
+  dailyPnL: number;
+  dailyPnLPercent: number;
+  profitTargetPercent: number;
+  profitTargetRemaining: number;
+  maxDrawdownUsed: number;
+  maxDrawdownRemaining: number;
+  tradingDays: number;
+  winRate: number;
+  totalTrades: number;
+}
+
+export interface TradingRule {
+  name: string;
+  status: "safe" | "warning" | "danger" | "progress";
+  currentValue: string;
+  limit: string;
+  percentage: number;
+}
+
+export interface EquityPoint {
+  date: string;
+  balance: number;
+  profit: number;
+}

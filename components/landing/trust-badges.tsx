@@ -1,52 +1,123 @@
 "use client";
 
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import CountUp from "react-countup";
+import { DollarSign, Users, TrendingUp, Clock } from "lucide-react";
+
 /**
- * Trust Badges - Clean Stats Display
- * Zero framer-motion, pure CSS
+ * Trust Section — Magma Design
+ * Animated counters, lucide icons, orange accents
  */
 
+const stats = [
+  {
+    value: 12.8,
+    prefix: "$",
+    suffix: "M",
+    decimals: 1,
+    label: "PAID OUT",
+    trend: "+$847K this month",
+    icon: DollarSign,
+  },
+  {
+    value: 15247,
+    prefix: "",
+    suffix: "",
+    decimals: 0,
+    label: "TRADERS FUNDED",
+    trend: "+312 this week",
+    icon: Users,
+  },
+  {
+    value: 92,
+    prefix: "",
+    suffix: "%",
+    decimals: 0,
+    label: "PASS RATE",
+    trend: "Phase 1 average",
+    icon: TrendingUp,
+  },
+  {
+    value: 4.2,
+    prefix: "",
+    suffix: "hrs",
+    decimals: 1,
+    label: "AVG PAYOUT TIME",
+    trend: "Last 30 days",
+    icon: Clock,
+  },
+];
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 export function TrustBadges() {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
-    <section className="py-24 lg:py-32 bg-[#050505]">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <span className="text-xs text-white/30 uppercase tracking-[0.4em] font-mono">
-            By the numbers
-          </span>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {[
-            { value: "$12M+", label: "Paid to Traders", color: "#ff6b35" },
-            { value: "15,247", label: "Funded Accounts", color: "#ffffff" },
-            { value: "4.9★", label: "Trustpilot Rating", color: "#fbbf24" },
-            { value: "50+", label: "Countries", color: "#ffffff" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div
-                className="text-5xl md:text-6xl lg:text-7xl font-mono font-light mb-4"
-                style={{ color: stat.color }}
+    <motion.section
+      ref={ref}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      className="bg-[#111113] border-y border-[#3F3F46]"
+    >
+      <div className="container-wide">
+        <div className="grid grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                variants={itemVariants}
+                className={`py-10 lg:py-12 px-6 ${i !== stats.length - 1 ? "border-r border-[#3F3F46]" : ""
+                  }`}
               >
-                {stat.value}
-              </div>
-              <div className="text-sm text-white/40 uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-20 pt-12 border-t border-white/5">
-          <div className="flex flex-wrap items-center justify-center gap-10 lg:gap-16">
-            <span className="text-xs text-white/20 uppercase tracking-wider">Trading Platforms</span>
-            {["MetaTrader 4", "MetaTrader 5", "cTrader", "TradingView", "DXtrade"].map((platform) => (
-              <span key={platform} className="text-sm text-white/40 font-medium hover:text-[#ff6b35] transition-colors cursor-default">
-                {platform}
-              </span>
-            ))}
-          </div>
+                <Icon
+                  className="w-5 h-5 text-[#F97316] mb-4"
+                  strokeWidth={1.5}
+                />
+                <div className="font-mono text-2xl lg:text-3xl text-white mb-2">
+                  {isInView ? (
+                    <CountUp
+                      start={0}
+                      end={stat.value}
+                      duration={2}
+                      decimals={stat.decimals}
+                      prefix={stat.prefix}
+                      suffix={stat.suffix}
+                      separator=","
+                    />
+                  ) : (
+                    `${stat.prefix}0${stat.suffix}`
+                  )}
+                </div>
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[#71717A] mb-2">
+                  {stat.label}
+                </div>
+                <div className="text-xs text-[#F97316] font-mono">
+                  {stat.trend}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

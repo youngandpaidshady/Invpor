@@ -1,93 +1,111 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
 /**
- * Pricing Preview - Clean Interactive
- * Zero framer-motion, pure CSS transitions
+ * Pricing Preview — Magma Theme
+ * Orange selected states, framer-motion entrance
  */
 
 const plans = [
-  { size: 10000, price: 89, split: 80 },
-  { size: 25000, price: 179, split: 85 },
-  { size: 50000, price: 299, split: 85 },
-  { size: 100000, price: 499, split: 90 },
-  { size: 200000, price: 999, split: 90 },
+  { id: "10k", capital: "$10,000", price: "$99", target: "8%", drawdown: "5%", days: "∞" },
+  { id: "25k", capital: "$25,000", price: "$199", target: "8%", drawdown: "5%", days: "∞" },
+  { id: "50k", capital: "$50,000", price: "$299", target: "8%", drawdown: "5%", days: "∞", popular: true },
+  { id: "100k", capital: "$100,000", price: "$499", target: "8%", drawdown: "5%", days: "∞" },
+  { id: "200k", capital: "$200,000", price: "$999", target: "8%", drawdown: "5%", days: "∞" },
 ];
 
 export function PricingPreview() {
-  const [selected, setSelected] = useState(2);
-  const currentPlan = plans[selected];
+  const [selectedPlan, setSelectedPlan] = useState("50k");
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="py-24 lg:py-40 bg-white text-black">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="max-w-3xl mb-16">
-          <span className="text-xs text-black/30 uppercase tracking-[0.4em] font-mono block mb-6">
-            Simple Pricing
-          </span>
-          <h2 className="text-4xl lg:text-6xl font-black leading-tight">
-            One payment.<br />
-            <span className="text-black/20">Forever.</span>
-          </h2>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          {/* Left - Selector & Price */}
+    <section ref={ref} className="section bg-[#111113] border-y border-[#3F3F46]">
+      <div className="container-wide">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16"
+        >
           <div>
-            <div className="mb-10">
-              <div className="text-sm text-black/40 uppercase tracking-wider mb-6">Account Size</div>
-              <div className="flex flex-wrap gap-3">
-                {plans.map((plan, i) => (
-                  <button
-                    key={plan.size}
-                    onClick={() => setSelected(i)}
-                    className={`px-6 py-4 text-lg font-bold transition-all ${selected === i
-                        ? "bg-black text-white"
-                        : "bg-transparent text-black/40 border border-black/10 hover:border-black/30"
-                      }`}
-                  >
-                    ${plan.size / 1000}K
-                  </button>
-                ))}
-              </div>
-            </div>
+            <p className="eyebrow mb-4">PRICING</p>
+            <h2 className="heading-lg text-white">
+              CHOOSE YOUR<br />
+              <span className="text-[#F97316]">CAPITAL</span>
+            </h2>
+          </div>
+          <p className="text-sm text-[#A1A1AA] max-w-md lg:text-right">
+            One-time payment. No monthly fees. No hidden charges.
+            All accounts include instant funding after passing evaluation.
+          </p>
+        </motion.div>
 
-            <div className="mb-10">
-              <span className="text-[8rem] lg:text-[10rem] font-black leading-none tracking-tighter">
-                ${currentPlan.price}
-              </span>
-              <span className="text-xl text-black/30 ml-2">one-time</span>
-            </div>
+        {/* Table */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="border border-[#3F3F46]"
+        >
+          {/* Table header */}
+          <div className="hidden lg:grid grid-cols-6 gap-4 p-4 border-b border-[#3F3F46] bg-[#09090B]">
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A]">Capital</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A]">Price</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A]">Profit Target</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A]">Max Drawdown</div>
+            <div className="text-[10px] uppercase tracking-wider text-[#71717A]">Trading Days</div>
+            <div></div>
+          </div>
 
-            <Link
-              href={`/checkout?size=${currentPlan.size}`}
-              className="inline-block px-12 py-5 bg-black text-white font-bold tracking-wider hover:bg-[#ff6b35] transition-colors"
+          {plans.map((plan) => (
+            <div
+              key={plan.id}
+              onClick={() => setSelectedPlan(plan.id)}
+              className={`grid grid-cols-2 lg:grid-cols-6 gap-4 p-4 lg:p-6 border-b border-[#27272A] last:border-b-0 cursor-pointer transition-all duration-200 ${selectedPlan === plan.id
+                  ? "bg-[#F97316]/5 border-l-2 border-l-[#F97316]"
+                  : "hover:bg-white/[0.02]"
+                }`}
             >
-              START CHALLENGE →
-            </Link>
-          </div>
-
-          {/* Right - Details */}
-          <div>
-            {[
-              { label: "Account Size", value: `$${currentPlan.size.toLocaleString()}` },
-              { label: "Profit Split", value: `${currentPlan.split}%`, highlight: true },
-              { label: "Profit Target", value: "10%" },
-              { label: "Daily Drawdown", value: "5%" },
-              { label: "Max Drawdown", value: "10%" },
-              { label: "Time Limit", value: "None" },
-              { label: "Free Retry", value: "Yes" },
-            ].map((item) => (
-              <div key={item.label} className="flex justify-between py-5 border-b border-black/5">
-                <span className="text-black/50">{item.label}</span>
-                <span className={`font-bold ${item.highlight ? "text-[#ff6b35] text-xl" : "text-black"}`}>
-                  {item.value}
-                </span>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-lg text-white">{plan.capital}</span>
+                {plan.popular && <span className="badge-success">POPULAR</span>}
               </div>
-            ))}
+              <div className="font-mono text-[#A1A1AA]">{plan.price}</div>
+              <div className="hidden lg:block font-mono text-[#A1A1AA]">{plan.target}</div>
+              <div className="hidden lg:block font-mono text-[#A1A1AA]">{plan.drawdown}</div>
+              <div className="hidden lg:block font-mono text-[#A1A1AA]">{plan.days}</div>
+              <div className="col-span-2 lg:col-span-1 lg:text-right">
+                <Link
+                  href={`/checkout/${plan.id}`}
+                  className={`inline-block text-xs uppercase tracking-wider transition-colors ${selectedPlan === plan.id
+                      ? "text-[#F97316]"
+                      : "text-[#71717A] hover:text-white"
+                    }`}
+                >
+                  SELECT →
+                </Link>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Bottom info */}
+        <div className="mt-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          <div className="flex items-center gap-6 text-xs text-[#71717A]">
+            <span>90% profit split</span>
+            <span className="text-[#3F3F46]">•</span>
+            <span>24h payouts</span>
+            <span className="text-[#3F3F46]">•</span>
+            <span>No time limits</span>
           </div>
+          <Link href="/pricing" className="text-xs uppercase tracking-wider text-[#A1A1AA] hover:text-[#F97316] transition-colors">
+            View full comparison →
+          </Link>
         </div>
       </div>
     </section>

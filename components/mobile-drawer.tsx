@@ -100,9 +100,8 @@ function AccordionSection({ section, onClose }: { section: MenuSection; onClose:
       >
         <span className="font-semibold text-foreground">{section.title}</span>
         <ChevronDown
-          className={`w-5 h-5 text-foreground/50 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`w-5 h-5 text-foreground/50 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
       <AnimatePresence>
@@ -174,7 +173,7 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                 </div>
                 <div>
                   <span className="font-display font-bold text-lg">
-                    <span className="bg-gradient-to-r from-primary to-amber-400 bg-clip-text text-transparent">
+                    <span className="text-[#F97316]">
                       Alpha
                     </span>
                     <span className="text-foreground">Trader</span>
@@ -196,7 +195,7 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                 <Link
                   href="#challenges"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-gradient-to-r from-primary to-amber-500 text-background font-semibold rounded-xl shadow-lg shadow-primary/20"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#F97316] text-black font-semibold rounded-xl shadow-lg shadow-[#F97316]/20"
                 >
                   <span>Get Funded</span>
                   <ExternalLink className="w-4 h-4" />
