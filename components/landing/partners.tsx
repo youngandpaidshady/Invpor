@@ -68,15 +68,6 @@ export function Partners() {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes platform-marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-platform-marquee {
-          animation: platform-marquee 20s linear infinite;
-        }
-      `}</style>
     </section>
   );
 }

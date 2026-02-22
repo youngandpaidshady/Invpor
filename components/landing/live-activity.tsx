@@ -77,16 +77,6 @@ export function LiveActivityMarquee() {
           </div>
         ))}
       </div>
-
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
@@ -115,16 +105,6 @@ export function StatsMarquee() {
           </div>
         ))}
       </div>
-
-      <style jsx>{`
-        @keyframes stats-marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-stats-marquee {
-          animation: stats-marquee 25s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

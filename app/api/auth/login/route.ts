@@ -2,20 +2,22 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { loginSchema } from "@/lib/validations";
 import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validatedData = loginSchema.parse(body);
-    
+    const sanitized = sanitizeObject(validatedData as unknown as Record<string, unknown>);
+
     const supabase = await createClient();
-    
+
     // Sign in with Supabase Auth
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: validatedData.email,
-      password: validatedData.password,
+      email: sanitized.email as string,
+      password: sanitized.password as string,
     });
 
     if (error) {
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
+
     console.error("Login error:", error);
     return NextResponse.json(
       { success: false, error: "An unexpected error occurred" },

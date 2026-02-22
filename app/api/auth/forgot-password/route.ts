@@ -2,18 +2,20 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { forgotPasswordSchema } from "@/lib/validations";
 import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validatedData = forgotPasswordSchema.parse(body);
-    
+    const sanitized = sanitizeObject(validatedData as unknown as Record<string, unknown>);
+
     const supabase = await createClient();
-    
+
     const { error } = await supabase.auth.resetPasswordForEmail(
-      validatedData.email,
+      sanitized.email as string,
       {
         redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/reset-password`,
       }
@@ -36,7 +38,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
+
     console.error("Forgot password error:", error);
     return NextResponse.json(
       { success: false, error: "An unexpected error occurred" },

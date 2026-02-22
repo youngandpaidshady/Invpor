@@ -1,4 +1,4 @@
-# AlphaTrader UI/UX Polish Roadmap
+# BraxleyNevim UI/UX Polish Roadmap
 
 > **Problem:** The site feels static, corporate, and lifeless. It doesn't convey the energy, excitement, and trust that prop traders expect.
 >

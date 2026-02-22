@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
 
 const updateProfileSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters").max(100).optional(),
@@ -14,7 +15,7 @@ const updateProfileSchema = z.object({
 export async function GET() {
   try {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -58,12 +59,14 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validatedData = updateProfileSchema.parse(body);
-    
+    // ★ Sanitize all user-supplied strings
+    sanitizeObject(validatedData as unknown as Record<string, unknown>);
+
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -111,7 +114,7 @@ export async function PATCH(request: Request) {
         { status: 400 }
       );
     }
-    
+
     console.error("Update profile error:", error);
     return NextResponse.json(
       { success: false, error: "An unexpected error occurred" },

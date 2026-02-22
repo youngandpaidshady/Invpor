@@ -331,10 +331,9 @@ export default function AboutPage() {
           <div className="flex justify-center gap-4">
             <Link
               href="/pricing"
-              data-cursor="GO"
-              className="px-10 py-5 bg-white text-black font-bold text-sm uppercase tracking-wider hover:bg-[#ff6b35] transition-colors"
+              className="shimmer-button inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#C7A257] text-black text-sm font-bold font-mono uppercase tracking-[0.15em] rounded-lg shadow-[0_0_20px_rgba(199,162,87,0.2)] hover:shadow-[0_0_30px_rgba(199,162,87,0.4)] transition-all active:scale-95"
             >
-              See pricing →
+              Get Funded →
             </Link>
           </div>
         </div>

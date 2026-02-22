@@ -86,7 +86,7 @@ export function FeaturesGrid() {
           <h2 className="text-3xl lg:text-5xl font-display font-bold mb-4">
             Why Choose{" "}
             <span className="text-[#F97316]">
-              AlphaTrader
+              BraxleyNevim
             </span>
           </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto">

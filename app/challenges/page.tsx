@@ -158,9 +158,9 @@ export default function ChallengesPage() {
                     >
                         <Link
                             href="/pricing"
-                            className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]"
+                            className="shimmer-button inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#C7A257] text-black text-sm font-bold font-mono uppercase tracking-[0.15em] rounded-lg shadow-[0_0_20px_rgba(199,162,87,0.2)] hover:shadow-[0_0_30px_rgba(199,162,87,0.4)] transition-all active:scale-95"
                         >
-                            <span className="relative z-10">View All Plans</span>
+                            <span className="relative z-10">Get Funded</span>
                             <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>

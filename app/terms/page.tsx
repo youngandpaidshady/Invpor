@@ -42,7 +42,7 @@ const sections = [
   },
   {
     title: "9. Limitation of Liability",
-    content: `To the maximum extent permitted by law, AlphaTrader Ltd shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services.`,
+    content: `To the maximum extent permitted by law, BraxleyNevim Ltd shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services.`,
   },
   {
     title: "10. Governing Law",
@@ -128,7 +128,7 @@ export default function TermsPage() {
             className="max-w-3xl bg-white/[0.02] border border-white/10 p-6"
           >
             <p className="text-white/60 font-light leading-relaxed">
-              Welcome to AlphaTrader. By accessing or using our services, you agree to be bound by these Terms of Service. Please read them carefully before using our platform.
+              Welcome to BraxleyNevim. By accessing or using our services, you agree to be bound by these Terms of Service. Please read them carefully before using our platform.
             </p>
           </motion.div>
         </div>
@@ -161,8 +161,8 @@ export default function TermsPage() {
             >
               <h3 className="font-bold mb-3">Contact Information</h3>
               <p className="text-white/40 text-sm font-mono">
-                AlphaTrader Ltd<br />
-                Email: legal@alphatrader.com<br />
+                BraxleyNevim Ltd<br />
+                Email: legal@braxleynevim.com<br />
                 Address: London, United Kingdom
               </p>
             </motion.div>

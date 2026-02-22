@@ -41,11 +41,11 @@ const sections = [
   },
   {
     title: "5. How to Request a Refund",
-    content: `Email refunds@alphatrader.com with your account number, purchase details, and reason for the refund request. Include any supporting documentation. Refund decisions are typically communicated within 3-5 business days. Approved refunds are processed within 7-10 business days.`,
+    content: `Email refunds@braxleynevim.com with your account number, purchase details, and reason for the refund request. Include any supporting documentation. Refund decisions are typically communicated within 3-5 business days. Approved refunds are processed within 7-10 business days.`,
   },
   {
     title: "6. Dispute Resolution",
-    content: `If your refund request is denied and you believe this is incorrect, you may appeal the decision by emailing appeals@alphatrader.com within 30 days of the denial. Include the original denial and any additional evidence supporting your claim.`,
+    content: `If your refund request is denied and you believe this is incorrect, you may appeal the decision by emailing appeals@braxleynevim.com within 30 days of the denial. Include the original denial and any additional evidence supporting your claim.`,
   },
 ];
 
@@ -209,7 +209,7 @@ export default function RefundsPage() {
             >
               <h3 className="font-bold mb-3">Refund Requests</h3>
               <p className="text-white/40 text-sm font-mono">
-                Email: refunds@alphatrader.com<br />
+                Email: refunds@braxleynevim.com<br />
                 Response Time: 3-5 business days<br />
                 Processing Time: 7-10 business days
               </p>

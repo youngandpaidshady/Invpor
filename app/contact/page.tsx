@@ -116,7 +116,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: MessageCircle, title: "Live Chat", value: "24/5 Available", desc: "Instant support" },
-              { icon: Mail, title: "Email", value: "support@alphatrader.com", desc: "Response < 2hrs" },
+              { icon: Mail, title: "Email", value: "support@braxleynevim.com", desc: "Response < 2hrs" },
               { icon: Headphones, title: "Discord", value: "Join Community", desc: "10k+ traders" },
             ].map((method, i) => (
               <motion.div
@@ -266,7 +266,7 @@ export default function ContactPage() {
                 <p className="text-white/40 text-sm mb-6 font-light">
                   For time-sensitive issues, our live chat offers the fastest support.
                 </p>
-                <button className="w-full py-3 border border-[#ff6b35] text-[#ff6b35] font-mono text-sm uppercase tracking-wider hover:bg-[#ff6b35] hover:text-white transition-all flex items-center justify-center gap-2">
+                <button onClick={() => alert("Starting live chat...")} type="button" className="w-full py-3 border border-[#ff6b35] text-[#ff6b35] font-mono text-sm uppercase tracking-wider hover:bg-[#ff6b35] hover:text-white transition-all flex items-center justify-center gap-2">
                   <MessageCircle className="w-4 h-4" />
                   Start Live Chat
                 </button>

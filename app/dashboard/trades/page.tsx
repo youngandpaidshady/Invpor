@@ -18,7 +18,6 @@ import {
   Target,
   ArrowUpRight,
   ArrowDownRight,
-  Loader2,
 } from "lucide-react";
 import { fetchTradeHistory } from "@/lib/services/mock-api";
 
@@ -99,7 +98,7 @@ const ITEMS_PER_PAGE = 8;
 
 export default function TradesPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChallenge, setSelectedChallenge] = useState("all");
   const [selectedSymbol, setSelectedSymbol] = useState("All Symbols");

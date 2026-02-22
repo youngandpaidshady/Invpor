@@ -277,7 +277,7 @@ export default function CareersPage() {
                         We&apos;re always looking for exceptional talent. Send us your resume and tell us why you&apos;d be a great fit.
                     </p>
                     <a
-                        href="mailto:careers@alphatrader.com"
+                        href="mailto:careers@braxleynevim.com"
                         className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]"
                     >
                         <span className="relative z-10">Get In Touch</span>

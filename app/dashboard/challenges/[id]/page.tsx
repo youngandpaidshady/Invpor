@@ -42,7 +42,7 @@ const challengeData = {
   status: "active" as const,
   startDate: "2026-01-15",
   platform: "MetaTrader 5",
-  server: "AlphaTrader-Live",
+  server: "BraxleyNevim-Live",
   login: "50012345",
   password: "xK9#mP2$vL",
   trades: [
@@ -203,13 +203,13 @@ export default function ChallengeDetailPage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button className="px-4 py-2 border border-border rounded-lg hover:bg-foreground/5 transition-colors flex items-center gap-2">
+          <button type="button" onClick={() => alert("Exporting report...")} className="px-4 py-2 border border-border rounded-lg hover:bg-foreground/5 transition-colors flex items-center gap-2">
             <Download className="w-4 h-4" />
             Export Report
           </button>
-          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+          <Link href="/dashboard/payouts" className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
             Request Payout
-          </button>
+          </Link>
         </div>
       </div>
 

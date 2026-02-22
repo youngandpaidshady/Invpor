@@ -15,11 +15,39 @@ export class RateLimiter {
     private tokenCache: Map<string, number[]>;
     private uniqueTokenPerInterval: number;
     private interval: number;
+    private lastCleanup: number;
+    private cleanupInterval: number;
 
     constructor(config: RateLimitConfig = {}) {
         this.tokenCache = new Map();
         this.uniqueTokenPerInterval = config.uniqueTokenPerInterval || 500;
         this.interval = config.interval || 60000; // Default 1 minute
+        this.lastCleanup = Date.now();
+        this.cleanupInterval = 60000; // Cleanup every 60 seconds
+    }
+
+    /**
+     * Remove stale entries from the cache to prevent memory leaks.
+     */
+    private cleanup(now: number) {
+        if (now - this.lastCleanup < this.cleanupInterval) return;
+        this.lastCleanup = now;
+
+        const windowStart = now - this.interval;
+        const keysToDelete: string[] = [];
+
+        for (const [key, timestamps] of this.tokenCache.entries()) {
+            const active = timestamps.filter(t => t > windowStart);
+            if (active.length === 0) {
+                keysToDelete.push(key);
+            } else {
+                this.tokenCache.set(key, active);
+            }
+        }
+
+        for (const key of keysToDelete) {
+            this.tokenCache.delete(key);
+        }
     }
 
     /**
@@ -32,6 +60,9 @@ export class RateLimiter {
         const now = Date.now();
         const windowStart = now - this.interval;
 
+        // Periodic cleanup
+        this.cleanup(now);
+
         let timestamps = this.tokenCache.get(token) || [];
 
         // Filter out timestamps outside the window
@@ -41,8 +72,7 @@ export class RateLimiter {
         const isRateLimited = currentUsage >= limit;
         const remaining = isRateLimited ? 0 : limit - currentUsage - 1;
 
-        // Calculate reset time (time until the oldest request expires)
-        // If no requests, reset is now. If maxed out, reset is when oldest expires.
+        // Calculate reset time
         const oldestTimestamp = timestamps[0] || now;
         const reset = oldestTimestamp + this.interval;
 
@@ -50,12 +80,8 @@ export class RateLimiter {
             timestamps.push(now);
             this.tokenCache.set(token, timestamps);
 
-            // Cleanup cache if too big
+            // Hard cap on cache size
             if (this.tokenCache.size > this.uniqueTokenPerInterval) {
-                // Simple eviction: remove the oldest entry encountered (or just clear specific one if we tracked LRU, but this is simple)
-                // For now, just clear a chunk or the current one to prevent memory leak is handled by map limitation logic usually
-                // but here we just accept the potential slight memory growth in short term or clear all?
-                // Let's just clear the oldest key if we could, but Map preserves order.
                 const firstKey = this.tokenCache.keys().next().value;
                 if (firstKey) this.tokenCache.delete(firstKey);
             }

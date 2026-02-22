@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
-import { sanitizeInput } from "@/lib/utils";
+import { z } from "zod";
+
+// Zod schema (previously had no schema validation)
+const verifySchema = z.object({
+  challengeType: z.string().trim().min(1).max(50),
+  accountSize: z.string().trim().min(1).max(20),
+  clientPrice: z.number().positive().max(100000),
+});
 
 // Simulated challenge prices (in production, fetch from database)
 const challengePrices: Record<string, Record<string, number>> = {
@@ -28,14 +35,14 @@ const challengePrices: Record<string, Record<string, number>> = {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { challengeType, accountSize, clientPrice } = body;
 
-    // Sanitize inputs
-    const sanitizedType = sanitizeInput(challengeType || "");
-    const sanitizedSize = sanitizeInput(accountSize || "");
+    // ★ Validate with Zod schema
+    const validatedData = verifySchema.parse(body);
+
+    const { challengeType, accountSize, clientPrice } = validatedData;
 
     // Verify challenge type exists
-    if (!challengePrices[sanitizedType]) {
+    if (!challengePrices[challengeType]) {
       return NextResponse.json(
         { error: "Invalid challenge type" },
         { status: 400 }
@@ -43,7 +50,7 @@ export async function POST(request: Request) {
     }
 
     // Verify account size exists
-    const serverPrice = challengePrices[sanitizedType][sanitizedSize];
+    const serverPrice = challengePrices[challengeType][accountSize];
     if (!serverPrice) {
       return NextResponse.json(
         { error: "Invalid account size" },
@@ -63,10 +70,17 @@ export async function POST(request: Request) {
       success: true,
       verified: true,
       price: serverPrice,
-      challengeType: sanitizedType,
-      accountSize: sanitizedSize,
+      challengeType,
+      accountSize,
     });
-  } catch {
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: error.errors[0].message },
+        { status: 400 }
+      );
+    }
+    console.error("Purchase verify error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

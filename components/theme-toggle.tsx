@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <button className="w-10 h-10 rounded-lg border border-border flex items-center justify-center">
+      <button type="button" disabled className="w-10 h-10 rounded-lg border border-border flex items-center justify-center">
         <div className="w-4 h-4" />
       </button>
     );

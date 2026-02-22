@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { LucideIcon, MoreHorizontal, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { MoreHorizontal, ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 interface StatsCardProps {
     label: string;

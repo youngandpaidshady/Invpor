@@ -37,7 +37,7 @@ const sections = [
   },
   {
     title: "2. Nature of Our Services",
-    content: `AlphaTrader provides evaluation programs and funded trading accounts. During the evaluation phase, you trade on simulated accounts with no real money at risk. However, the skills and habits developed during evaluation will be applied to live trading, where real capital is involved.`,
+    content: `BraxleyNevim provides evaluation programs and funded trading accounts. During the evaluation phase, you trade on simulated accounts with no real money at risk. However, the skills and habits developed during evaluation will be applied to live trading, where real capital is involved.`,
   },
   {
     title: "3. No Guaranteed Returns",
@@ -61,7 +61,7 @@ const sections = [
   },
   {
     title: "8. Seek Independent Advice",
-    content: `The information provided by AlphaTrader is for educational purposes only and should not be considered financial advice. Before engaging in trading, we strongly recommend seeking advice from a qualified financial advisor who can assess your individual circumstances.`,
+    content: `The information provided by BraxleyNevim is for educational purposes only and should not be considered financial advice. Before engaging in trading, we strongly recommend seeking advice from a qualified financial advisor who can assess your individual circumstances.`,
   },
 ];
 
@@ -199,7 +199,7 @@ export default function RiskPage() {
             >
               <h3 className="font-bold mb-3">Acknowledgment</h3>
               <p className="text-white/40 text-sm leading-relaxed">
-                By using AlphaTrader&apos;s services, you acknowledge that you have read and understood this Risk Disclosure, and you accept all risks associated with trading financial instruments.
+                By using BraxleyNevim&apos;s services, you acknowledge that you have read and understood this Risk Disclosure, and you accept all risks associated with trading financial instruments.
               </p>
             </motion.div>
 

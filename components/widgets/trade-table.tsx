@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DataTable, type Column } from "@/components/ui/data-table";
-import { fetchRecentTrades } from "@/lib/services/mock-api";
+// import { fetchRecentTrades } from "@/lib/services/mock-api";
 import type { Trade } from "@/lib/types";
 
 interface TradeTableProps {
@@ -22,7 +22,7 @@ export function TradeTable({
     className = "",
     initialTrades = [],
 }: TradeTableProps) {
-    const [trades, setTrades] = useState<Trade[]>(initialTrades);
+    const [trades] = useState<Trade[]>(initialTrades);
     const [loading, setLoading] = useState(initialTrades.length === 0);
 
     useEffect(() => {

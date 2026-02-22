@@ -269,7 +269,7 @@ function VerifyEmailContent() {
             A
           </div>
           <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
-            AlphaTrader
+            BraxleyNevim
           </span>
         </Link>
       </div>

@@ -18,7 +18,7 @@ export function CTASection() {
             Ready to Start Trading?
           </h2>
           <p className="text-foreground/60 mb-8">
-            Join thousands of traders who are already funded. 
+            Join thousands of traders who are already funded.
             No experience required—just prove your skills.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -26,7 +26,7 @@ export function CTASection() {
               href="/pricing"
               className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors group"
             >
-              Get Started
+              Get Funded
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link

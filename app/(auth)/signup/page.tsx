@@ -202,7 +202,7 @@ export default function SignupPage() {
             A
           </div>
           <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
-            AlphaTrader
+            BraxleyNevim
           </span>
         </Link>
         <div className="text-xs text-white/30 uppercase tracking-[0.3em] font-mono">

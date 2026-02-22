@@ -212,7 +212,11 @@ export default function SupportPage() {
                             <MessageCircle className="w-10 h-10 text-[#ff6b35] mx-auto mb-6" />
                             <h3 className="text-xl font-bold mb-2">Live Chat</h3>
                             <p className="text-white/40 mb-6 font-light">Chat with our support team in real-time. Available 24/5.</p>
-                            <button className="group relative w-full py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]">
+                            <button
+                                type="button"
+                                onClick={() => alert("Starting live chat...")}
+                                className="group relative w-full py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]"
+                            >
                                 <span className="relative z-10">Start Chat</span>
                                 <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                                 <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
@@ -225,7 +229,7 @@ export default function SupportPage() {
                             <Mail className="w-10 h-10 text-[#ff6b35] mx-auto mb-6" />
                             <h3 className="text-xl font-bold mb-2">Email Support</h3>
                             <p className="text-white/40 mb-6 font-light">Send us a detailed message. We usually reply within 2 hours.</p>
-                            <a href="mailto:support@alphatrader.com" className="block w-full py-4 border border-white/10 text-white/60 font-mono text-sm uppercase tracking-wider hover:border-white/20 hover:text-white transition-all text-center">
+                            <a href="mailto:support@braxleynevim.com" className="block w-full py-4 border border-white/10 text-white/60 font-mono text-sm uppercase tracking-wider hover:border-white/20 hover:text-white transition-all text-center">
                                 Send Email
                             </a>
                         </div>

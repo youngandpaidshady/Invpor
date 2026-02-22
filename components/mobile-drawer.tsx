@@ -193,12 +193,12 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
               {/* Quick Actions */}
               <div className="p-4 space-y-2">
                 <Link
-                  href="#challenges"
+                  href="/pricing"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 bg-[#F97316] text-black font-semibold rounded-xl shadow-lg shadow-[#F97316]/20"
+                  className="flex items-center justify-center gap-2 w-full py-4 text-center text-xs font-mono font-bold uppercase tracking-widest text-[#050505] bg-[#C7A257] rounded-lg shadow-[0_0_20px_rgba(199,162,87,0.2)] active:scale-[0.98] transition-all"
                 >
                   <span>Get Funded</span>
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-4 h-4 ml-1 opacity-50 text-black" />
                 </Link>
                 <div className="grid grid-cols-2 gap-2">
                   <Link

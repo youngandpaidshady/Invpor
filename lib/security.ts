@@ -2,21 +2,33 @@
 // Security Utilities
 // ===========================================
 
-import { createHmac, randomBytes } from "crypto";
+import { createHmac, randomBytes, timingSafeEqual } from "crypto";
 
 // ===========================================
 // CSRF Token Management
 // ===========================================
 
-const CSRF_SECRET = process.env.CSRF_SECRET || "default-csrf-secret-change-in-production";
+function getCsrfSecret(): string {
+  const secret = process.env.CSRF_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("CSRF_SECRET environment variable is required in production");
+    }
+    // Only allow fallback in development with a warning
+    console.warn("[SECURITY] CSRF_SECRET not set — using insecure development fallback");
+    return "dev-only-csrf-secret-do-not-use-in-prod";
+  }
+  return secret;
+}
 
 /**
  * Generate a CSRF token
  */
 export function generateCsrfToken(): string {
+  const secret = getCsrfSecret();
   const token = randomBytes(32).toString("hex");
   const timestamp = Date.now().toString();
-  const signature = createHmac("sha256", CSRF_SECRET)
+  const signature = createHmac("sha256", secret)
     .update(`${token}:${timestamp}`)
     .digest("hex");
   return `${token}:${timestamp}:${signature}`;
@@ -27,24 +39,32 @@ export function generateCsrfToken(): string {
  */
 export function verifyCsrfToken(token: string, maxAge = 3600000): boolean {
   try {
+    const secret = getCsrfSecret();
     const [tokenValue, timestamp, signature] = token.split(":");
-    
+
     if (!tokenValue || !timestamp || !signature) {
       return false;
     }
 
     // Check if token is expired (default 1 hour)
     const tokenAge = Date.now() - parseInt(timestamp, 10);
-    if (tokenAge > maxAge) {
+    if (isNaN(tokenAge) || tokenAge > maxAge || tokenAge < 0) {
       return false;
     }
 
-    // Verify signature
-    const expectedSignature = createHmac("sha256", CSRF_SECRET)
+    // Verify signature using timing-safe comparison
+    const expectedSignature = createHmac("sha256", secret)
       .update(`${tokenValue}:${timestamp}`)
       .digest("hex");
 
-    return signature === expectedSignature;
+    const sigBuffer = Buffer.from(signature, "hex");
+    const expectedBuffer = Buffer.from(expectedSignature, "hex");
+
+    if (sigBuffer.length !== expectedBuffer.length) {
+      return false;
+    }
+
+    return timingSafeEqual(sigBuffer, expectedBuffer);
   } catch {
     return false;
   }
@@ -77,7 +97,7 @@ export function sanitizeHtml(input: string): string {
  */
 export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
   const sanitized: Record<string, unknown> = {};
-  
+
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "string") {
       sanitized[key] = sanitizeHtml(value);
@@ -86,8 +106,8 @@ export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
         typeof item === "string"
           ? sanitizeHtml(item)
           : typeof item === "object" && item !== null
-          ? sanitizeObject(item as Record<string, unknown>)
-          : item
+            ? sanitizeObject(item as Record<string, unknown>)
+            : item
       );
     } else if (typeof value === "object" && value !== null) {
       sanitized[key] = sanitizeObject(value as Record<string, unknown>);
@@ -95,7 +115,7 @@ export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
       sanitized[key] = value;
     }
   }
-  
+
   return sanitized as T;
 }
 
@@ -114,7 +134,7 @@ export function hasSqlInjectionPatterns(input: string): boolean {
     /(\bOR\b|\bAND\b)\s*\d+\s*=\s*\d+/i,
     /'\s*(OR|AND)\s*'?\d/i,
   ];
-  
+
   return patterns.some((pattern) => pattern.test(input));
 }
 
@@ -151,14 +171,14 @@ export function createRequestLog(
   userId?: string
 ): RequestLog {
   const url = new URL(request.url);
-  
+
   return {
     timestamp: new Date().toISOString(),
     method: request.method,
     path: url.pathname,
-    ip: request.headers.get("x-forwarded-for") || 
-        request.headers.get("x-real-ip") || 
-        "unknown",
+    ip: request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown",
     userAgent: request.headers.get("user-agent") || "unknown",
     userId,
   };
@@ -171,14 +191,12 @@ export function logRequest(log: RequestLog): void {
   // In development, log to console
   if (process.env.NODE_ENV === "development") {
     console.log(
-      `[${log.timestamp}] ${log.method} ${log.path} - IP: ${log.ip}${
-        log.userId ? ` - User: ${log.userId}` : ""
-      }${log.statusCode ? ` - Status: ${log.statusCode}` : ""}${
-        log.duration ? ` - ${log.duration}ms` : ""
+      `[${log.timestamp}] ${log.method} ${log.path} - IP: ${log.ip}${log.userId ? ` - User: ${log.userId}` : ""
+      }${log.statusCode ? ` - Status: ${log.statusCode}` : ""}${log.duration ? ` - ${log.duration}ms` : ""
       }`
     );
   }
-  
+
   // In production, you would send to a logging service like:
   // - Datadog
   // - LogRocket
@@ -207,13 +225,13 @@ const PRODUCTION_ENV_VARS = [
  */
 export function validateEnvVars(): { valid: boolean; missing: string[] } {
   const missing: string[] = [];
-  
+
   for (const envVar of REQUIRED_ENV_VARS) {
     if (!process.env[envVar]) {
       missing.push(envVar);
     }
   }
-  
+
   // In production, check additional vars
   if (process.env.NODE_ENV === "production") {
     for (const envVar of PRODUCTION_ENV_VARS) {
@@ -222,7 +240,7 @@ export function validateEnvVars(): { valid: boolean; missing: string[] } {
       }
     }
   }
-  
+
   return {
     valid: missing.length === 0,
     missing,
@@ -241,27 +259,27 @@ export interface PasswordStrength {
 export function checkPasswordStrength(password: string): PasswordStrength {
   const feedback: string[] = [];
   let score = 0;
-  
+
   if (password.length >= 8) score++;
   else feedback.push("Use at least 8 characters");
-  
+
   if (password.length >= 12) score++;
-  
+
   if (/[A-Z]/.test(password)) score++;
   else feedback.push("Add uppercase letters");
-  
+
   if (/[0-9]/.test(password)) score++;
   else feedback.push("Add numbers");
-  
+
   if (/[^A-Za-z0-9]/.test(password)) score++;
   else feedback.push("Add special characters");
-  
+
   // Check for common patterns
   if (/^[a-z]+$/i.test(password) || /^[0-9]+$/.test(password)) {
     score = Math.max(0, score - 1);
     feedback.push("Avoid using only letters or numbers");
   }
-  
+
   return {
     score: Math.min(4, score),
     feedback,

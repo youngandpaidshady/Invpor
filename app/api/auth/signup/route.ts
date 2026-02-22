@@ -2,23 +2,25 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { signupSchema } from "@/lib/validations";
 import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validatedData = signupSchema.parse(body);
-    
+    const sanitized = sanitizeObject(validatedData as unknown as Record<string, unknown>);
+
     const supabase = await createClient();
-    
+
     // Create user with Supabase Auth
     const { data, error } = await supabase.auth.signUp({
-      email: validatedData.email,
-      password: validatedData.password,
+      email: sanitized.email as string,
+      password: sanitized.password as string,
       options: {
         data: {
-          full_name: validatedData.full_name,
+          full_name: sanitized.full_name as string,
         },
         emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/auth/callback`,
       },
@@ -62,7 +64,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
+
     console.error("Signup error:", error);
     return NextResponse.json(
       { success: false, error: "An unexpected error occurred" },

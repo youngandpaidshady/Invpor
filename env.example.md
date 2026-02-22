@@ -33,5 +33,5 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 # Email (Optional)
 # ===========================================
 RESEND_API_KEY=re_...
-SUPPORT_EMAIL=support@alphatrader.com
+SUPPORT_EMAIL=support@braxleynevim.com
 ```

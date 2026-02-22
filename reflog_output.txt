@@ -1,0 +1,10 @@
+﻿5f10bd8 HEAD@{0} revert: Revert "Add 21st.dev component design system skill (61 component guides)"
+fddca9c HEAD@{1} commit: Add 21st.dev component design system skill (61 component guides)
+879ee48 HEAD@{2} commit: feat: Enhance dashboard logic, add KYC server action, and fix serialization errors
+2020a05 HEAD@{3} Branch: renamed refs/heads/main to refs/heads/main
+2020a05 HEAD@{5} commit: Refactor: Stabilize codebase, remove framer-motion, fix webpack errors. Rewrote landing components to pure CSS, fixed hydration issues, and cleaned up duplicate files.
+c25cef8 HEAD@{6} commit: Add GOAT-inspired features: promo banner, challenge tabs, payout ticker, scaling program, community section, reward guarantee, trading platforms
+89373f7 HEAD@{7} commit: Elevate platform to premium level: animated hero, live feed, testimonials, FAQ, trust badges, features grid, how it works section, and CTA
+252c0df HEAD@{8} commit: Add award-winning enhancements: theme toggle, lens flare cards, animated stats, comparison table, mobile drawer, and Sonner toasts
+af678ba HEAD@{9} commit: Build AlphaTrader platform: Modern Noir theme, challenge engine, dashboard, security middleware, and purchase flow
+f6af112 HEAD@{10} commit (initial): Initial commit: Investment platform with braxley color palette

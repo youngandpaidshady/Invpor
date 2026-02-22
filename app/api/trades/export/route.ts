@@ -1,11 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { escapeCsvCell, sanitizeQueryString } from "@/lib/sanitize";
 
 // GET /api/trades/export - Export trades as CSV
 export async function GET(request: Request) {
   try {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -16,9 +17,9 @@ export async function GET(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const challenge_id = searchParams.get("challenge_id");
-    const from_date = searchParams.get("from_date");
-    const to_date = searchParams.get("to_date");
+    const challenge_id = sanitizeQueryString(searchParams.get("challenge_id"), 50);
+    const from_date = sanitizeQueryString(searchParams.get("from_date"), 30);
+    const to_date = sanitizeQueryString(searchParams.get("to_date"), 30);
 
     // Get user's challenge IDs
     const { data: userChallenges } = await supabase
@@ -48,6 +49,9 @@ export async function GET(request: Request) {
       query = query.lte("opened_at", to_date);
     }
 
+    // Cap export to 10000 rows to prevent memory exhaustion
+    query = query.limit(10000);
+
     const { data: trades, error } = await query;
 
     if (error) {
@@ -58,7 +62,7 @@ export async function GET(request: Request) {
       return new NextResponse("No trades found", { status: 404 });
     }
 
-    // Generate CSV
+    // Generate CSV with injection prevention
     const headers = [
       "ID",
       "Challenge ID",
@@ -73,28 +77,29 @@ export async function GET(request: Request) {
       "Closed At",
     ];
 
+    // ★ CSV Injection Prevention (CWE-1236): escape cells with dangerous leading characters
     const rows = trades.map((trade) => [
-      trade.id,
-      trade.challenge_id,
-      trade.symbol,
-      trade.type,
-      trade.lot_size,
-      trade.entry_price,
-      trade.exit_price || "",
-      trade.profit_loss || "",
-      trade.status,
-      trade.opened_at,
-      trade.closed_at || "",
+      escapeCsvCell(trade.id),
+      escapeCsvCell(trade.challenge_id),
+      escapeCsvCell(trade.symbol),
+      escapeCsvCell(trade.type),
+      escapeCsvCell(trade.lot_size),
+      escapeCsvCell(trade.entry_price),
+      escapeCsvCell(trade.exit_price),
+      escapeCsvCell(trade.profit_loss),
+      escapeCsvCell(trade.status),
+      escapeCsvCell(trade.opened_at),
+      escapeCsvCell(trade.closed_at),
     ]);
 
     const csvContent = [
       headers.join(","),
-      ...rows.map((row) => row.map((cell) => `"${cell}"`).join(",")),
+      ...rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")),
     ].join("\n");
 
     return new NextResponse(csvContent, {
       headers: {
-        "Content-Type": "text/csv",
+        "Content-Type": "text/csv; charset=utf-8",
         "Content-Disposition": `attachment; filename="trades-${new Date().toISOString().split("T")[0]}.csv"`,
       },
     });

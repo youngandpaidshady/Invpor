@@ -5,7 +5,7 @@ import { fetchDashboardStats, fetchTradingRules, fetchRecentTrades, fetchEquityC
 import { MOCK_USER_STATE } from "@/lib/mock-data";
 
 export default async function DashboardPage() {
-  const [stats, rules, recentTrades, equityCurve] = await Promise.all([
+  const [, rules, recentTrades, equityCurve] = await Promise.all([
     fetchDashboardStats(),
     fetchTradingRules(),
     fetchRecentTrades(5),
@@ -69,7 +69,7 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-3">
-          <button className="px-5 py-2.5 bg-background border border-border font-medium hover:bg-muted transition-colors flex items-center gap-2">
+          <button type="button" onClick={() => alert("Filtering by today's date...")} className="px-5 py-2.5 bg-background border border-border font-medium hover:bg-muted transition-colors flex items-center gap-2">
             <Calendar className="w-4 h-4" />
             <span>Today</span>
           </button>

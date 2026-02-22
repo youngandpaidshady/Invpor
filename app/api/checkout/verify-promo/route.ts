@@ -13,14 +13,22 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { code } = body;
 
-    if (!code) {
+    if (!code || typeof code !== "string") {
       return NextResponse.json(
         { valid: false, error: "Promo code is required" },
         { status: 400 }
       );
     }
 
-    const upperCode = code.toUpperCase().trim();
+    // ★ Length limit to prevent abuse
+    if (code.length > 20) {
+      return NextResponse.json(
+        { valid: false, error: "Invalid promo code" },
+        { status: 400 }
+      );
+    }
+
+    const upperCode = code.toUpperCase().trim().replace(/[^A-Z0-9]/g, "");
 
     // Try database first
     try {

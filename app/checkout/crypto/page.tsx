@@ -5,18 +5,13 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-    CreditCard,
-    Shield,
     Check,
     ChevronLeft,
     Loader2,
     Copy,
-    Clock,
     AlertTriangle,
     Wallet,
-    QrCode,
     ArrowRight,
-    ExternalLink,
 } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { PRICING_PLANS } from "@/lib/constants";

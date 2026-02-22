@@ -131,7 +131,7 @@ export function StatsSection() {
           </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
             Join a growing community of successful traders who have achieved
-            their financial goals with AlphaTrader.
+            their financial goals with BraxleyNevim.
           </p>
         </motion.div>
 

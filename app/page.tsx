@@ -2,7 +2,7 @@ import { TickerTape, Hero, TrustBadges, HowItWorks, PricingPreview, SocialProof,
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#09090B]">
+    <main className="min-h-screen bg-black">
       <TickerTape />
       <Hero />
       <TrustBadges />

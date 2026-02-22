@@ -75,6 +75,10 @@ const nextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
         ],
       },
     ];
@@ -84,9 +88,9 @@ const nextConfig = {
   // Compiler Options
   // ===========================================
   compiler: {
-    // removeConsole: process.env.NODE_ENV === "production" ? {
-    //   exclude: ["error", "warn"],
-    // } : false,
+    removeConsole: process.env.NODE_ENV === "production" ? {
+      exclude: ["error", "warn"],
+    } : false,
   },
 
   // ===========================================

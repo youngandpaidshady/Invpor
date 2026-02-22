@@ -187,7 +187,7 @@ function FailedContent() {
               </div>
             </Link>
             <a
-              href="mailto:support@alphatrader.com"
+              href="mailto:support@braxleynevim.com"
               className="flex items-center gap-3 p-3 bg-background border border-border rounded-lg hover:border-primary/50 hover:bg-primary/5 transition-all"
             >
               <Mail className="w-5 h-5 text-primary" />

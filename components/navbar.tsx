@@ -29,8 +29,8 @@ export function Navbar() {
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${isScrolled
-          ? "bg-[#09090B]/95 backdrop-blur-md border-b border-[#3F3F46]"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? "bg-[#050507]/95 backdrop-blur-xl border-b border-[#1C1C22]"
           : "bg-transparent"
         }`}
     >
@@ -38,11 +38,11 @@ export function Navbar() {
         <div className="h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 bg-[#F97316] flex items-center justify-center transition-shadow group-hover:shadow-glow-magma-sm">
-              <span className="font-bold text-black text-sm">A</span>
+            <div className="w-8 h-8 bg-arctic flex items-center justify-center transition-shadow group-hover:shadow-glow-arctic-sm">
+              <span className="font-display text-[#050507] text-lg">A</span>
             </div>
-            <span className="font-bold text-white tracking-tight hidden sm:block">
-              ALPHA<span className="text-[#F97316]">TRADER</span>
+            <span className="font-display text-lg tracking-wider text-[#E8E8ED] hidden sm:block">
+              ALPHA<span className="text-arctic">TRADER</span>
             </span>
           </Link>
 
@@ -52,7 +52,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[#A1A1AA] hover:text-white transition-colors"
+                className="text-sm text-[#6B6B76] hover:text-[#E8E8ED] transition-colors font-body"
               >
                 {link.label}
               </Link>
@@ -63,13 +63,13 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               href="/login"
-              className="hidden sm:block text-sm text-[#A1A1AA] hover:text-white transition-colors"
+              className="hidden sm:block text-sm text-[#6B6B76] hover:text-[#E8E8ED] transition-colors font-body"
             >
               Login
             </Link>
             <Link
               href="/pricing"
-              className="btn-primary text-xs py-2 px-4"
+              className="btn-primary text-[11px] py-2.5 px-5"
             >
               GET FUNDED
             </Link>
@@ -77,7 +77,7 @@ export function Navbar() {
             {/* Mobile toggle */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="lg:hidden p-2 text-white/60 hover:text-[#F97316]"
+              className="lg:hidden p-2 text-[#6B6B76] hover:text-arctic transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileOpen ? (
@@ -96,7 +96,7 @@ export function Navbar() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="lg:hidden bg-[#09090B] border-t border-[#3F3F46]"
+          className="lg:hidden bg-[#050507] border-t border-[#1C1C22]"
         >
           <div className="container-wide py-6 space-y-4">
             {navLinks.map((link) => (
@@ -104,16 +104,16 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsMobileOpen(false)}
-                className="block text-lg text-[#A1A1AA] hover:text-[#F97316] py-2"
+                className="block text-lg text-[#6B6B76] hover:text-arctic py-2 font-body"
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t border-[#3F3F46]">
+            <div className="pt-4 border-t border-[#1C1C22]">
               <Link
                 href="/login"
                 onClick={() => setIsMobileOpen(false)}
-                className="block text-lg text-[#A1A1AA] hover:text-white py-2"
+                className="block text-lg text-[#6B6B76] hover:text-[#E8E8ED] py-2 font-body"
               >
                 Login
               </Link>

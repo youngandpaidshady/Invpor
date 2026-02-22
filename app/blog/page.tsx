@@ -1,11 +1,14 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
 import { Calendar, Clock, ArrowRight, Search, Mail, TrendingUp, BookOpen, Brain, Zap, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { TiltCard } from "@/components/rules/tilt-card";
 
 const blogPosts = [
     {
@@ -78,6 +81,79 @@ const categories = [
     { name: "Psychology", icon: <Brain className="w-4 h-4" /> },
 ];
 
+function GridPostCard({ post, index }: { post: any, index: number }) {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+        const { left, top } = currentTarget.getBoundingClientRect();
+        mouseX.set(clientX - left);
+        mouseY.set(clientY - top);
+    }
+
+    return (
+        <motion.div
+            key={post.id}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="h-full group relative rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition-all overflow-hidden"
+            onMouseMove={handleMouseMove}
+        >
+            <motion.div
+                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                style={{
+                    background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(199, 162, 87, 0.15),
+              transparent 80%
+            )
+          `,
+                }}
+            />
+            <Link href={`/blog/${post.id}`} className="flex flex-col h-full relative z-10">
+                <div className="relative h-48 overflow-hidden rounded-t-xl">
+                    <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute top-3 left-3">
+                        <span className="px-2 py-1 bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-mono uppercase tracking-wider rounded-md">
+                            {post.category}
+                        </span>
+                    </div>
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center gap-3 text-xs text-white/40 font-mono mb-4">
+                        <span>{post.date}</span>
+                        <span>•</span>
+                        <span>{post.readTime}</span>
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-[#C7A257] transition-colors leading-tight">
+                        {post.title}
+                    </h3>
+                    <p className="text-sm text-white/50 mb-6 line-clamp-2 font-light leading-relaxed">
+                        {post.excerpt}
+                    </p>
+                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
+                        <div className="flex items-center gap-2 text-xs text-white/40">
+                            <div className="w-6 h-6 bg-white/10 overflow-hidden rounded-full border border-white/10">
+                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${post.author}`} alt={post.author} />
+                            </div>
+                            {post.author}
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-[#C7A257] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </div>
+                </div>
+            </Link>
+        </motion.div>
+    );
+}
+
 export default function BlogPage() {
     const [activeCategory, setActiveCategory] = useState("All");
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -139,6 +215,9 @@ export default function BlogPage() {
                 style={{ y: heroY }}
                 className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 z-10"
             >
+                {/* Animated Grid Background */}
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent pointer-events-none" />
                 {/* Massive background text */}
                 <div className="absolute inset-0 flex items-center justify-center overflow-hidden select-none pointer-events-none">
                     <span
@@ -173,7 +252,7 @@ export default function BlogPage() {
                             <span
                                 className="block text-transparent bg-clip-text"
                                 style={{
-                                    backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                                    backgroundImage: "linear-gradient(135deg, #C7A257 0%, #E8D099 50%, #C7A257 100%)",
                                     WebkitBackgroundClip: "text",
                                 }}
                             >
@@ -195,14 +274,17 @@ export default function BlogPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="relative max-w-xl"
+                            className="relative max-w-xl group"
                         >
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                            <input
-                                type="text"
-                                placeholder="Search articles..."
-                                className="w-full pl-12 pr-4 py-4 bg-white/[0.03] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 transition-all"
-                            />
+                            <div className="absolute inset-[-2px] bg-gradient-to-r from-[#C7A257]/0 via-[#C7A257]/20 to-[#C7A257]/0 opacity-0 group-focus-within:opacity-100 transition-opacity rounded-md blur-sm" />
+                            <div className="relative">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 group-focus-within:text-[#C7A257] transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="Search articles..."
+                                    className="w-full pl-12 pr-4 py-4 bg-black/40 backdrop-blur-md border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/5 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+                                />
+                            </div>
                         </motion.div>
                     </div>
                 </div>
@@ -219,25 +301,35 @@ export default function BlogPage() {
             {/* Content Section */}
             <section className="relative z-10 pb-32 container mx-auto px-6 lg:px-12">
 
-                {/* Categories Bar */}
+                {/* Categories Bar (Floating Pill Archetype) */}
                 <div className="mb-16 py-6 border-b border-white/5">
                     <div className="flex items-center justify-between gap-4 overflow-x-auto">
-                        <div className="flex gap-2">
-                            {categories.map((cat, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => setActiveCategory(cat.name)}
-                                    className={`flex items-center gap-2 px-5 py-2 text-sm font-mono uppercase tracking-wider transition-all ${activeCategory === cat.name
-                                            ? "bg-white text-black"
-                                            : "text-white/40 hover:text-white border border-white/10 hover:border-white/20"
-                                        }`}
-                                >
-                                    {cat.icon}
-                                    {cat.name}
-                                </button>
-                            ))}
+                        <div className="flex gap-2 p-1.5 bg-white/[0.02] border border-white/5 rounded-full relative">
+                            {categories.map((cat, i) => {
+                                const isActive = activeCategory === cat.name;
+                                return (
+                                    <button
+                                        key={i}
+                                        onClick={() => setActiveCategory(cat.name)}
+                                        className={`relative z-10 flex items-center gap-2 px-5 py-2 text-sm font-mono uppercase tracking-wider transition-colors duration-300 rounded-full ${isActive ? "text-[#0a0a0a]" : "text-white/60 hover:text-white"
+                                            }`}
+                                    >
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="activeCategoryPill"
+                                                className="absolute inset-0 bg-[#C7A257] rounded-full shadow-[0_0_20px_rgba(199,162,87,0.3)]"
+                                                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                                            />
+                                        )}
+                                        <span className="relative z-20 flex items-center gap-2">
+                                            {cat.icon}
+                                            {cat.name}
+                                        </span>
+                                    </button>
+                                );
+                            })}
                         </div>
-                        <div className="hidden lg:block text-xs font-mono text-white/20 uppercase tracking-wider">
+                        <div className="hidden lg:block text-xs font-mono text-white/20 uppercase tracking-wider tabular-nums">
                             {filteredPosts.length} Articles
                         </div>
                     </div>
@@ -252,51 +344,53 @@ export default function BlogPage() {
                         transition={{ duration: 0.7 }}
                         className="mb-20"
                     >
-                        <Link href={`/blog/${featuredPost.id}`} className="group block">
-                            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 bg-white/[0.02] border border-white/10 p-2 hover:border-white/20 transition-all">
-                                <div className="relative h-72 lg:h-auto overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-                                    <img
-                                        src={featuredPost.image}
-                                        alt={featuredPost.title}
-                                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                    />
-                                    <div className="absolute top-4 left-4 z-20">
-                                        <span className="px-3 py-1 bg-[#ff6b35] text-white text-xs font-mono uppercase tracking-wider">
-                                            Featured
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col justify-center p-6 lg:p-10 lg:pl-0">
-                                    <div className="flex items-center gap-4 text-xs font-mono text-white/30 uppercase tracking-wider mb-6">
-                                        <span className="text-[#ff6b35]">{featuredPost.category}</span>
-                                        <span>•</span>
-                                        <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {featuredPost.date}</span>
-                                        <span>•</span>
-                                        <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {featuredPost.readTime}</span>
-                                    </div>
-                                    <h2 className="text-3xl lg:text-5xl font-black mb-6 group-hover:text-[#ff6b35] transition-colors leading-tight tracking-tight">
-                                        {featuredPost.title}
-                                    </h2>
-                                    <p className="text-lg text-white/40 mb-8 line-clamp-3 font-light leading-relaxed">
-                                        {featuredPost.excerpt}
-                                    </p>
-                                    <div className="flex items-center justify-between mt-auto">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-white/10 border border-white/10 overflow-hidden">
-                                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${featuredPost.author}`} alt={featuredPost.author} />
-                                            </div>
-                                            <div className="text-sm">
-                                                <div className="font-medium text-white/80">{featuredPost.author}</div>
-                                                <div className="text-white/30 text-xs font-mono">Author</div>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-[#ff6b35] font-mono text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform">
-                                            Read <ArrowRight className="w-4 h-4" />
+                        <Link href={`/blog/${featuredPost.id}`} className="group block h-full">
+                            <TiltCard gradientColor="from-[#C7A257]/20" className="rounded-2xl">
+                                <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 bg-transparent p-2">
+                                    <div className="relative h-72 lg:h-auto overflow-hidden rounded-xl">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+                                        <img
+                                            src={featuredPost.image}
+                                            alt={featuredPost.title}
+                                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute top-4 left-4 z-20">
+                                            <span className="px-3 py-1 bg-[#C7A257] text-white text-xs font-mono uppercase tracking-wider rounded-md">
+                                                Featured
+                                            </span>
                                         </div>
                                     </div>
+                                    <div className="flex flex-col justify-center p-6 lg:p-10 lg:pl-0">
+                                        <div className="flex items-center gap-4 text-xs font-mono text-white/30 uppercase tracking-wider mb-6">
+                                            <span className="text-[#C7A257]">{featuredPost.category}</span>
+                                            <span>•</span>
+                                            <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {featuredPost.date}</span>
+                                            <span>•</span>
+                                            <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {featuredPost.readTime}</span>
+                                        </div>
+                                        <h2 className="text-3xl lg:text-5xl font-black mb-6 group-hover:text-[#C7A257] transition-colors leading-tight tracking-tight">
+                                            {featuredPost.title}
+                                        </h2>
+                                        <p className="text-lg text-white/40 mb-8 line-clamp-3 font-light leading-relaxed">
+                                            {featuredPost.excerpt}
+                                        </p>
+                                        <div className="flex items-center justify-between mt-auto">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 bg-white/10 border border-white/10 overflow-hidden rounded-full flex-shrink-0">
+                                                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${featuredPost.author}`} alt={featuredPost.author} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div className="text-sm">
+                                                    <div className="font-medium text-white/80">{featuredPost.author}</div>
+                                                    <div className="text-white/30 text-xs font-mono">Author</div>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-2 text-[#C7A257] font-mono text-sm uppercase tracking-wider group-hover:translate-x-2 transition-transform">
+                                                Read <ArrowRight className="w-4 h-4" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </TiltCard>
                         </Link>
                     </motion.div>
                 )}
@@ -304,73 +398,34 @@ export default function BlogPage() {
                 {/* Posts Grid */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {otherPosts.map((post, index) => (
-                        <motion.div
-                            key={post.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                        >
-                            <Link href={`/blog/${post.id}`} className="group h-full flex flex-col bg-white/[0.02] border border-white/10 overflow-hidden hover:border-white/20 transition-all hover:-translate-y-1">
-                                <div className="relative h-48 overflow-hidden">
-                                    <img
-                                        src={post.image}
-                                        alt={post.title}
-                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                                    />
-                                    <div className="absolute top-3 left-3">
-                                        <span className="px-2 py-1 bg-black/60 backdrop-blur-sm border border-white/10 text-xs font-mono uppercase tracking-wider">
-                                            {post.category}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-6 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 text-xs text-white/30 font-mono mb-4">
-                                        <span>{post.date}</span>
-                                        <span>•</span>
-                                        <span>{post.readTime}</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold mb-3 group-hover:text-[#ff6b35] transition-colors leading-tight">
-                                        {post.title}
-                                    </h3>
-                                    <p className="text-sm text-white/40 mb-6 line-clamp-2 font-light leading-relaxed">
-                                        {post.excerpt}
-                                    </p>
-                                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
-                                        <div className="flex items-center gap-2 text-xs text-white/40">
-                                            <div className="w-6 h-6 bg-white/10 overflow-hidden">
-                                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${post.author}`} alt={post.author} />
-                                            </div>
-                                            {post.author}
-                                        </div>
-                                        <ChevronRight className="w-4 h-4 text-[#ff6b35] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                                    </div>
-                                </div>
-                            </Link>
-                        </motion.div>
+                        <GridPostCard key={post.id} post={post} index={index} />
                     ))}
                 </div>
             </section>
 
-            {/* Newsletter Section */}
+            {/* Newsletter Section (Marketing Block Archetype) */}
             <section className="pb-32 container mx-auto px-6 lg:px-12">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="relative border border-white/10 p-8 lg:p-16"
+                    transition={{ duration: 0.6, type: "spring" }}
+                    className="relative border border-white/10 p-8 lg:p-16 rounded-2xl bg-[#050505] shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden"
                 >
-                    {/* Top accent line */}
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/50 to-transparent" />
+                    {/* Glowing background blob */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-[#C7A257]/10 blur-[100px] pointer-events-none rounded-full translate-x-1/3 -translate-y-1/3" />
 
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    {/* Top accent line */}
+                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C7A257]/50 to-transparent" />
+
+                    <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
                         <div>
-                            <div className="w-14 h-14 bg-[#ff6b35]/10 border border-[#ff6b35]/20 flex items-center justify-center mb-8">
-                                <Mail className="w-7 h-7 text-[#ff6b35]" />
+                            <div className="w-14 h-14 bg-[#C7A257]/10 border border-[#C7A257]/20 flex items-center justify-center mb-8 rounded-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                                <Mail className="w-7 h-7 text-[#C7A257]" />
                             </div>
                             <h2 className="text-4xl lg:text-5xl font-black mb-4 tracking-tight">
                                 SUBSCRIBE TO<br />
-                                <span className="text-[#ff6b35]">THE WEEKLY</span>
+                                <span className="text-[#C7A257]">THE WEEKLY</span>
                             </h2>
                             <p className="text-lg text-white/40 mb-8 max-w-md font-light">
                                 Join 10,000+ traders getting weekly insights, market analysis, and exclusive tips.
@@ -379,14 +434,14 @@ export default function BlogPage() {
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
-                                    className="flex-1 px-5 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 transition-colors"
+                                    className="flex-1 px-5 py-4 bg-black/40 backdrop-blur-md border border-white/10 rounded-lg text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/5 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
                                 />
-                                <button className="group relative px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]">
-                                    <span className="relative z-10">Subscribe</span>
-                                    <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                                        Subscribe
-                                    </span>
+                                <button
+                                    type="button"
+                                    onClick={(e) => { e.preventDefault(); alert("Subscription successful!"); }}
+                                    className="shimmer-button inline-flex items-center justify-center px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-wider rounded-lg overflow-hidden transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(199,162,87,0.3)] hover:shadow-[0_0_30px_rgba(199,162,87,0.5)]"
+                                >
+                                    <span className="relative z-10 flex items-center gap-2">Subscribe <ArrowRight className="w-4 h-4" /></span>
                                 </button>
                             </div>
                             <p className="text-xs text-white/20 mt-4 flex items-center gap-2 font-mono">
@@ -395,19 +450,22 @@ export default function BlogPage() {
                             </p>
                         </div>
                         <div className="hidden lg:block relative">
-                            <div className="bg-white/[0.02] border border-white/10 p-6">
-                                <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-4">
-                                    <div className="w-10 h-10 bg-[#ff6b35]/20 flex items-center justify-center text-[#ff6b35] font-black">A</div>
-                                    <div>
-                                        <div className="font-bold text-sm">AlphaTrader Weekly</div>
-                                        <div className="text-xs text-white/30 font-mono">Just now</div>
+                            <div className="bg-white/[0.02] border border-white/10 p-6 rounded-xl relative overflow-hidden">
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-4">
+                                        <div className="w-10 h-10 bg-[#C7A257]/20 border border-[#C7A257]/30 rounded-lg flex items-center justify-center text-[#C7A257] font-black">A</div>
+                                        <div>
+                                            <div className="font-bold text-sm">BraxleyNevim Weekly</div>
+                                            <div className="text-xs text-white/30 font-mono">Just now</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="space-y-3">
-                                    <div className="h-4 w-3/4 bg-white/5" />
-                                    <div className="h-4 w-full bg-white/[0.02]" />
-                                    <div className="h-4 w-5/6 bg-white/[0.02]" />
-                                    <div className="h-32 w-full bg-gradient-to-br from-[#ff6b35]/10 to-transparent border border-white/5 mt-4" />
+                                    <div className="space-y-3">
+                                        <div className="h-4 w-3/4 bg-white/5 rounded-sm" />
+                                        <div className="h-4 w-full bg-white/[0.02] rounded-sm" />
+                                        <div className="h-4 w-5/6 bg-white/[0.02] rounded-sm" />
+                                        <div className="h-32 w-full bg-gradient-to-br from-[#C7A257]/10 to-transparent border border-white/5 rounded-md mt-4" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

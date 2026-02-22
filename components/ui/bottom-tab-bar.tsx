@@ -9,6 +9,7 @@ import {
   BarChart3,
   Wallet,
   Settings,
+  Shield,
 } from "lucide-react";
 
 const tabs = [
@@ -16,6 +17,7 @@ const tabs = [
   { href: "/dashboard/challenges", icon: Target, label: "Challenges" },
   { href: "/dashboard/trades", icon: BarChart3, label: "Trades" },
   { href: "/dashboard/payouts", icon: Wallet, label: "Payouts" },
+  { href: "/dashboard/kyc", icon: Shield, label: "KYC" },
   { href: "/dashboard/settings", icon: Settings, label: "Settings" },
 ];
 

@@ -1,21 +1,24 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { isSafeRedirectPath } from "@/lib/sanitize";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/dashboard";
+  const rawNext = searchParams.get("next") ?? "/dashboard";
+
+  // ★ Validate redirect target to prevent open redirect (CWE-601)
+  const next = isSafeRedirectPath(rawNext) ? rawNext : "/dashboard";
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
-    
+
     if (!error) {
-      // Successful authentication
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
 
-  // Authentication failed, redirect to login with error
+  // Authentication failed
   return NextResponse.redirect(`${origin}/login?error=auth_callback_error`);
 }

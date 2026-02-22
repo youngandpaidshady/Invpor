@@ -17,7 +17,7 @@ export default function AuthLayout({
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-amber-400 flex items-center justify-center font-bold text-background text-sm">
             A
           </div>
-          <span className="font-bold text-lg">AlphaTrader</span>
+          <span className="font-bold text-lg">BraxleyNevim</span>
         </Link>
         <ThemeToggle />
       </header>
@@ -31,7 +31,7 @@ export default function AuthLayout({
 
       {/* Minimal Footer */}
       <footer className="py-4 text-center text-sm text-foreground/50 border-t border-border/50">
-        <p>© {new Date().getFullYear()} AlphaTrader. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} BraxleyNevim. All rights reserved.</p>
       </footer>
     </div>
   );

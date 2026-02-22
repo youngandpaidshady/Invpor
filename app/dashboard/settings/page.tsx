@@ -118,7 +118,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-border pb-1">
+      <div className="flex gap-2 border-b border-border pb-1 overflow-x-auto no-scrollbar scroll-smooth">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -475,7 +475,7 @@ export default function SettingsPage() {
               certain.
             </p>
 
-            <button className="px-4 py-2 bg-destructive text-white font-medium rounded-lg hover:bg-destructive/90 transition-colors">
+            <button type="button" onClick={() => { if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) { alert("Account deletion request submitted."); } }} className="px-4 py-2 bg-destructive text-white font-medium rounded-lg hover:bg-destructive/90 transition-colors">
               Delete Account
             </button>
           </motion.div>
@@ -629,7 +629,7 @@ export default function SettingsPage() {
               Demo Mode
             </h3>
             <p className="text-sm text-foreground/70">
-              Toggle between "Challenge" and "Funded" states to verify UI behavior.
+              Toggle between &quot;Challenge&quot; and &quot;Funded&quot; states to verify UI behavior.
               Note: This is a client-side simulation. Real persistence requires a backend update.
             </p>
           </div>

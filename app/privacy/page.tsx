@@ -26,7 +26,7 @@ const sections = [
   },
   {
     title: "5. Your Rights",
-    content: `Depending on your location, you may have rights to: access your personal data, correct inaccurate data, delete your data, restrict processing, data portability, and withdraw consent. To exercise these rights, contact us at privacy@alphatrader.com.`,
+    content: `Depending on your location, you may have rights to: access your personal data, correct inaccurate data, delete your data, restrict processing, data portability, and withdraw consent. To exercise these rights, contact us at privacy@braxleynevim.com.`,
   },
   {
     title: "6. Cookies and Tracking",
@@ -128,7 +128,7 @@ export default function PrivacyPage() {
             className="max-w-3xl bg-white/[0.02] border border-white/10 p-6"
           >
             <p className="text-white/60 font-light leading-relaxed">
-              Your privacy is important to us. This Privacy Policy explains how AlphaTrader collects, uses, discloses, and safeguards your information when you use our services.
+              Your privacy is important to us. This Privacy Policy explains how BraxleyNevim collects, uses, discloses, and safeguards your information when you use our services.
             </p>
           </motion.div>
         </div>
@@ -161,8 +161,8 @@ export default function PrivacyPage() {
             >
               <h3 className="font-bold mb-3">Data Protection Officer</h3>
               <p className="text-white/40 text-sm font-mono">
-                AlphaTrader Ltd<br />
-                Email: privacy@alphatrader.com<br />
+                BraxleyNevim Ltd<br />
+                Email: privacy@braxleynevim.com<br />
                 Address: London, United Kingdom
               </p>
             </motion.div>

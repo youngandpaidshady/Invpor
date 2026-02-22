@@ -1,43 +1,35 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
+
+// Zod schema for purchase creation (this route lacked proper validation)
+const createSessionSchema = z.object({
+  challengeType: z.string().trim().min(1).max(50),
+  accountSize: z.string().trim().min(1).max(20),
+  price: z.number().positive().max(100000),
+  paymentMethod: z.enum(["card", "crypto"]),
+  email: z.string().trim().toLowerCase().email().max(254),
+});
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { challengeType, accountSize, price, paymentMethod, email } = body;
 
-    // Validate required fields
-    if (!challengeType || !accountSize || !price || !paymentMethod || !email) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    // ★ Validate input with Zod (previously had no schema validation)
+    const validatedData = createSessionSchema.parse(body);
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
-    }
+    // ★ Sanitize all string fields
+    sanitizeObject(validatedData as unknown as Record<string, unknown>);
 
     // In production, integrate with Stripe or Coinbase Commerce
-    // This is a placeholder response
-    if (paymentMethod === "card") {
-      // Create Stripe Checkout Session
-      // const session = await stripe.checkout.sessions.create({...});
-      
+    if (validatedData.paymentMethod === "card") {
       return NextResponse.json({
         success: true,
         provider: "stripe",
         sessionId: `stripe_session_${Date.now()}`,
         url: `https://checkout.stripe.com/placeholder`,
       });
-    } else if (paymentMethod === "crypto") {
-      // Create Coinbase Commerce Charge
-      // const charge = await coinbaseCommerce.createCharge({...});
-      
+    } else if (validatedData.paymentMethod === "crypto") {
       return NextResponse.json({
         success: true,
         provider: "coinbase",
@@ -50,7 +42,14 @@ export async function POST(request: Request) {
       { error: "Invalid payment method" },
       { status: 400 }
     );
-  } catch {
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: error.errors[0].message },
+        { status: 400 }
+      );
+    }
+    console.error("Purchase create-session error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

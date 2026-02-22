@@ -252,8 +252,8 @@ export default function PayoutsPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex items-center gap-4">
-        <div className="relative">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="relative w-full sm:w-auto">
           <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
           <select
             value={filterStatus}
@@ -269,7 +269,7 @@ export default function PayoutsPage() {
             <option value="rejected">Rejected</option>
           </select>
         </div>
-        <button className="px-4 py-2.5 border border-border rounded-lg hover:bg-foreground/5 transition-colors flex items-center gap-2">
+        <button type="button" onClick={() => alert("Exporting payouts...")} className="px-4 py-2.5 border border-border rounded-lg hover:bg-foreground/5 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto">
           <Download className="w-4 h-4" />
           Export
         </button>

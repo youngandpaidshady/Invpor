@@ -48,7 +48,7 @@ export default function DashboardLayout({
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="font-serif font-bold text-primary-foreground text-sm">A</span>
               </div>
-              <span className="font-serif font-bold text-lg tracking-tight">AlphaTrader</span>
+              <span className="font-serif font-bold text-lg tracking-tight">BraxleyNevim</span>
             </Link>
           )}
           <button
@@ -84,6 +84,8 @@ export default function DashboardLayout({
         {/* Bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border/50 bg-card/20 backdrop-blur-sm">
           <button
+            type="button"
+            onClick={() => window.location.href = "/"}
             className={`flex items-center gap-3 px-3 py-3 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all w-full ${isCollapsed ? "justify-center" : ""}`}
           >
             <LogOut className="w-5 h-5" />
@@ -114,7 +116,7 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="relative w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center hover:bg-muted transition-colors">
+            <button type="button" onClick={() => alert("You have 1 new notification.")} className="relative w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center hover:bg-muted transition-colors">
               <Bell className="w-5 h-5 text-muted-foreground" />
               <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-primary" />
             </button>

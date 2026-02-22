@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validations";
 import { z } from "zod";
+import { sanitizeObject } from "@/lib/sanitize";
 
 // POST /api/contact - Submit contact form
 export async function POST(request: Request) {
@@ -9,6 +10,9 @@ export async function POST(request: Request) {
 
     // Validate input
     const validatedData = contactSchema.parse(body);
+
+    // ★ Sanitize all string fields to prevent stored XSS
+    sanitizeObject(validatedData as unknown as Record<string, unknown>);
 
     // In production, you would:
     // 1. Save to database

@@ -678,7 +678,7 @@ export default function CheckoutPage() {
               {/* Trust Badges */}
               <div className="bg-[#09090B] p-4 border border-[#27272A]">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-[#71717A] mb-3">
-                  Why AlphaTrader
+                  Why BraxleyNevim
                 </p>
                 <ul className="space-y-2 text-sm text-[#A1A1AA]">
                   <li className="flex items-center gap-2">

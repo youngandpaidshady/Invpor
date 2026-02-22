@@ -1,6 +1,6 @@
-# 🏆 AlphaTrader GOLD EDITION UI/UX Enhancement Guide
+# 🏆 BraxleyNevim GOLD EDITION UI/UX Enhancement Guide
 
-> **Vision:** Transform AlphaTrader into a **luxurious, premium trading experience** with a stunning gold-themed design that exudes wealth, success, and exclusivity.
+> **Vision:** Transform BraxleyNevim into a **luxurious, premium trading experience** with a stunning gold-themed design that exudes wealth, success, and exclusivity.
 
 ---
 
@@ -969,7 +969,7 @@ const goldParticleConfig = {
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                                                                         │
-│  🏆 ALPHATRADER    Home  Pricing  How It Works  FAQ     [Get Funded]   │
+│  🏆 BRAXLEYNEVIM    Home  Pricing  How It Works  FAQ     [Get Funded]   │
 │  ━━━━━━━━━━━━━                                          ╰── Gold CTA   │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -1026,7 +1026,7 @@ Features:
 │   ╭─────────────────────────────────────────────────────────╮  │
 │   │                                                         │  │
 │   │   "I received my first $8,000 payout in just 3 weeks.  │  │
-│   │    AlphaTrader changed my trading career forever."      │  │
+│   │    BraxleyNevim changed my trading career forever."      │  │
 │   │                                                         │  │
 │   │         ┌────┐                                          │  │
 │   │         │ 👤 │  John Davidson                           │  │
@@ -1232,7 +1232,7 @@ Features:
 
 ```
 ╭────────────────────────────────────────╮
-│ 🏆 ALPHATRADER              ☰ Menu    │
+│ 🏆 BRAXLEYNEVIM              ☰ Menu    │
 ╰────────────────────────────────────────╯
 
         ↓ Menu slides down
@@ -1342,7 +1342,7 @@ After implementing these changes, the site should:
 
 ## 🏆 THE GOLD STANDARD
 
-> **Remember:** The gold theme isn't just a color - it's a **promise of wealth and success**. Every element should reinforce the message that traders who choose AlphaTrader are investing in their financial future.
+> **Remember:** The gold theme isn't just a color - it's a **promise of wealth and success**. Every element should reinforce the message that traders who choose BraxleyNevim are investing in their financial future.
 
 **Key Principles:**
 1. **Gold = Success** - Use gold for positive actions and achievements

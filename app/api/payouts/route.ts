@@ -6,7 +6,7 @@ import type { PayoutStatus } from "@/lib/types";
 export async function GET(request: Request) {
   try {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -18,8 +18,8 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status") as PayoutStatus | null;
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    const page = Math.max(parseInt(searchParams.get("page") || "1") || 1, 1);
+    const limit = Math.min(parseInt(searchParams.get("limit") || "10") || 10, 100);
     const offset = (page - 1) * limit;
 
     let query = supabase

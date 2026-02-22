@@ -2,219 +2,379 @@
 
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
-import { ArrowRight, ChevronDown, Check, Disc, Target, Zap } from "lucide-react";
+import { ArrowUpRight, Crosshair, Shield, TrendingUp, Banknote } from "lucide-react";
 
 /**
- * How It Works — Magma Design System
- * 
- * 3D Scroll Experience.
- * "The Path to Capital"
+ * How It Works — Arctic Void Design System
+ *
+ * A vertical timeline experience. Each phase is a full-bleed
+ * void-glass card with diagonal composition, data-dense specs,
+ * and scan-line hover effects. The hero uses an asymmetric
+ * split with a vertical "PROTOCOL" label. Final CTA uses
+ * the clipped primary button (btn-primary).
+ *
+ * Aesthetic: Deep-space mission briefing. Cold. Precise. Inevitable.
  */
 
-const steps = [
+/* ─── DATA ─── */
+
+interface Phase {
+  id: string;
+  phase: string;
+  title: string;
+  subtitle: string;
+  brief: string;
+  specs: { label: string; value: string }[];
+  icon: typeof Crosshair;
+}
+
+const phases: Phase[] = [
   {
     id: "01",
-    title: "The Evaluation",
-    tagline: "Prove your edge.",
-    desc: "Trade a demo account with simulated capital. Hit the profit target without violating risk rules. Show us you can manage risk like a professional.",
+    phase: "PHASE 01",
+    title: "THE EVALUATION",
+    subtitle: "Prove your edge.",
+    brief:
+      "Trade a simulated account at the size you choose. Hit the profit target while respecting drawdown limits. No time pressure — execute on your schedule.",
     specs: [
-      { label: "Profit Target", value: "8-10%" },
-      { label: "Drawdown", value: "10%" },
-      { label: "Time Limit", value: "None" }
-    ]
+      { label: "Profit Target", value: "8 %" },
+      { label: "Max Drawdown", value: "10 %" },
+      { label: "Time Limit", value: "∞" },
+      { label: "Leverage", value: "1 : 100" },
+    ],
+    icon: Crosshair,
   },
   {
     id: "02",
-    title: "The Verification",
-    tagline: "Consistency check.",
-    desc: "Repeat your success. A slightly lower profit target to prove your first run wasn't luck. Consistency is the only currency that matters.",
+    phase: "PHASE 02",
+    title: "VERIFICATION",
+    subtitle: "Consistency, not luck.",
+    brief:
+      "A reduced profit target confirms your edge is repeatable. Same risk rules. Same instruments. Different result required: proof of discipline.",
     specs: [
-      { label: "Profit Target", value: "5%" },
-      { label: "Drawdown", value: "10%" },
-      { label: "Time Limit", value: "None" }
-    ]
+      { label: "Profit Target", value: "5 %" },
+      { label: "Max Drawdown", value: "10 %" },
+      { label: "Time Limit", value: "∞" },
+      { label: "Min Days", value: "5" },
+    ],
+    icon: Shield,
   },
   {
     id: "03",
-    title: "The Allocation",
-    tagline: "Professional Status.",
-    desc: "You are now funded. Trade our capital. Keep up to 90% of the profits. Scale your account up to $2,000,000 based on performance.",
+    phase: "PHASE 03",
+    title: "FUNDED",
+    subtitle: "Professional allocation.",
+    brief:
+      "Your funded account is provisioned within 24 hours. Trade our capital, keep the majority of profits, and scale your allocation based on performance.",
     specs: [
-      { label: "Profit Split", value: "80-90%" },
+      { label: "Profit Split", value: "80–90 %" },
       { label: "Payouts", value: "On Demand" },
-      { label: "Scaling", value: "Up to $2M" }
-    ]
-  }
+      { label: "Max Scale", value: "$2 M" },
+      { label: "First Payout", value: "14 Days" },
+    ],
+    icon: TrendingUp,
+  },
+  {
+    id: "04",
+    phase: "PHASE 04",
+    title: "WITHDRAW",
+    subtitle: "Your money. Your terms.",
+    brief:
+      "Request a payout whenever you want. Bank transfer, crypto, or e-wallet — processed within 24 hours. No lock-ups, no hidden fees.",
+    specs: [
+      { label: "Methods", value: "3+" },
+      { label: "Processing", value: "24 hrs" },
+      { label: "Min Payout", value: "$50" },
+      { label: "Frequency", value: "Unlimited" },
+    ],
+    icon: Banknote,
+  },
 ];
 
-function StepCard({ step, index, total }: { step: typeof steps[0], index: number, total: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"]
-  });
+/* ─── PHASE CARD ─── */
 
-  // 3D Scroll Transformations
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const rotateX = useTransform(scrollYProgress, [0.2, 0.8], [15, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0.2, 0.8], [0.9, 1]);
+function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
+
+  const Icon = phase.icon;
+  const isEven = index % 2 === 0;
 
   return (
-    <div ref={cardRef} className="min-h-screen flex items-center justify-center sticky top-0 perspective-1000">
-      <motion.div
-        style={{ rotateX, opacity, scale, y }}
-        className="w-full max-w-5xl bg-[#111113] border border-[#27272A] p-8 md:p-12 lg:p-16 relative overflow-hidden shadow-2xl shadow-black/50"
-      >
-        {/* Background Gradients */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F97316]/5 blur-[100px] rounded-full pointer-events-none" />
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      className="relative"
+    >
+      {/* Connector line from timeline */}
+      {index < phases.length - 1 && (
+        <div className="absolute left-8 top-full w-[1px] h-16 lg:h-24 bg-gradient-to-b from-[#2A2A32] to-transparent z-0" />
+      )}
 
-        <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="flex items-center gap-4 mb-6">
-              <span className="font-mono text-[#F97316] text-xl md:text-2xl font-bold">/{step.id}</span>
-              <div className="h-px flex-1 bg-[#27272A]" />
+      <div className="card-void scan-line-effect group relative overflow-hidden">
+        {/* Corner accent — top left */}
+        <div className="absolute top-0 left-0 w-10 h-[1px] bg-arctic/50" />
+        <div className="absolute top-0 left-0 w-[1px] h-10 bg-arctic/50" />
+
+        {/* Background glow */}
+        <div
+          className="absolute -top-24 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            width: 400,
+            height: 400,
+            background: "radial-gradient(ellipse at center, rgba(0,229,255,0.06), transparent 70%)",
+            [isEven ? "right" : "left"]: "-10%",
+          }}
+        />
+
+        <div className={`relative z-10 grid lg:grid-cols-[1fr_1px_320px] gap-0 ${isEven ? "" : "lg:grid-cols-[320px_1px_1fr]"}`}>
+          {/* ── Main content ── */}
+          <div className={`p-8 lg:p-12 ${isEven ? "" : "lg:order-3"}`}>
+            {/* Phase + Icon row */}
+            <div className="flex items-center justify-between mb-8">
+              <span className="eyebrow">{phase.phase}</span>
+              <Icon className="w-5 h-5 text-[#2A2A32] group-hover:text-arctic/40 transition-colors duration-500" strokeWidth={1.5} />
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-display font-bold uppercase tracking-tight text-white mb-4">
-              {step.title}
+            {/* Title */}
+            <h2 className="heading-lg text-[#E8E8ED] mb-3">
+              {phase.title}
             </h2>
-
-            <p className="font-mono text-[#71717A] text-lg uppercase tracking-wider mb-8">
-                    // {step.tagline}
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-arctic/60 mb-6">
+              {"// "}{phase.subtitle}
             </p>
 
-            <p className="text-[#A1A1AA] text-lg leading-relaxed mb-12 max-w-lg">
-              {step.desc}
+            {/* Brief */}
+            <p className="text-sm text-[#6B6B76] leading-relaxed font-body max-w-lg mb-10">
+              {phase.brief}
             </p>
 
-            <div className="grid grid-cols-3 gap-6 border-t border-[#27272A] pt-8">
-              {step.specs.map(spec => (
-                <div key={spec.label}>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#71717A] mb-2">
-                    {spec.label}
-                  </div>
-                  <div className="text-white font-mono font-bold text-lg md:text-xl">
-                    {spec.value}
+            {/* Specs grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 border-t border-[#2A2A32] pt-6">
+              {phase.specs.map((s) => (
+                <div key={s.label}>
+                  <div className="stat-label mb-1.5">{s.label}</div>
+                  <div className="font-mono text-[#E8E8ED] text-lg font-medium tracking-wide">
+                    {s.value}
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center justify-center relative">
-            <div className="absolute inset-0 border border-[#F97316]/20 rounded-full animate-[spin_10s_linear_infinite]" />
-            <div className="absolute inset-[20px] border border-[#27272A] rounded-full" />
+          {/* ── Vertical divider ── */}
+          <div className={`hidden lg:block bg-[#2A2A32] ${isEven ? "" : "lg:order-2"}`} />
 
-            <div className="w-64 h-64 rounded-full bg-[#09090B] border border-[#3F3F46] flex items-center justify-center relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[#F97316]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <span className="font-display text-[100px] font-bold text-[#18181B] group-hover:text-[#F97316]/20 transition-colors select-none">
-                {step.id}
-              </span>
-            </div>
+          {/* ── Number panel ── */}
+          <div className={`hidden lg:flex flex-col items-center justify-center relative py-12 ${isEven ? "" : "lg:order-1"}`}>
+            <span className="font-display text-[120px] leading-none text-[#0C0C10] group-hover:text-arctic/[0.07] transition-colors duration-700 select-none">
+              {phase.id}
+            </span>
+            {/* Tiny orbit ring */}
+            <div className="absolute w-32 h-32 border border-[#1C1C22] rounded-full group-hover:border-arctic/10 transition-colors duration-700" />
           </div>
         </div>
-
-        {/* Progress indicator */}
-        <div className="absolute bottom-8 right-8 text-[#71717A] font-mono text-xs">
-          STEP {index + 1} OF {total}
-        </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 }
 
-export default function HowItWorksPage() {
+/* ─── PROGRESS BAR ─── */
+
+function ProgressBar() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <main className="bg-[#09090B] text-white selection:bg-[#F97316] selection:text-black">
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-[2px] bg-arctic origin-left z-50"
+      style={{ scaleX, opacity: 0.8 }}
+    />
+  );
+}
+
+/* ─── PAGE ─── */
+
+export default function HowItWorksPage() {
+  const heroRef = useRef<HTMLElement>(null);
+  const heroInView = useInView(heroRef, { once: true });
+
+  return (
+    <main className="bg-[#050507] text-[#E8E8ED] selection:bg-arctic selection:text-[#050507]">
       <Navbar />
+      <ProgressBar />
 
-      {/* Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-[#F97316] origin-left z-50"
-        style={{ scaleX }}
-      />
+      {/* ═══════════════════════════════════
+           HERO — Asymmetric split
+         ═══════════════════════════════════ */}
+      <section
+        ref={heroRef}
+        className="min-h-[85vh] flex items-center relative overflow-hidden pt-24 noise-overlay"
+      >
+        {/* Void spotlight */}
+        <div className="absolute inset-0 void-spotlight" />
 
-      {/* Hero */}
-      <section className="min-h-[80vh] flex flex-col justify-center items-center relative overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#18181B] via-[#09090B] to-[#09090B]" />
-        <div className="absolute inset-0 grid-pattern opacity-20" />
+        {/* Grid pattern */}
+        <div className="absolute inset-0 grid-pattern opacity-[0.04]" />
 
-        <div className="container-wide relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316] text-[10px] font-bold uppercase tracking-wider mb-8">
-              <Disc className="w-3 h-3 animate-spin-slow" />
-              System Overview
-            </div>
+        {/* Vertical label */}
+        <div className="hidden xl:block absolute left-12 top-1/2 -translate-y-1/2 writing-vertical">
+          <span className="font-mono text-[10px] tracking-[0.4em] text-[#2A2A32] uppercase">
+            Protocol Sequence
+          </span>
+        </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold uppercase tracking-tighter mb-8 text-white">
-              Protocol
-              <span className="block text-transparent bg-clip-text bg-gradient-to-b from-[#71717A] to-[#27272A]">
-                Sequence
-              </span>
-            </h1>
+        {/* Diagonal accent line */}
+        <div
+          className="absolute top-0 right-[20%] w-[1px] h-full bg-gradient-to-b from-transparent via-arctic/10 to-transparent"
+          style={{ transform: "rotate(-6deg)", transformOrigin: "top" }}
+        />
 
-            <p className="max-w-xl mx-auto text-[#A1A1AA] text-xl font-light leading-relaxed mb-12">
-              Our funding model removes the friction between talent and capital.
-              No hidden rules. No time limits. Pure execution.
-            </p>
-
+        <div className="container-wide relative z-10">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-end">
+            {/* Left — headline */}
             <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="flex justify-center"
+              initial={{ opacity: 0, y: 40 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             >
-              <ChevronDown className="w-6 h-6 text-[#71717A]" />
+              <div className="inline-flex items-center gap-2.5 mb-8">
+                <div className="w-1.5 h-1.5 bg-arctic animate-pulse-live" />
+                <span className="eyebrow">System Overview</span>
+              </div>
+
+              <h1 className="heading-xl text-[#E8E8ED] mb-6">
+                THE PATH<br />
+                TO <span className="text-arctic">CAPITAL</span>
+              </h1>
+
+              <p className="text-[#6B6B76] text-lg font-body leading-relaxed max-w-xl mb-12">
+                Three stages separate you from fully funded status.
+                No hidden clauses. No time limits. Pure execution meets
+                transparent evaluation.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/pricing" className="shimmer-button inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#C7A257] text-black text-sm font-bold font-mono uppercase tracking-[0.15em] rounded-lg shadow-[0_0_20px_rgba(199,162,87,0.2)] hover:shadow-[0_0_30px_rgba(199,162,87,0.4)] transition-all active:scale-95">
+                  <Crosshair className="w-4 h-4 mr-2" />
+                  Get Funded
+                </Link>
+                <Link href="/dashboard/demo" className="btn-secondary">
+                  Try Free Demo
+                </Link>
+              </div>
             </motion.div>
-          </motion.div>
+
+            {/* Right — data block */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={heroInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+              className="hidden lg:block card-void p-8 w-72"
+            >
+              <div className="stat-label mb-2">Evaluation Pipeline</div>
+              <div className="divider mb-6" />
+              {["EVALUATE", "VERIFY", "FUND", "WITHDRAW"].map((label, i) => (
+                <div key={label} className="flex items-center gap-3 mb-4 last:mb-0">
+                  <span className="font-mono text-xs text-arctic/40">0{i + 1}</span>
+                  <div className="flex-1 h-[1px] bg-[#2A2A32]" />
+                  <span className="font-mono text-[11px] tracking-[0.15em] text-[#6B6B76] uppercase">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Bottom divider */}
+          <div className="mt-20 flex items-center gap-4">
+            <div className="flex-1 h-[1px] bg-[#2A2A32]" />
+            <span className="font-mono text-[10px] tracking-[0.3em] text-[#2A2A32] uppercase">
+              Scroll to explore
+            </span>
+            <div className="w-4 h-4 border border-[#2A2A32] flex items-center justify-center">
+              <motion.div
+                animate={{ y: [0, 4, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                className="w-[2px] h-2 bg-arctic/40"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Steps Container */}
-      <div className="relative">
-        {steps.map((step, i) => (
-          <StepCard key={step.id} step={step} index={i} total={steps.length} />
-        ))}
-      </div>
+      {/* ═══════════════════════════════════
+           PHASE CARDS — Vertical timeline
+         ═══════════════════════════════════ */}
+      <section className="section relative noise-overlay">
+        {/* Central timeline spine */}
+        <div className="absolute left-8 lg:left-1/2 lg:-translate-x-[0.5px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#2A2A32] to-transparent opacity-40 pointer-events-none" />
 
-      {/* Final CTA */}
-      <section className="py-32 relative overflow-hidden border-t border-[#27272A]">
-        <div className="absolute inset-0 magma-spotlight opacity-50" />
+        <div className="container-wide relative z-10 flex flex-col gap-16 lg:gap-24">
+          {phases.map((phase, i) => (
+            <PhaseCard key={phase.id} phase={phase} index={i} />
+          ))}
+        </div>
+      </section>
 
-        <div className="container-wide relative z-10 text-center">
-          <h2 className="text-4xl md:text-6xl font-display font-bold uppercase tracking-tight mb-8">
-            Ready to <span className="text-[#F97316]">Execute?</span>
-          </h2>
+      {/* ═══════════════════════════════════
+           BOTTOM DATA STRIP — Key metrics
+         ═══════════════════════════════════ */}
+      <section className="border-t border-b border-[#2A2A32] bg-[#050507] relative noise-overlay">
+        <div className="container-wide py-10 lg:py-14">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { label: "Funded Traders", value: "4,200+", color: "text-arctic" },
+              { label: "Capital Deployed", value: "$38M", color: "text-[#E8E8ED]" },
+              { label: "Avg Payout Time", value: "< 24h", color: "text-[#00FF88]" },
+              { label: "Profit Split", value: "Up to 90%", color: "text-[#E8E8ED]" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="stat-label mb-2">{stat.label}</div>
+                <div className={`font-mono text-2xl lg:text-3xl font-medium tracking-wide ${stat.color}`}>
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link
-              href="/pricing"
-              className="px-8 py-4 bg-[#F97316] text-black font-bold uppercase tracking-widest hover:bg-[#ff8a3d] transition-colors flex items-center justify-center gap-3"
-            >
-              <Target className="w-5 h-5" />
-              Start Challenge
-            </Link>
-            <Link
-              href="/dashboard/demo"
-              className="px-8 py-4 bg-transparent border border-[#3F3F46] text-white font-bold uppercase tracking-widest hover:bg-[#27272A] transition-colors flex items-center justify-center gap-3"
-            >
-              <Zap className="w-5 h-5" />
-              Try Free Demo
-            </Link>
+      {/* ═══════════════════════════════════
+           CTA — Final push
+         ═══════════════════════════════════ */}
+      <section className="section relative overflow-hidden noise-overlay">
+        <div className="absolute inset-0 void-spotlight" />
+
+        <div className="container-wide relative z-10">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-center">
+            <div>
+              <p className="eyebrow mb-4">Ready?</p>
+              <h2 className="heading-lg text-[#E8E8ED] mb-4">
+                START YOUR<br />
+                <span className="text-arctic">EVALUATION</span>
+              </h2>
+              <p className="text-[#6B6B76] text-sm font-body leading-relaxed max-w-md">
+                Join thousands of traders who have already secured funded accounts.
+                One-time fee. No recurring charges. No hidden rules.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/pricing" className="shimmer-button inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#C7A257] text-black text-sm font-bold font-mono uppercase tracking-[0.15em] rounded-lg shadow-[0_0_20px_rgba(199,162,87,0.2)] hover:shadow-[0_0_30px_rgba(199,162,87,0.4)] transition-all active:scale-95">
+                <Crosshair className="w-4 h-4 mr-2" />
+                Get Funded
+                <ArrowUpRight className="w-4 h-4 ml-2" />
+              </Link>
+              <Link href="/faq" className="btn-secondary">
+                View FAQ
+              </Link>
+            </div>
           </div>
         </div>
       </section>

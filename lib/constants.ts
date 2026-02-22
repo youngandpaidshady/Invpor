@@ -4,7 +4,7 @@
 
 import { PricingPlan } from "./types";
 
-export const APP_NAME = "AlphaTrader";
+export const APP_NAME = "BraxleyNevim";
 export const APP_DESCRIPTION = "Get funded up to $200,000. Trade with our capital, keep up to 90% of profits.";
 
 // ===========================================
@@ -194,14 +194,14 @@ export const TRADING_RULES = {
 // ===========================================
 
 export const COMPANY_INFO = {
-  name: "AlphaTrader Ltd",
+  name: "BraxleyNevim Ltd",
   founded: 2023,
   headquarters: "London, UK",
-  support_email: "support@alphatrader.com",
+  support_email: "support@braxleynevim.com",
   social: {
-    twitter: "https://twitter.com/alphatrader",
-    discord: "https://discord.gg/alphatrader",
-    telegram: "https://t.me/alphatrader",
+    twitter: "https://twitter.com/braxleynevim",
+    discord: "https://discord.gg/braxleynevim",
+    telegram: "https://t.me/braxleynevim",
   },
 };
 

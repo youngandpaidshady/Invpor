@@ -222,6 +222,7 @@ export interface KYCSubmission {
 /**
  * Submit KYC documents
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function submitKYC(data: KYCSubmission): Promise<{ success: boolean; message: string }> {
     await delay(1500); // Simulate upload time
 

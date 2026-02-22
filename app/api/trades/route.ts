@@ -1,11 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { sanitizeQueryString, sanitizeNumericParam } from "@/lib/sanitize";
 
 // GET /api/trades - List user's trades with pagination
 export async function GET(request: Request) {
   try {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -16,13 +17,13 @@ export async function GET(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const challenge_id = searchParams.get("challenge_id");
-    const symbol = searchParams.get("symbol");
-    const status = searchParams.get("status"); // "open" or "closed"
-    const from_date = searchParams.get("from_date");
-    const to_date = searchParams.get("to_date");
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "20");
+    const challenge_id = sanitizeQueryString(searchParams.get("challenge_id"), 50);
+    const symbol = sanitizeQueryString(searchParams.get("symbol"), 20);
+    const status = sanitizeQueryString(searchParams.get("status"), 20);
+    const from_date = sanitizeQueryString(searchParams.get("from_date"), 30);
+    const to_date = sanitizeQueryString(searchParams.get("to_date"), 30);
+    const page = sanitizeNumericParam(searchParams.get("page"), 1, 1, 1000);
+    const limit = sanitizeNumericParam(searchParams.get("limit"), 20, 1, 100);
     const offset = (page - 1) * limit;
 
     // First, get user's challenge IDs for authorization

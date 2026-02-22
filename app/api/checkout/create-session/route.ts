@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PRICING_PLANS } from "@/lib/constants";
 import { purchaseSchema } from "@/lib/validations";
 import { z } from "zod";
+import { sanitizeString } from "@/lib/sanitize";
 
 // ============================================
 // STRIPE INTEGRATION DISABLED
@@ -69,14 +70,21 @@ export async function POST(request: Request) {
     }
 
     if (payment_method === "crypto") {
-      const { cryptoCoin, cryptoNetwork } = body; // These weren't in strict schema but are needed for crypto flow
+      const rawCryptoCoin = body.cryptoCoin;
+      const rawCryptoNetwork = body.cryptoNetwork;
 
-      if (!cryptoCoin || !cryptoNetwork) {
-        return NextResponse.json({ error: "Missing crypto details" }, { status: 400 });
+      if (!rawCryptoCoin || !rawCryptoNetwork ||
+        typeof rawCryptoCoin !== "string" || typeof rawCryptoNetwork !== "string" ||
+        rawCryptoCoin.length > 20 || rawCryptoNetwork.length > 30) {
+        return NextResponse.json({ error: "Invalid crypto details" }, { status: 400 });
       }
 
+      // ★ Sanitize unvalidated fields
+      const cryptoCoin = sanitizeString(rawCryptoCoin.trim());
+      const cryptoNetwork = sanitizeString(rawCryptoNetwork.trim());
+
       // Calculate crypto price with discount
-      const cryptoDiscount = 0.05; // 5%
+      // const cryptoDiscount = 0.05; // 5%
 
       const params = new URLSearchParams({
         planId: plan_id,

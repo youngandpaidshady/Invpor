@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
     AreaChart,
     Area,
@@ -11,7 +11,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { format } from "date-fns";
-import { fetchEquityCurve, type ChartPeriod } from "@/lib/services/server";
+import { type ChartPeriod } from "@/lib/services/server";
 import type { EquityPoint } from "@/lib/types";
 
 interface EquityChartProps {
@@ -74,8 +74,8 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
     useEffect(() => {
         if (initialData.length > 0) {
             setData(initialData);
-            setIsLoading(false);
         }
+        setIsLoading(false);
     }, [initialData]);
 
     /* 
@@ -171,51 +171,57 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
                             <p className="text-sm text-muted-foreground">Loading chart...</p>
                         </div>
                     </div>
+                ) : data.length === 0 ? (
+                    <div className="h-full flex items-center justify-center border border-dashed border-border bg-muted/20">
+                        <p className="text-sm text-muted-foreground">No data available</p>
+                    </div>
                 ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart
-                            data={data}
-                            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-                        >
-                            <defs>
-                                <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0.3} />
-                                    <stop offset="100%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid
-                                strokeDasharray="3 3"
-                                stroke="hsl(0, 0%, 15%)"
-                                vertical={false}
-                            />
-                            <XAxis
-                                dataKey="date"
-                                tickFormatter={(date) => format(new Date(date), "MMM d")}
-                                stroke="hsl(0, 0%, 40%)"
-                                fontSize={11}
-                                tickLine={false}
-                                axisLine={false}
-                            />
-                            <YAxis
-                                domain={[minBalance, maxBalance]}
-                                tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                                stroke="hsl(0, 0%, 40%)"
-                                fontSize={11}
-                                tickLine={false}
-                                axisLine={false}
-                                width={50}
-                            />
-                            <Tooltip content={<CustomTooltip />} />
-                            <Area
-                                type="monotone"
-                                dataKey="balance"
-                                stroke="hsl(152, 100%, 50%)"
-                                strokeWidth={2}
-                                fill="url(#equityGradient)"
-                                animationDuration={300}
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    <div className="w-full h-full min-h-[300px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart
+                                data={data}
+                                margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                            >
+                                <defs>
+                                    <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0.3} />
+                                        <stop offset="100%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    stroke="hsl(0, 0%, 15%)"
+                                    vertical={false}
+                                />
+                                <XAxis
+                                    dataKey="date"
+                                    tickFormatter={(date) => format(new Date(date), "MMM d")}
+                                    stroke="hsl(0, 0%, 40%)"
+                                    fontSize={11}
+                                    tickLine={false}
+                                    axisLine={false}
+                                />
+                                <YAxis
+                                    domain={[minBalance, maxBalance]}
+                                    tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                                    stroke="hsl(0, 0%, 40%)"
+                                    fontSize={11}
+                                    tickLine={false}
+                                    axisLine={false}
+                                    width={50}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Area
+                                    type="monotone"
+                                    dataKey="balance"
+                                    stroke="hsl(152, 100%, 50%)"
+                                    strokeWidth={2}
+                                    fill="url(#equityGradient)"
+                                    animationDuration={300}
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
                 )}
             </div>
 

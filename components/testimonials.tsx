@@ -30,7 +30,7 @@ const testimonials = [
     country: "🇩🇪 Germany",
     image: "/avatars/3.jpg",
     content:
-      "I've tried 5 different prop firms. AlphaTrader has the best combination of fair rules, great support, and fast payouts. Worth every penny.",
+      "I've tried 5 different prop firms. BraxleyNevim has the best combination of fair rules, great support, and fast payouts. Worth every penny.",
     rating: 5,
     payout: "$22,100",
   },
@@ -87,7 +87,7 @@ export function Testimonials() {
           </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto">
             Join thousands of profitable traders who have achieved their goals
-            with AlphaTrader.
+            with BraxleyNevim.
           </p>
         </motion.div>
 

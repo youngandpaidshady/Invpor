@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { randomBytes, randomInt } from "crypto";
 
 // ============================================
-// STRIPE WEBHOOKS DISABLED
+// STRIPE WEBHOOKS
 // ============================================
-// This endpoint is currently in demo mode.
 // To enable real webhooks:
 // 1. Set STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET in .env
 // 2. Configure webhook URL in Stripe Dashboard
-// 3. Uncomment the verification code below
-//
-// import Stripe from 'stripe';
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2023-10-16' });
-// const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
-
-import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
   try {
@@ -25,17 +19,30 @@ export async function POST(request: Request) {
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     if (stripeSecret && webhookSecret) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const Stripe = require('stripe');
       const stripe = new Stripe(stripeSecret);
       try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-      } catch (err: any) {
-        console.error(`Webhook signature verification failed.`, err.message);
-        return NextResponse.json({ error: "Webhook signature verification failed" }, { status: 400 });
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+        console.error(`Webhook signature verification failed:`, message);
+        return NextResponse.json(
+          { error: "Webhook signature verification failed" },
+          { status: 400 }
+        );
       }
     } else {
-      // Fallback to basic JSON parse if no secrets (DEMO MODE)
-      // In production this should be disallowed
+      // ★ SECURITY: In production, reject unsigned webhooks entirely
+      if (process.env.NODE_ENV === "production") {
+        console.error("Stripe webhook secrets not configured in production — rejecting request");
+        return NextResponse.json(
+          { error: "Webhook not configured" },
+          { status: 503 }
+        );
+      }
+
+      // Development-only: allow unsigned JSON for testing
       try {
         event = JSON.parse(body);
       } catch {
@@ -45,22 +52,15 @@ export async function POST(request: Request) {
 
     const supabase = await createClient();
 
-    // Handle different event types
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
 
-        // Extract metadata
         const {
           orderId,
-          planId,
-          userId,
-          //   challengeType,
-          //   accountSize,
-          //   promoCode,
+          // planId,
+          // userId,
         } = session.metadata || {};
-
-        console.log("Processing completed session for order:", orderId);
 
         if (orderId) {
           // 1. Update Order Status
@@ -69,25 +69,25 @@ export async function POST(request: Request) {
             .update({
               payment_status: "paid",
               stripe_session_id: session.id,
-              stripe_payment_intent: session.payment_intent
+              stripe_payment_intent: session.payment_intent,
             })
             .eq("id", orderId);
 
           if (updateError) console.error("Error updating order:", updateError);
 
-          // 2. Fetch Order Details to create Challenge
-          const { data: order } = await supabase.from("orders").eq("id", orderId).single();
+          // 2. Fetch Order Details
+          const { data: order } = await supabase
+            .from("orders")
+            .select("*")
+            .eq("id", orderId)
+            .single();
 
           if (order) {
-            // 3. Create Challenge
-            // We need to determine challenge parameters based on plan
-            // For now, we use what's in the order record or defaults
-
+            // 3. Create Challenge with secure credential generation
             const { error: challengeError } = await supabase
               .from("challenges")
               .insert({
-                user_id: order.user_id, // If null (guest), we might need to create user first? Or user created account during checkout?
-                // Assuming user_id is present. If guest checkout, this might fail or we assign to a temp user.
+                user_id: order.user_id,
                 order_id: order.id,
                 type: order.challenge_type || "2-step",
                 account_size: order.account_size || 25000,
@@ -95,23 +95,26 @@ export async function POST(request: Request) {
                 phase: 1,
                 start_balance: order.account_size || 25000,
                 current_balance: order.account_size || 25000,
-                profit_target: 8, // Default
-                max_drawdown: 10, // Default
-                daily_drawdown: 5, // Default
+                profit_target: 8,
+                max_drawdown: 10,
+                daily_drawdown: 5,
                 trading_days: 0,
-                platform_login: `ACC${Math.floor(Math.random() * 1000000)}`,
-                platform_password: Math.random().toString(36).slice(-8),
+                // ★ SECURITY: Use crypto-secure random generation instead of Math.random()
+                platform_login: `ACC${randomInt(100000, 999999)}`,
+                platform_password: randomBytes(16).toString("hex"),
               });
 
             if (challengeError) console.error("Error creating challenge:", challengeError);
-            else console.log("Challenge created successfully for order:", orderId);
           }
         }
         break;
       }
 
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        // Silently ignore unhandled event types in production
+        if (process.env.NODE_ENV !== "production") {
+          console.log(`Unhandled event type: ${event.type}`);
+        }
     }
 
     return NextResponse.json({ received: true });

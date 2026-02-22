@@ -1,4 +1,4 @@
-# AlphaTrader - Development Task List
+# BraxleyNevim - Development Task List
 
 > **Current Status:** Foundation only. Site is not functional.
 > **Goal:** Production-ready prop trading platform

@@ -4,7 +4,7 @@
 
 import { APP_NAME, COMPANY_INFO } from "./constants";
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://alphatrader.com";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://braxleynevim.com";
 
 // ===========================================
 // Organization Schema

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const plans = [
@@ -170,9 +171,9 @@ export function ComparisonTable() {
                       </span>
                     </div>
                   ))}
-                  <button className="w-full mt-4 py-3 bg-primary text-background font-semibold rounded-xl">
-                    Get Started
-                  </button>
+                  <Link href="/pricing" className="block text-center w-full mt-4 py-3 bg-primary text-background font-semibold rounded-xl hover:bg-primary/90 transition-colors">
+                    Get Funded
+                  </Link>
                 </div>
               )}
             </motion.div>

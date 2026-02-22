@@ -32,7 +32,7 @@ function SuccessContent() {
     createdAt: new Date().toISOString(),
     credentials: {
       platform: "MetaTrader 5",
-      server: "AlphaTrader-Live",
+      server: "BraxleyNevim-Live",
       login: "AT" + Math.floor(100000 + Math.random() * 900000),
       password: "••••••••",
     },
@@ -99,7 +99,7 @@ function SuccessContent() {
           >
             Your challenge account is ready. Let&apos;s start trading!
           </motion.p>
-          
+
           {/* Demo Mode Notice */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -265,7 +265,7 @@ function SuccessContent() {
             <MessageCircle className="w-5 h-5 text-primary" />
             <span className="font-medium">FAQ</span>
           </Link>
-          <button className="flex items-center gap-3 p-4 bg-foreground/[0.02] border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all">
+          <button onClick={() => alert("Downloading MT5 platform...")} type="button" className="flex items-center gap-3 p-4 bg-foreground/[0.02] border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all">
             <Download className="w-5 h-5 text-primary" />
             <span className="font-medium">Download MT5</span>
           </button>
