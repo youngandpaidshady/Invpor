@@ -480,6 +480,16 @@ export function Hero() {
 
       {/* Gradient floor */}
       <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#010101] to-transparent z-20 pointer-events-none" />
+
+      {/* New Hero Image Backdrop */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+        <img
+          src="/images/hero_architectural.png"
+          alt="Modern skyscraper looking straight up"
+          className="w-full h-full object-cover object-top"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#010101] via-transparent to-[#010101]/50" />
+      </div>
     </motion.section>
   );
 }
