@@ -108,27 +108,12 @@ export default function LoginPage() {
         </span>
       </div>
 
-      {/* Top bar */}
-      <div className="absolute top-0 left-0 right-0 p-6 lg:p-10 flex justify-between items-center z-20">
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#C7A257] transition-colors">
-            A
-          </div>
-          <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
-            BraxleyNevim
-          </span>
-        </Link>
-        <div className="text-xs text-white/30 uppercase tracking-[0.3em] font-mono">
-          Secure Login
-        </div>
-      </div>
-
       {/* Main content */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="w-full max-w-md p-6 relative z-10"
+        className="w-full max-w-md p-6 relative z-10 pt-24"
       >
         <div className="text-center mb-10">
           <motion.h1
