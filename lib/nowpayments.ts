@@ -132,6 +132,7 @@ export function verifyIpnSignature(
     payload: Record<string, unknown>,
     receivedSignature: string
 ): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const crypto = require("crypto");
     const secret = process.env.NOWPAYMENTS_IPN_SECRET;
 
