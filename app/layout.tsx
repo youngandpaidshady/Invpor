@@ -92,12 +92,14 @@ export default function RootLayout({
             <Footer />
           </ToastProvider>
         </ThemeProvider>
-        {/* Tawk.to Live Chat Widget */}
+        {/* Tawk.to Live Chat Widget — skip on auth pages */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
               (function(){
+                var p = window.location.pathname;
+                if (p.indexOf('/login') === 0 || p.indexOf('/signup') === 0 || p.indexOf('/forgot-password') === 0 || p.indexOf('/verify-email') === 0 || p.indexOf('/reset-password') === 0) return;
+                var Tawk_API=window.Tawk_API||{}, Tawk_LoadStart=new Date();
                 try {
                   var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
                   s1.async=true;
