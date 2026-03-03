@@ -48,37 +48,31 @@ const menuSections: MenuSection[] = [
   {
     title: "Challenges",
     items: [
-      { icon: Target, label: "2-Step Challenge", href: "#challenges" },
-      { icon: Zap, label: "1-Step Challenge", href: "#challenges", badge: "Popular" },
-      { icon: Clock, label: "Instant Funding", href: "#challenges", badge: "New" },
-      { icon: Flame, label: "Blitz Challenge", href: "#challenges" },
+      { icon: Target, label: "2-Step Challenge", href: "/challenges" },
+      { icon: Zap, label: "1-Step Challenge", href: "/challenges", badge: "Popular" },
+      { icon: Clock, label: "Instant Funding", href: "/challenges", badge: "New" },
     ],
   },
   {
     title: "Trading",
     items: [
-      { icon: TrendingUp, label: "Trading Rules", href: "#" },
-      { icon: Calculator, label: "Profit Calculator", href: "#" },
-      { icon: Shield, label: "Scaling Program", href: "#" },
-      { icon: Wallet, label: "Payouts", href: "#" },
+      { icon: TrendingUp, label: "Trading Rules", href: "/rules" },
+      { icon: Shield, label: "Scaling Program", href: "/scaling" },
+      { icon: Wallet, label: "Payouts", href: "/dashboard/payouts" },
     ],
   },
   {
     title: "Resources",
     items: [
-      { icon: BookOpen, label: "Trading Academy", href: "#" },
-      { icon: FileText, label: "Blog", href: "#" },
-      { icon: HelpCircle, label: "FAQ", href: "#faq" },
-      { icon: MessageCircle, label: "Support", href: "#" },
+      { icon: HelpCircle, label: "FAQ", href: "/faq" },
+      { icon: MessageCircle, label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Company",
     items: [
-      { icon: Users, label: "About Us", href: "#" },
-      { icon: Trophy, label: "Leaderboard", href: "#" },
-      { icon: Gift, label: "Affiliates", href: "#" },
-      { icon: Star, label: "Reviews", href: "#" },
+      { icon: Users, label: "About Us", href: "/about" },
+      { icon: Gift, label: "Affiliates", href: "/affiliates" },
     ],
   },
 ];
@@ -169,14 +163,14 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
             <div className="flex items-center justify-between p-4 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-amber-500 flex items-center justify-center font-display font-bold text-background">
-                  A
+                  B
                 </div>
                 <div>
                   <span className="font-display font-bold text-lg">
                     <span className="text-[#F97316]">
-                      Alpha
+                      Braxley
                     </span>
-                    <span className="text-foreground">Trader</span>
+                    <span className="text-foreground">Nevim</span>
                   </span>
                 </div>
               </div>
@@ -247,7 +241,7 @@ export function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                       View Pricing
                     </div>
                     <div className="text-xs text-foreground/50">
-                      Starting from $49
+                      Starting from $149
                     </div>
                   </div>
                 </Link>

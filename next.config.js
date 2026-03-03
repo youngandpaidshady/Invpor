@@ -3,15 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
 
   // ===========================================
-  // Build Configuration - Ignore lint errors during build
-  // These should be fixed in a separate lint pass
+  // Build Configuration
   // ===========================================
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // ESLint and TypeScript errors will now properly fail the build.
 
   // ===========================================
   // Image Optimization

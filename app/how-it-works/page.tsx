@@ -264,8 +264,8 @@ export default function HowItWorksPage() {
                   <Crosshair className="w-4 h-4 mr-2" />
                   Get Funded
                 </Link>
-                <Link href="/dashboard/demo" className="btn-secondary">
-                  Try Free Demo
+                <Link href="/faq" className="btn-secondary">
+                  Learn More
                 </Link>
               </div>
             </motion.div>

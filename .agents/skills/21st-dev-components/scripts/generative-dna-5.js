@@ -1,0 +1,122 @@
+// ─── Generative DNA Part 5: map through pricing-section ───
+const DNA_5 = {
+    'map': {
+        layout: ["Full-width interactive map", "Map card with location info sidebar", "Mini-map with address overlay", "Globe/3D map visualization", "Static map image with pin markers"],
+        surface: ["Dark-themed map tiles with brand-color pins", "Glass overlay panel with location details", "Satellite imagery with UI overlay", "Stylized illustration-style map", "Minimal outlined map with dots for cities"],
+        motion: ["Smooth pan and zoom on interaction", "Pins bounce in staggered on load", "Info card slides in on pin click", "Globe rotates slowly, arc lines animate", "Zoom-to-location with spring easing"],
+        mood: ["Corporate — clean pins, address cards, professional", "Travel — colorful, photo thumbnails, exploratory", "Data — heatmap overlay, density visualization", "Futuristic — globe, arc connections, dark theme", "Minimal — outline-only, single brand-color accent"],
+        composition: ["Contact page location map", "Store locator", "Coverage area visualization", "Event location details", "Global presence showcase"],
+        spawnRecipes: [
+            "Globe Network — 3D rotating globe (cobe library or Three.js). Arc lines animate between locations showing connections. Dots pulse at city locations. Dark background. Globe rotates slowly, can be dragged. Location labels float near dots. Premium SaaS globe visualization.",
+            "Dark Tile Map — interactive map with dark-themed tiles. Custom brand-color markers pulse on hover. Click marker: glass info card slides in from side with location details, image, and CTA. Smooth zoom and pan. Cluster markers for density.",
+            "Dotted World — SVG world map made of dots (dotted-map library). Highlighted regions in brand color. Hover region: tooltip with country name and stat. Dots pulse staggered by region on mount. Clean, abstract, data-focused.",
+            "Static Pin Card — rounded card containing a static map image with a single centered pin. Address text below. Directions link. Glass card surface. Pin has brand-color fill with pulse animation. Clean, functional, compact.",
+        ],
+    },
+    'marketing-block': {
+        layout: ["Stats + headline + CTA combined block", "Testimonial + feature side by side", "Logo strip + headline social proof", "Banner with countdown + urgency CTA", "Multi-section stacked marketing funnel"],
+        surface: ["Gradient mesh background with glass cards", "Dark solid with neon accent highlights", "Image background with text overlay", "Pattern background (dots/lines) with clean foreground", "Full-bleed color with white text"],
+        motion: ["Counter numbers animate on scroll", "CTA button pulses with glow", "Testimonial cards rotate carousel", "Urgency countdown timer ticks", "Sections reveal with parallax scroll effects"],
+        mood: ["Conversion-focused — CTA prominent, urgency elements", "Trust-building — logos, testimonials, stats together", "Launch hype — countdown, confetti, bold colors", "Storytelling — narrative sections, emotional progression", "Data-driven — metrics, charts, evidence-based"],
+        composition: ["Landing page conversion section", "Product page social proof block", "Homepage between hero and features", "Pricing page above-fold teaser", "Email campaign landing block"],
+        spawnRecipes: [
+            "Social Proof Stack — horizontal layout: large stat number (count-up animated) on left, testimonial quote card center, client logos strip right. All on dark gradient background. Scroll-triggered stagger entrance. Stats in text-6xl bold. Trust-maximizing composition.",
+            "Urgency Banner — full-width dark section with centered countdown timer (DD:HH:MM:SS). Bold headline above, CTA button below timer. Timer digits flip-animate on change. Button has pulsing glow. Red/orange accent for urgency. Limited time messaging.",
+            "Metric Wall — grid of 4-6 metric cards (glass surface). Each: large animated number, unit label, description. Numbers count up on scroll visibility. Cards stagger-in. One hero metric is double-width. Brand-color accents on numbers.",
+            "Story Scroll — vertical sequence of marketing sections that reveal on scroll. Each section: icon → headline → short description → visual. Sections alternate alignment (left/right). Scroll-triggered fade+slide entrance. Connected by a vertical line between sections.",
+        ],
+    },
+    'menu': {
+        layout: ["Vertical sidebar navigation", "Horizontal top nav bar", "Hamburger → mobile slide-out", "Mega menu with panels", "Command palette style"],
+        surface: ["Glass sidebar with blur", "Solid dark with active item accent", "Outlined with hover fill", "Full-height dark panel overlay", "Floating glass pill bar"],
+        motion: ["Active item indicator slides between items", "Menu item hover: bg fill transitions", "Mobile menu slides in from left with spring", "Sub-menu items stagger fade-in", "Menu opens with staggered item entrance"],
+        mood: ["Dashboard — icons + labels, collapsible to icon-only", "Marketing — clean, minimal, brand-focused", "Documentation — tree structure, search, hierarchical", "App — bottom tab bar, icon-focused, mobile-first", "Enterprise — multi-level, breadcrumbs, complex nav"],
+        composition: ["App sidebar navigation", "Website header nav", "Mobile hamburger menu", "Settings page section nav", "Documentation sidebar"],
+        spawnRecipes: [
+            "Glass Sidebar — frosted-glass sidebar (240px wide) with border-right-white/10. Logo at top. Menu items with icon + label. Active item has brand-color left bar indicator that slides between items with spring animation. Hover: subtle bg fill. Collapsible to icon-only (56px) with smooth width transition.",
+            "Mega Panel — horizontal nav bar item triggers full-width mega dropdown. Panel has multiple columns with grouped links. Featured item large card on right. Panel enters with scaleY from top with spring. Grouped sections with bold headers.",
+            "Mobile Drawer — hamburger icon triggers full-screen overlay menu. Dark backdrop fades in. Menu panel slides from left with spring. Items stagger-fade-in (50ms delay each). Close X animates from hamburger morphing. Large touch targets.",
+            "Command Nav — search-activated navigation (⌘K). Modal with search input and categorized results. Type to filter. Keyboard navigation with active highlight. Recent items section. Shortcut badges next to items. Clean, fast, developer-friendly.",
+        ],
+    },
+    'navigation-menu': {
+        layout: ["Horizontal top bar with dropdowns", "Vertical sidebar with sections", "Tabbed navigation bar", "Breadcrumb + section nav combined", "Floating bottom navigation bar"],
+        surface: ["Glass bar with blur backdrop", "Solid dark with bottom border accent", "Outlined items with active fill", "Transparent overlay on hero", "Card-contained navigation block"],
+        motion: ["Active tab indicator slides with spring (layout animation)", "Dropdown enters with scale from top", "Mobile toggle with hamburger morph to X", "Hover: underline slides from left", "Scroll: nav collapses to compact mode"],
+        mood: ["SaaS — clean, logo left, links center, CTA right", "Portfolio — minimal, name left, links right", "Documentation — version selector, search, hierarchical", "E-commerce — categories, cart icon, account", "Creative — unconventional layout, animated hover"],
+        composition: ["Site-wide sticky header nav", "Documentation top bar", "Dashboard header with user menu", "Landing page transparent overlay nav", "Mobile app bottom tab bar"],
+        spawnRecipes: [
+            "Glass Header — fixed top bar with backdrop-blur-xl on dark bg. Logo left, nav links center, CTA button right. Active link has animated underline (brand-color) that slides between links. Scroll: bar background becomes more opaque. Mobile: hamburger triggers glass sidebar.",
+            "Sliding Tab Bar — horizontal tabs with active indicator that slides underneath active tab (layout animation, spring physics). Tabs change content below. Active tab text brightens. Clean, app-like navigation pattern.",
+            "Collapsing Scroll Nav — full navbar on page load (logo, links, CTA). On scroll down: collapses to compact (logo centered, hamburger, smaller). Scroll up: re-expands. Transition with height/opacity springs. Elegant, responsive.",
+            "Bottom Tab Bar — mobile-fixed bottom bar with 4-5 icon tabs. Active icon enlarges + fills with brand color. Inactive: outlined muted icons. Tab switch: icon pops with spring scale. Active indicator dot below. Safe-area aware. Glass background.",
+        ],
+    },
+    'notification': {
+        layout: ["Toast stack (top-right corner)", "Bell icon with dropdown panel", "Full-width banner notification", "Inline notification card", "Floating bubble notification"],
+        surface: ["Glass with colored left border accent", "Solid dark card with icon circle", "Outlined with status color border", "Gradient background matching severity", "Minimal text-only with dismiss"],
+        motion: ["Slide in from right with spring", "Stack reorder with layout animation", "Auto-dismiss with progress bar", "Bell icon shakes on new notification", "Dismiss: collapse height + fade"],
+        mood: ["System — clean, icons, timestamps, grouped", "Social — avatar, action text, interactive buttons", "Alert — urgent, prominent, action-required", "Subtle — toast, auto-dismiss, unobtrusive", "Rich — image preview, action buttons, expandable"],
+        composition: ["App-wide notification system", "Form validation feedback", "System status updates", "Social activity feed", "Chat message alerts"],
+        spawnRecipes: [
+            "Glass Toast Stack — notifications appear top-right as frosted-glass cards. Slide in from right with spring. Stack with 8px gaps, newest on top. Auto-dismiss with animated progress bar (brand-color). Dismiss X hover glow. Icons by type (info/success/warning/error). Sound-ready.",
+            "Bell Dropdown — bell icon in navbar. Red count badge (bounces on increment). Click: glass dropdown panel with notification list. Items: avatar + text + timestamp. Unread items have brand-color left bar. Mark all read button. Stagger-in animation.",
+            "Inline Alert — notification card embedded in content. Colored left border (4px) by severity. Icon + title + description. Action buttons (primary/secondary). Dismissible. Entrance: fade + slideY. Close: collapse height smoothly.",
+            "Bubble Pop — circular bubble notification that floats up from bottom-right. Pops in with spring scale. Shows avatar + count or icon. Click: expands to full notification card. Auto-shrinks back after 5s. Playful, attention-grabbing.",
+        ],
+    },
+    'number': {
+        layout: ["Large stat number with label", "Counter grid (multiple stats)", "Number input stepper", "Animated counter inline", "Metric card with sparkline"],
+        surface: ["Dark card with large mono number", "Glass panel with counter", "Gradient text on dark background", "Outlined metric card", "Number with colored background"],
+        motion: ["Count-up animation on scroll visibility", "Number flip/roll animation on change", "Sparkline draws on mount", "Stepper value bounces on change", "Odometer-style digit roll"],
+        mood: ["Dashboard — compact, precise, data-dense", "Marketing — large, impressive, conversion-focused", "Financial — decimal precision, trend arrows, green/red", "Scientific — units, notation, monospace", "Playful — oversized, colorful, fun animations"],
+        composition: ["Dashboard KPI metric", "Homepage social proof stats", "Pricing plan number display", "Analytics counter widget", "Score/rating display"],
+        spawnRecipes: [
+            "Odometer Counter — large display number where each digit rolls vertically (odometer-style) when value changes. Digits roll independently. Spring physics on the roll. Monospace font. Label below in text-xs muted. Scroll-triggered initial count-up from 0.",
+            "Metric Card — glass card containing: large number (text-5xl, mono), trend arrow (up green / down red), percentage change, sparkline chart, and label. Number counts up on scroll visibility. Sparkline draws with stroke animation. Card hovers with lift + shadow.",
+            "Flip Counter — event countdown style. Each digit is a flip card that animates top-half rotate down to reveal new digit. Used for countdown timers (DD:HH:MM:SS) or live counters. Dark background, light text. Digit separators with colons. Bold, physical feel.",
+            "Gradient Stat — large number (text-7xl) with gradient text (brand spectrum). Below: label in text-sm muted. Numbers count up from 0 on intersection observer trigger. Optional '+' suffix animated. Used for marketing stats like '10M+', '99.9%'.",
+        ],
+    },
+    'pagination': {
+        layout: ["Numbered page buttons row", "Previous/Next only", "Infinite scroll with loading trigger", "Load more button", "Cursor-based endless feed"],
+        surface: ["Outlined page number buttons", "Active page with brand-color fill", "Minimal text-only page numbers", "Glass pill-shaped page buttons", "Floating pagination bar"],
+        motion: ["Active page indicator slides between numbers", "Page transition: content crossfades", "Load more: spinner + new items stagger in", "Button hover: scale + micro-lift", "Infinite scroll: skeleton items appear then resolve"],
+        mood: ["Clean modern — pill buttons, active indicator", "Minimal — text numbers only, underline active", "Table pagination — compact, rows-per-page select", "Content feed — load more, endless scroll", "Dashboard — detailed: showing X of Y results"],
+        composition: ["Table data pagination", "Blog post list pagination", "Search results pages", "Product catalog pagination", "Image gallery pages"],
+        spawnRecipes: [
+            "Sliding Indicator — row of page number buttons. Active page has brand-color background pill that slides between positions (layoutId spring animation). Hover: button lifts with shadow. Ellipsis (…) for truncated ranges. Previous/Next arrows at edges. Clean, modern, satisfying.",
+            "Infinite River — no visible pagination controls. Scroll near bottom triggers loading. Skeleton placeholder items appear, then resolve to real content with crossfade. Loading spinner at bottom during fetch. Smooth, social-media-style feed.",
+            "Glass Bar — fixed floating glass bar at bottom-center. Contains: left arrow, page numbers, right arrow. Active page highlighted. Bar has backdrop-blur + border-white/10. Fades in on scroll-down, fades out at top. Compact, elegant.",
+            "Progressive Load — 'Load More' button centered below content. Click: button shows spinner, then new items stagger-in below existing content. Button moves down. Count text: 'Showing 20 of 156'. Keeps scroll position. Clean, user-controlled.",
+        ],
+    },
+    'popover': {
+        layout: ["Anchored tooltip-style panel", "Multi-section panel with header/body/footer", "Popover with form content", "Popover with list/menu content", "Nested popover chain"],
+        surface: ["Frosted glass with border-white/10", "Solid dark with subtle shadow", "Outlined card with arrow pointer", "Glass with gradient accent border", "Dark with brand-color header bar"],
+        motion: ["Scale-in from anchor point with spring", "Content stagger-fade on open", "Arrow points to trigger (positioned dynamically)", "Exit: scale-to-zero toward trigger", "Open/close with AnimatePresence"],
+        mood: ["Informational — text content, learn-more", "Interactive — form fields, action buttons", "Menu — list of options, clickable items", "Rich preview — image/meta preview card", "Minimal — small text tip, narrow width"],
+        composition: ["User profile preview on avatar hover", "Color picker or date selector", "Share/social options panel", "Filter options panel", "Help/context information tooltip"],
+        spawnRecipes: [
+            "Glass Preview — frosted-glass popover that appears on hover. Scale-in from trigger origin with spring. Contains: avatar, name, bio snippet, action button. Arrow pointer in matching glass style. Positioned dynamically to stay in viewport. Exit with scale-down.",
+            "Action Panel — popover with header (title + close X), body (action list items with icons), and footer (secondary action). Glass surface. Opens on click with spring scale. Items have hover highlight. Keyboard navigable (arrow keys, Escape close).",
+            "Form Popover — popover containing a compact form (2-3 fields). Appears on button click. Glass surface. Inputs have focus glow. Submit button at bottom. Success: popover closes + toast notification. Spring entrance from anchor.",
+            "Nested Info — informational popover with rich content: heading, paragraph, inline link that opens another popover. Chain of popovers. Each positioned to not overlap parent. Clean hierarchy. Used for progressive disclosure of complex info.",
+        ],
+    },
+    'pricing-section': {
+        layout: ["3-column plan comparison cards", "Horizontal toggle (monthly/yearly) + cards", "Single featured plan spotlight", "Comparison table matrix", "Slider-based custom plan builder"],
+        surface: ["Glass cards with border-white/10, featured card border-brand", "Dark cards with gradient featured card", "Outlined cards with shadow on featured", "Full-bleed gradient background with card overlay", "Alternating light/dark card scheme"],
+        motion: ["Price toggle: numbers flip/morph when switching billing", "Featured card scales slightly larger", "Scroll-triggered card stagger entrance", "Hover: card lifts with shadow bloom", "CTA button magnetic + glow on featured"],
+        mood: ["SaaS — monthly/yearly toggle, feature list, clear CTAs", "Enterprise — custom plan, contact sales, enterprise features", "Creator — single plan, simple, trust badges, early supporter", "Startup — generous free tier, upgrade path clarity", "Premium — gold/black, VIP feel, exclusive language"],
+        composition: ["Dedicated pricing page", "Landing page pricing preview section", "Settings upgrade modal", "Checkout plan selection step", "In-app upgrade prompt"],
+        spawnRecipes: [
+            "Glass Tiers — 3 glass cards side by side. Center card (recommended) is slightly larger, has gradient border animation, 'Most Popular' badge with shimmer. All cards: plan name, price (text-5xl), billing period, feature list with checkmarks, CTA button. Price morphs on monthly/yearly toggle. CTAs have magnetic hover.",
+            "Dark Premium — dark background, 3 cards. Enterprise card (center) has gold gradient border + glow. Price count-up animation on scroll. Feature list with green checkmarks and red X marks. Toggle switch for billing period. Cards stagger-in. Trust badges below: '14-day free trial' etc.",
+            "Comparison Matrix — table format. Plans as columns, features as rows. Checkmarks/X/values in cells. Recommended column highlighted with brand-color header + subtle column glow. Sticky column headers on scroll. Row hover highlights. CTA buttons at column bottom.",
+            "Custom Builder — single card with slider controls. Adjust users/storage/features with range sliders. Price calculates dynamically and animates on change. Real-time feature summary list. Single CTA button. Glass card on gradient mesh background. Premium, interactive feel.",
+        ],
+    },
+};
+
+module.exports = { DNA_5 };

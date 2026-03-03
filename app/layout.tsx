@@ -60,6 +60,26 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${bebasNeue.variable} ${dmSans.variable} ${ibmPlexMono.variable} font-body antialiased`}>
+        {/* JSON-LD Structured Data — Organization */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "BraxleyNevim",
+              url: "https://braxleynevimalphatrade.com",
+              logo: "https://braxleynevimalphatrade.com/icon.png",
+              description: APP_DESCRIPTION,
+              sameAs: [],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer support",
+                availableLanguage: "English",
+              },
+            }),
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -72,6 +92,22 @@ export default function RootLayout({
             <Footer />
           </ToastProvider>
         </ThemeProvider>
+        {/* Tawk.to Live Chat Widget */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+              (function(){
+                var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                s1.async=true;
+                s1.src='https://embed.tawk.to/69a6650be2f23c1c34acba21/1jiovldjj';
+                s1.charset='UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1,s0);
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

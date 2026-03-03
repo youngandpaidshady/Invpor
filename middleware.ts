@@ -1,18 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { RateLimiter } from "@/lib/rate-limit";
+import { checkRateLimit, type RateLimitTier } from "@/lib/rate-limit";
 import { isSafeRedirectPath } from "@/lib/sanitize";
-
-// ===========================================
-// Rate Limiters
-// ===========================================
-
-const limiters = {
-  global: new RateLimiter({ interval: 60 * 1000 }),           // 1 min window
-  auth: new RateLimiter({ interval: 60 * 1000 }),             // 1 min window (strict)
-  sensitive: new RateLimiter({ interval: 60 * 60 * 1000 }),   // 1 hour window
-};
 
 // ===========================================
 // Route Definitions
@@ -52,58 +42,35 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ===========================================
-  // Rate Limiting
+  // Rate Limiting (Upstash Redis)
   // ===========================================
   if (pathname.startsWith("/api/")) {
-    let limitResult;
+    let tier: RateLimitTier = "api";
 
-    // ★ Strict auth brute-force limiter: 5 req / min
     if (authApiPaths.some((p) => pathname.startsWith(p))) {
-      limitResult = limiters.auth.check(ip + "_auth", 5);
-    }
-    // Checkout: 10 req / min
-    else if (pathname.startsWith("/api/checkout")) {
-      limitResult = limiters.global.check(ip + "_checkout", 10);
-    }
-    // Contact: 5 req / hour
-    else if (pathname.startsWith("/api/contact")) {
-      limitResult = limiters.sensitive.check(ip + "_contact", 5);
-    }
-    // KYC upload: 20 req / min
-    else if (pathname.startsWith("/api/kyc/upload")) {
-      limitResult = limiters.global.check(ip + "_kyc_upload", 20);
-    }
-    // Sensitive user actions: 10 req / min
-    else if (
-      pathname.startsWith("/api/user/change-password") ||
-      pathname.startsWith("/api/user/change-email") ||
-      pathname.startsWith("/api/user/account")
-    ) {
-      limitResult = limiters.global.check(ip + "_user_sensitive", 10);
-    }
-    // General API: 100 req / min
-    else {
-      limitResult = limiters.global.check(ip, 100);
+      tier = "auth";
+    } else if (pathname.startsWith("/api/checkout") || pathname.startsWith("/api/purchase")) {
+      tier = "checkout";
     }
 
-    if (!limitResult.success) {
+    const limitResult = await checkRateLimit(`${ip}:${tier}`, tier);
+
+    if (!limitResult.allowed) {
       return new NextResponse(
         JSON.stringify({ error: "Too many requests. Please try again later." }),
         {
           status: 429,
           headers: {
             "Content-Type": "application/json",
-            "Retry-After": Math.ceil((limitResult.reset - Date.now()) / 1000).toString(),
-            "X-RateLimit-Limit": limitResult.limit.toString(),
-            "X-RateLimit-Remaining": "0",
-            "X-RateLimit-Reset": limitResult.reset.toString(),
+            "Retry-After": Math.ceil((limitResult.resetAt - Date.now()) / 1000).toString(),
+            "X-RateLimit-Remaining": limitResult.remaining.toString(),
+            "X-RateLimit-Reset": limitResult.resetAt.toString(),
           },
         }
       );
     }
 
     // Attach rate-limit info to successful responses
-    response.headers.set("X-RateLimit-Limit", limitResult.limit.toString());
     response.headers.set("X-RateLimit-Remaining", limitResult.remaining.toString());
   }
 
@@ -163,31 +130,26 @@ export async function middleware(request: NextRequest) {
   }
 
   // ===========================================
-  // Security Headers
+  // Security Headers (only headers not already in next.config.js)
+  // X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+  // Strict-Transport-Security are set in next.config.js headers().
   // ===========================================
 
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("X-XSS-Protection", "1; mode=block");
   response.headers.set(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=(), payment=()"
   );
-  response.headers.set(
-    "Strict-Transport-Security",
-    "max-age=63072000; includeSubDomains; preload"
-  );
 
   // CSP: remove unsafe-eval in production
   const isProduction = process.env.NODE_ENV === "production";
   const scriptSrc = isProduction
-    ? "'self' 'unsafe-inline'"
-    : "'self' 'unsafe-inline' 'unsafe-eval'";
+    ? "'self' 'unsafe-inline' https://embed.tawk.to"
+    : "'self' 'unsafe-inline' 'unsafe-eval' https://embed.tawk.to";
 
   response.headers.set(
     "Content-Security-Policy",
-    `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';`
+    `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://*.upstash.io https://nowpayments.io https://*.tawk.to wss://*.tawk.to; frame-src https://embed.tawk.to; frame-ancestors 'none'; base-uri 'self'; form-action 'self';`
   );
 
   return response;

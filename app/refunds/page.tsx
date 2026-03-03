@@ -218,7 +218,7 @@ export default function RefundsPage() {
             {/* Related Links */}
             <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
               <Link href="/terms" className="text-[#ff6b35] hover:underline text-sm font-mono">Terms of Service →</Link>
-              <Link href="/support" className="text-[#ff6b35] hover:underline text-sm font-mono">Contact Support →</Link>
+              <Link href="/contact" className="text-[#ff6b35] hover:underline text-sm font-mono">Contact Support →</Link>
             </div>
           </div>
         </div>

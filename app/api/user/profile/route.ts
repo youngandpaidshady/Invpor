@@ -3,10 +3,19 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { sanitizeObject } from "@/lib/sanitize";
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+
 const updateProfileSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters").max(100).optional(),
   phone: z.string().optional(),
-  avatar_url: z.string().url().optional(),
+  avatar_url: z
+    .string()
+    .url()
+    .refine(
+      (url) => url.startsWith(supabaseUrl),
+      "Avatar URL must be from the application's storage"
+    )
+    .optional(),
   country: z.string().optional(),
   timezone: z.string().optional(),
 });

@@ -11,8 +11,9 @@ interface PromoCodeProps {
 
 // Demo promo codes
 const VALID_CODES: Record<string, { discount: number; label: string }> = {
-  ALPHA10: { discount: 10, label: "10% off" },
-  ALPHA20: { discount: 20, label: "20% off" },
+  BN10: { discount: 10, label: "10% off" },
+  BN20: { discount: 20, label: "20% off" },
+  BN25: { discount: 25, label: "25% off" },
   WELCOME: { discount: 15, label: "15% off (New customer)" },
 };
 

@@ -24,39 +24,52 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * 21st.dev Pricing Preview — Compact Card + Snap-Scroll Carousel
+ * 21st.dev Pricing Preview — Redesigned Layered Card + Snap-Scroll Carousel
  *
- * Skills referenced:
- *  - pricing-sections.md: dark-gradient-pricing archetype, AnimatePresence tabs
- *  - carousels.md: CSS scroll-snap mobile carousel, edge fade, pagination dots
- *  - cards.md: layered composition (bg → surface → interaction), spotlight hover
- *  - SKILL.md: brand gold #C7A257, fadeInUp entrance, spring hover physics
+ * Skills: pricing-sections.md, carousels.md, cards.md, SKILL.md
+ * DNA: Glassmorphism Surface + Magnetic Cursor Warp + Spring Physics + Prestige Mood
+ * Chaos: Animated conic border, holographic sheen, noise grain, glow pulse, spotlight hover
  */
 
-/* ─── ANIMATION CONSTANTS ─── */
 const EASE = [0.16, 1, 0.3, 1] as const;
-const SPRING_CARD = { type: "spring", stiffness: 300, damping: 25 };
 
 const container = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 };
 
 const fadeUpCard = {
-  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  hidden: { opacity: 0, y: 35, scale: 0.96 },
   visible: (isPopular: boolean) => ({
     opacity: 1,
     y: isPopular ? -8 : 0,
     scale: 1,
-    transition: { duration: 0.6, ease: EASE },
+    transition: { duration: 0.7, ease: EASE },
   }),
 };
 
 /* ─── DATA ─── */
 const challengeTypes = [
-  { id: "2-step", label: "2-Step", icon: TrendingUp, desc: "The standard evaluation path" },
-  { id: "1-step", label: "1-Step", icon: Clock, desc: "Fast-track funding", badge: "Popular" },
-  { id: "instant", label: "Instant", icon: Zap, desc: "Skip the evaluation", badge: "New" },
+  {
+    id: "2-step",
+    label: "2-Step",
+    icon: TrendingUp,
+    desc: "The standard evaluation path",
+  },
+  {
+    id: "1-step",
+    label: "1-Step",
+    icon: Clock,
+    desc: "Fast-track funding",
+    badge: "Popular",
+  },
+  {
+    id: "instant",
+    label: "Instant",
+    icon: Zap,
+    desc: "Skip the evaluation",
+    badge: "New",
+  },
 ];
 
 interface Plan {
@@ -76,91 +89,197 @@ interface Plan {
 const challengeData: Record<string, Plan[]> = {
   "2-step": [
     {
-      id: "starter", name: "Starter", size: "$10K", price: 99,
-      profitTarget: "8%", maxDrawdown: "10%", dailyDrawdown: "5%", profitSplit: 80,
-      features: ["Unlimited Trading Days", "Refundable Fee", "Bi-weekly Payouts"],
+      id: "starter",
+      name: "Starter",
+      size: "$10K",
+      price: 99,
+      profitTarget: "8%",
+      maxDrawdown: "10%",
+      dailyDrawdown: "5%",
+      profitSplit: 80,
+      features: [
+        "Unlimited Trading Days",
+        "Refundable Fee",
+        "Bi-weekly Payouts",
+      ],
     },
     {
-      id: "pro", name: "Professional", size: "$50K", price: 299, originalPrice: 349,
-      profitTarget: "8%", maxDrawdown: "10%", dailyDrawdown: "5%", profitSplit: 85,
-      features: ["Unlimited Trading Days", "Refundable Fee", "Weekly Payouts", "Priority Support"],
+      id: "pro",
+      name: "Professional",
+      size: "$50K",
+      price: 299,
+      originalPrice: 349,
+      profitTarget: "8%",
+      maxDrawdown: "10%",
+      dailyDrawdown: "5%",
+      profitSplit: 85,
+      features: [
+        "Unlimited Trading Days",
+        "Refundable Fee",
+        "Weekly Payouts",
+        "Priority Support",
+      ],
       isPopular: true,
     },
     {
-      id: "elite", name: "Elite", size: "$200K", price: 999,
-      profitTarget: "8%", maxDrawdown: "10%", dailyDrawdown: "5%", profitSplit: 90,
-      features: ["Unlimited Trading Days", "Refundable Fee", "Same-day Payouts", "Personal Manager", "Premium Dashboard Access"],
+      id: "elite",
+      name: "Elite",
+      size: "$200K",
+      price: 999,
+      profitTarget: "8%",
+      maxDrawdown: "10%",
+      dailyDrawdown: "5%",
+      profitSplit: 90,
+      features: [
+        "Unlimited Trading Days",
+        "Refundable Fee",
+        "Same-day Payouts",
+        "Personal Manager",
+        "Premium Dashboard Access",
+      ],
     },
   ],
   "1-step": [
     {
-      id: "starter", name: "Accelerated Starter", size: "$10K", price: 149,
-      profitTarget: "10%", maxDrawdown: "6%", dailyDrawdown: "4%", profitSplit: 80,
+      id: "starter",
+      name: "Accelerated Starter",
+      size: "$10K",
+      price: 149,
+      profitTarget: "10%",
+      maxDrawdown: "6%",
+      dailyDrawdown: "4%",
+      profitSplit: 80,
       features: ["Single Phase", "No Time Limits", "Bi-weekly Payouts"],
     },
     {
-      id: "pro", name: "Accelerated Pro", size: "$50K", price: 399, originalPrice: 449,
-      profitTarget: "10%", maxDrawdown: "6%", dailyDrawdown: "4%", profitSplit: 85,
-      features: ["Single Phase", "No Time Limits", "Weekly Payouts", "Priority Support"],
+      id: "pro",
+      name: "Accelerated Pro",
+      size: "$50K",
+      price: 399,
+      originalPrice: 449,
+      profitTarget: "10%",
+      maxDrawdown: "6%",
+      dailyDrawdown: "4%",
+      profitSplit: 85,
+      features: [
+        "Single Phase",
+        "No Time Limits",
+        "Weekly Payouts",
+        "Priority Support",
+      ],
       isPopular: true,
     },
     {
-      id: "elite", name: "Accelerated Elite", size: "$100K", price: 799,
-      profitTarget: "10%", maxDrawdown: "6%", dailyDrawdown: "4%", profitSplit: 90,
-      features: ["Single Phase", "No Time Limits", "Same-day Payouts", "Direct Slack Channel"],
+      id: "elite",
+      name: "Accelerated Elite",
+      size: "$100K",
+      price: 799,
+      profitTarget: "10%",
+      maxDrawdown: "6%",
+      dailyDrawdown: "4%",
+      profitSplit: 90,
+      features: [
+        "Single Phase",
+        "No Time Limits",
+        "Same-day Payouts",
+        "Direct Slack Channel",
+      ],
     },
   ],
   instant: [
     {
-      id: "starter", name: "Direct Small", size: "$5K", price: 199,
-      profitTarget: "None", maxDrawdown: "8%", dailyDrawdown: "4%", profitSplit: 70,
+      id: "starter",
+      name: "Direct Small",
+      size: "$5K",
+      price: 199,
+      profitTarget: "None",
+      maxDrawdown: "8%",
+      dailyDrawdown: "4%",
+      profitSplit: 70,
       features: ["No Evaluation", "Instant Funding", "Weekly Payouts"],
     },
     {
-      id: "pro", name: "Direct Medium", size: "$25K", price: 699,
-      profitTarget: "None", maxDrawdown: "8%", dailyDrawdown: "4%", profitSplit: 75,
-      features: ["No Evaluation", "Instant Funding", "Bi-weekly Payouts", "Priority Support"],
+      id: "pro",
+      name: "Direct Medium",
+      size: "$25K",
+      price: 699,
+      profitTarget: "None",
+      maxDrawdown: "8%",
+      dailyDrawdown: "4%",
+      profitSplit: 75,
+      features: [
+        "No Evaluation",
+        "Instant Funding",
+        "Bi-weekly Payouts",
+        "Priority Support",
+      ],
       isPopular: true,
     },
     {
-      id: "elite", name: "Direct Large", size: "$50K", price: 1299,
-      profitTarget: "None", maxDrawdown: "8%", dailyDrawdown: "4%", profitSplit: 80,
-      features: ["No Evaluation", "Instant Funding", "Unlimited Scaling", "VIP Concierge"],
+      id: "elite",
+      name: "Direct Large",
+      size: "$50K",
+      price: 1299,
+      profitTarget: "None",
+      maxDrawdown: "8%",
+      dailyDrawdown: "4%",
+      profitSplit: 80,
+      features: [
+        "No Evaluation",
+        "Instant Funding",
+        "Unlimited Scaling",
+        "VIP Concierge",
+      ],
     },
   ],
 };
 
-/* ─── COMPACT PLAN CARD ─── */
-function CompactPlanCard({ plan, challengeType }: { plan: Plan; challengeType: string }) {
+/* ─── COMPACT PLAN CARD — Glassmorphism + Magnetic Cursor ─── */
+function CompactPlanCard({
+  plan,
+  challengeType,
+}: {
+  plan: Plan;
+  challengeType: string;
+}) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useTransform(mouseY, [0, 400], [4, -4]);
-  const rotateY = useTransform(mouseX, [0, 400], [-4, 4]);
+  const rotateX = useTransform(mouseY, [0, 400], [5, -5]);
+  const rotateY = useTransform(mouseX, [0, 400], [-5, 5]);
 
-  const springConfig = { damping: 20, stiffness: 200, mass: 1 };
+  const springConfig = { damping: 25, stiffness: 180, mass: 0.8 };
   const smoothRotateX = useSpring(rotateX, springConfig);
   const smoothRotateY = useSpring(rotateY, springConfig);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLDivElement>) {
     const { left, top } = currentTarget.getBoundingClientRect();
-    const x = clientX - left;
-    const y = clientY - top;
-    mouseX.set(x);
-    mouseY.set(y);
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   }
 
   function handleMouseLeave() {
-    mouseX.set(200); // approximate center to reset
+    mouseX.set(200);
     mouseY.set(200);
   }
 
   const isPopular = !!plan.isPopular;
-  const spotLightColor = isPopular ? "rgba(199,162,87,0.15)" : "rgba(255,255,255,0.06)";
+  const spotLightColor = isPopular
+    ? "rgba(199,162,87,0.18)"
+    : "rgba(255,255,255,0.07)";
 
   const metrics = [
     { label: "Target", value: plan.profitTarget, icon: Target, primary: true },
-    { label: "Split", value: `${plan.profitSplit}%`, icon: TrendingUp, primary: true },
+    {
+      label: "Split",
+      value: `${plan.profitSplit}%`,
+      icon: TrendingUp,
+      primary: true,
+    },
     { label: "Max DD", value: plan.maxDrawdown, icon: BarChart3 },
     { label: "Daily DD", value: plan.dailyDrawdown, icon: BarChart3 },
   ];
@@ -169,7 +288,7 @@ function CompactPlanCard({ plan, challengeType }: { plan: Plan; challengeType: s
     <motion.div
       custom={isPopular}
       variants={fadeUpCard}
-      style={{ perspective: 1000 }}
+      style={{ perspective: 800 }}
       className="h-full group"
     >
       <motion.div
@@ -179,92 +298,148 @@ function CompactPlanCard({ plan, challengeType }: { plan: Plan; challengeType: s
           transformStyle: "preserve-3d",
         }}
         whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "relative flex flex-col h-full rounded-2xl overflow-hidden bg-[#050505] backdrop-blur-xl",
-          !isPopular && "border border-white/10"
+          "relative flex flex-col h-full overflow-hidden backdrop-blur-2xl rounded-xl",
+          isPopular
+            ? "bg-white/[0.03]"
+            : "bg-white/[0.015] border border-white/[0.06]"
         )}
       >
-        {/* Animated Conic Gradient Border (Only for Popular) */}
+        {/* Animated Conic Gradient Border (Popular) */}
         {isPopular && (
-          <div className="absolute inset-0 z-0 overflow-hidden rounded-2xl">
+          <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%]"
               style={{
-                background: "conic-gradient(from 0deg, transparent 0%, transparent 60%, #C7A257 80%, transparent 100%)",
+                background:
+                  "conic-gradient(from 0deg, transparent 0%, transparent 55%, #C7A257 70%, #F0D78C 78%, #C7A257 85%, transparent 100%)",
               }}
             />
-            {/* Inner background mask to create the 1px border effect */}
-            <div className="absolute inset-[1px] bg-[#0A0A0A] rounded-2xl z-10" />
+            {/* Inner mask for 1px border effect */}
+            <div className="absolute inset-[1px] bg-[#070707] z-10" />
           </div>
         )}
 
-        {/* Noise Grain Texture overlay */}
+        {/* Noise Grain Texture */}
         <div
-          className="absolute inset-0 z-[1] mix-blend-overlay opacity-30 pointer-events-none"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
+          className="absolute inset-0 z-[1] mix-blend-overlay opacity-25 pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
         />
 
         {/* Hover Spotlight */}
         <motion.div
-          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 z-[2]"
+          className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300 z-[2]"
           style={{
             background: useMotionTemplate`
-              radial-gradient(350px circle at ${mouseX}px ${mouseY}px, ${spotLightColor}, transparent 80%)
+              radial-gradient(380px circle at ${mouseX}px ${mouseY}px, ${spotLightColor}, transparent 80%)
             `,
           }}
         />
 
-        {/* Holographic Sheen Sweep on Hover */}
-        <div className="absolute inset-0 z-[2] -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[30deg] pointer-events-none opacity-0 group-hover:opacity-100 group-hover:translate-x-[200%] transition-all duration-1000 ease-in-out" />
+        {/* Holographic Sheen Sweep */}
+        <div
+          className={cn(
+            "absolute inset-0 z-[2] -translate-x-full bg-gradient-to-r from-transparent to-transparent skew-x-[30deg] pointer-events-none opacity-0 group-hover:opacity-100 group-hover:translate-x-[200%] transition-all duration-1000 ease-in-out",
+            isPopular
+              ? "via-[#C7A257]/[0.08]"
+              : "via-white/[0.06]"
+          )}
+        />
 
-        {/* Popular fixed glow overlay */}
+        {/* Popular ambient glow */}
         {isPopular && (
-          <div className="absolute inset-0 bg-gradient-to-b from-[#C7A257]/[0.05] to-transparent pointer-events-none z-[2]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#C7A257]/[0.06] via-transparent to-[#C7A257]/[0.02] pointer-events-none z-[2]" />
         )}
 
         {/* Card Body */}
-        <div className="relative z-10 flex flex-col p-4 md:p-6 h-full" style={{ transform: "translateZ(20px)" }}>
-
+        <div
+          className="relative z-10 flex flex-col p-5 md:p-6 h-full"
+          style={{ transform: "translateZ(20px)" }}
+        >
           {/* Row 1: Name + Badge */}
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-white/50 font-mono text-[10px] uppercase tracking-widest">{plan.name}</h3>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <h3 className="text-white/50 font-mono text-[11px] uppercase tracking-[0.12em] font-medium">
+                {plan.name}
+              </h3>
+              {isPopular && (
+                <div className="w-4 h-px bg-[#C7A257]/40" />
+              )}
+            </div>
             {isPopular && (
-              <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#C7A257]/10 border border-[#C7A257]/20 text-[#C7A257] text-[8px] font-bold uppercase tracking-widest backdrop-blur-md shadow-[0_0_15px_rgba(199,162,87,0.3)]">
-                <Sparkles className="w-2 h-2" /> Most Chosen
-              </span>
+              <motion.span
+                animate={{
+                  boxShadow: [
+                    "0 0 10px rgba(199,162,87,0.15)",
+                    "0 0 20px rgba(199,162,87,0.3)",
+                    "0 0 10px rgba(199,162,87,0.15)",
+                  ],
+                }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                className="flex items-center gap-1 px-2.5 py-0.5 bg-[#C7A257]/10 border border-[#C7A257]/25 text-[#C7A257] text-[8px] font-bold uppercase tracking-widest backdrop-blur-md rounded-sm"
+              >
+                <Sparkles className="w-2.5 h-2.5" /> Most Chosen
+              </motion.span>
             )}
           </div>
 
           {/* Row 2: Size + Price */}
-          <div className="flex items-end justify-between mb-3">
-            <span className="text-3xl md:text-4xl font-display uppercase tracking-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{plan.size}</span>
-            <div className="flex items-baseline gap-1.5 text-right">
-              <span className="text-2xl md:text-3xl font-mono text-white font-semibold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">${plan.price}</span>
+          <div className="flex items-end justify-between mb-5">
+            <span className="text-3xl md:text-4xl font-display uppercase tracking-tight text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+              {plan.size}
+            </span>
+            <div className="flex items-baseline gap-2 text-right">
+              <span className="text-2xl md:text-3xl font-mono text-white font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+                ${plan.price}
+              </span>
               {plan.originalPrice && (
-                <span className="text-white/30 line-through font-mono text-xs drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">${plan.originalPrice}</span>
+                <span className="text-white/25 line-through font-mono text-xs">
+                  ${plan.originalPrice}
+                </span>
               )}
             </div>
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-3" />
+          <div className="border-b border-white/[0.06] mb-5" />
 
-          {/* Row 3: Inline Metrics — floating pill layout */}
-          <div className="flex gap-1 mb-4 flex-wrap">
+          {/* Metrics Grid — Refined Glass Capsules */}
+          <div className="grid grid-cols-2 gap-2 mb-6">
             {metrics.map((m) => (
               <div
                 key={m.label}
-                className="flex-1 min-w-[45%] bg-white/[0.04] border border-white/[0.05] rounded-lg py-2 px-2 flex flex-col items-center gap-0.5 group/m hover:bg-white/[0.08] hover:border-white/[0.1] transition-all backdrop-blur-md shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                className={cn(
+                  "group/m rounded-lg py-3 px-3.5 flex flex-col items-center gap-1.5 transition-all backdrop-blur-md",
+                  m.primary
+                    ? "bg-[#C7A257]/[0.04] border border-[#C7A257]/[0.12] hover:bg-[#C7A257]/[0.08] hover:border-[#C7A257]/[0.2]"
+                    : "bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.1]"
+                )}
               >
-                <div className="flex items-center gap-1 text-white/40">
-                  <m.icon className={cn("w-3 h-3", m.primary ? "text-[#C7A257]" : "text-white/30")} />
-                  <span className="text-[8px] md:text-[9px] uppercase font-mono tracking-widest">{m.label}</span>
+                <div className="flex items-center gap-1.5 text-white/40">
+                  <m.icon
+                    className={cn(
+                      "w-3 h-3",
+                      m.primary ? "text-[#C7A257]" : "text-white/30"
+                    )}
+                    strokeWidth={1.5}
+                  />
+                  <span className="text-[9px] uppercase font-mono tracking-[0.1em]">
+                    {m.label}
+                  </span>
                 </div>
-                <span className={cn("font-mono text-xs md:text-sm font-medium", m.primary ? "text-white" : "text-white/70")}>
+                <span
+                  className={cn(
+                    "font-mono text-sm font-semibold",
+                    m.primary ? "text-white" : "text-white/60"
+                  )}
+                >
                   {m.value}
                 </span>
               </div>
@@ -274,16 +449,18 @@ function CompactPlanCard({ plan, challengeType }: { plan: Plan; challengeType: s
           {/* CTA Button */}
           <div className="mt-auto">
             <Link
-              href={`/checkout/${challengeType}-${plan.size.replace("$", "").toLowerCase()}`}
+              href={`/checkout/${challengeType}-${plan.size
+                .replace("$", "")
+                .toLowerCase()}`}
               className={cn(
-                "group/btn relative flex items-center justify-center gap-2 py-3 rounded-xl text-[10px] md:text-xs font-bold font-mono uppercase tracking-[0.15em] transition-all overflow-hidden active:scale-95 shadow-lg",
+                "group/btn relative flex items-center justify-center gap-2 py-3.5 rounded-lg text-[10px] md:text-xs font-bold font-mono uppercase tracking-[0.15em] transition-all overflow-hidden active:scale-95",
                 isPopular
-                  ? "bg-[#C7A257] text-black hover:bg-[#D4AF37] shadow-[0_0_20px_rgba(199,162,87,0.15)] hover:shadow-[0_0_30px_rgba(199,162,87,0.3)]"
-                  : "bg-white/5 text-white/90 border border-white/10 hover:bg-white/10 hover:border-white/20"
+                  ? "bg-gradient-to-r from-[#C7A257] to-[#D4AF37] text-black shadow-[0_0_25px_rgba(199,162,87,0.15)] hover:shadow-[0_0_40px_rgba(199,162,87,0.3)]"
+                  : "bg-white/[0.04] text-white/80 border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.15]"
               )}
             >
               {/* Glossy sweep */}
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover/btn:translate-x-full duration-700 ease-out" />
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent group-hover/btn:translate-x-full duration-700 ease-out" />
               <span className="relative z-10">Select Plan</span>
               <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover/btn:translate-x-0.5 transition-transform" />
             </Link>
@@ -295,7 +472,13 @@ function CompactPlanCard({ plan, challengeType }: { plan: Plan; challengeType: s
 }
 
 /* ─── MOBILE SNAP-SCROLL CAROUSEL ─── */
-function MobileCarousel({ plans, challengeType }: { plans: Plan[]; challengeType: string }) {
+function MobileCarousel({
+  plans,
+  challengeType,
+}: {
+  plans: Plan[];
+  challengeType: string;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
@@ -307,7 +490,6 @@ function MobileCarousel({ plans, challengeType }: { plans: Plan[]; challengeType
     setActiveIdx(Math.min(idx, plans.length - 1));
   }, [plans.length]);
 
-  // Reset scroll when plans change
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft = 0;
@@ -317,7 +499,6 @@ function MobileCarousel({ plans, challengeType }: { plans: Plan[]; challengeType
 
   return (
     <div className="relative md:hidden">
-      {/* Scrollable container */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -342,35 +523,22 @@ function MobileCarousel({ plans, challengeType }: { plans: Plan[]; challengeType
       </div>
 
       {/* Edge fades */}
-      <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
-      <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
+      <div className="absolute right-0 top-0 bottom-4 w-10 bg-gradient-to-l from-black to-transparent pointer-events-none z-10" />
+      <div className="absolute left-0 top-0 bottom-4 w-10 bg-gradient-to-r from-black to-transparent pointer-events-none z-10" />
 
-      {/* Pagination dots */}
-      <div className="flex justify-center gap-1.5 pt-2">
-        {plans.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              if (!scrollRef.current) return;
-              const cardWidth = scrollRef.current.scrollWidth / plans.length;
-              scrollRef.current.scrollTo({ left: cardWidth * i, behavior: "smooth" });
-            }}
-            className={cn(
-              "rounded-full transition-all duration-300",
-              i === activeIdx
-                ? "w-6 h-1.5 bg-[#C7A257]"
-                : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
-            )}
-            aria-label={`Go to card ${i + 1}`}
-          />
-        ))}
-      </div>
+
     </div>
   );
 }
 
 /* ─── DESKTOP GRID ─── */
-function DesktopGrid({ plans, challengeType }: { plans: Plan[]; challengeType: string }) {
+function DesktopGrid({
+  plans,
+  challengeType,
+}: {
+  plans: Plan[];
+  challengeType: string;
+}) {
   return (
     <motion.div
       key={challengeType}
@@ -381,7 +549,11 @@ function DesktopGrid({ plans, challengeType }: { plans: Plan[]; challengeType: s
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-start"
     >
       {plans.map((plan) => (
-        <CompactPlanCard key={`${challengeType}-${plan.id}`} plan={plan} challengeType={challengeType} />
+        <CompactPlanCard
+          key={`${challengeType}-${plan.id}`}
+          plan={plan}
+          challengeType={challengeType}
+        />
       ))}
     </motion.div>
   );
@@ -396,13 +568,25 @@ export function PricingPreview() {
   const currentPlans = challengeData[activeTab] || [];
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-black border-y border-white/5">
+    <section
+      ref={ref}
+      className="relative overflow-hidden bg-black border-y border-white/[0.04]"
+    >
       {/* Background layers */}
-      <div className="absolute inset-0 bg-noise opacity-[0.25] pointer-events-none mix-blend-overlay" />
+      <div className="absolute inset-0 bg-noise opacity-[0.2] pointer-events-none mix-blend-overlay" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(199,162,87,0.08),transparent_60%)] pointer-events-none" />
 
-      <div className="container-wide py-20 lg:py-32 relative z-10">
+      {/* Dot matrix underlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(199,162,87,0.5) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
 
+      <div className="container-wide py-20 lg:py-32 relative z-10">
         {/* ─── HEADER ─── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -410,47 +594,61 @@ export function PricingPreview() {
           transition={{ duration: 0.8, ease: EASE }}
           className="text-center mb-12 lg:mb-16 max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C7A257] animate-pulse" />
-            <span className="text-[10px] uppercase font-mono tracking-widest text-[#C7A257]">Funding Programs</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/[0.03] border border-white/[0.08] mb-6 backdrop-blur-md">
+            <span className="w-1.5 h-1.5 bg-[#C7A257] animate-pulse" />
+            <span className="text-[10px] uppercase font-mono tracking-widest text-[#C7A257]">
+              Funding Programs
+            </span>
           </div>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display text-white tracking-tight leading-[1.1] mb-4">
             Simple, transparent pricing <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#C7A257] to-white/50">for every stage.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#C7A257] to-white/40">
+              for every stage.
+            </span>
           </h2>
-          <p className="text-base md:text-lg text-white/50 font-body leading-relaxed max-w-xl mx-auto">
-            One upfront fee. Zero subscriptions. Choose the path that fits your trading style.
+          <p className="text-base md:text-lg text-white/40 font-body leading-relaxed max-w-xl mx-auto">
+            One upfront fee. Zero subscriptions. Choose the path that fits your
+            trading style.
           </p>
         </motion.div>
 
-        {/* ─── TAB SWITCHER ─── */}
+        {/* ─── TAB SWITCHER — Glassmorphism + Gold layoutId ─── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
           className="flex justify-center mb-10"
         >
-          <div className="inline-flex p-1 bg-white/[0.02] border border-white/10 rounded-xl backdrop-blur-xl shrink-0 overflow-x-auto max-w-[90vw] no-scrollbar shadow-2xl">
+          <div className="inline-flex p-1 bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl shrink-0 overflow-x-auto max-w-[90vw] no-scrollbar shadow-2xl">
             {challengeTypes.map((type) => (
               <button
                 key={type.id}
                 onClick={() => setActiveTab(type.id)}
                 className={cn(
-                  "group relative flex items-center justify-center gap-1.5 px-4 sm:px-8 py-3 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-widest transition-colors whitespace-nowrap",
-                  activeTab === type.id ? "text-white" : "text-white/40 hover:text-white/80"
+                  "group relative flex items-center justify-center gap-1.5 px-4 sm:px-8 py-3 text-xs sm:text-sm font-mono uppercase tracking-widest transition-colors whitespace-nowrap",
+                  activeTab === type.id
+                    ? "text-[#C7A257]"
+                    : "text-white/35 hover:text-white/60"
                 )}
               >
                 {activeTab === type.id && (
                   <motion.span
                     layoutId="pricingPreviewTab"
-                    className="absolute inset-0 bg-white/10 border border-white/10 rounded-lg"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    className="absolute inset-0 bg-[#C7A257]/[0.08] border border-[#C7A257]/20"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 30,
+                    }}
                   />
                 )}
-                <type.icon className="w-3.5 h-3.5 relative z-10" strokeWidth={2.5} />
+                <type.icon
+                  className="w-3.5 h-3.5 relative z-10"
+                  strokeWidth={2.5}
+                />
                 <span className="relative z-10">{type.label}</span>
                 {type.badge && activeTab !== type.id && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-[#C7A257]/20 border border-[#C7A257]/30 text-[#C7A257] text-[8px] px-1.5 py-0.5 rounded-full font-bold">
+                  <span className="absolute -top-1.5 -right-1.5 bg-[#C7A257]/15 border border-[#C7A257]/25 text-[#C7A257] text-[8px] px-1.5 py-0.5 font-bold">
                     {type.badge}
                   </span>
                 )}
@@ -468,7 +666,7 @@ export function PricingPreview() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
               transition={{ duration: 0.25 }}
-              className="text-white/40 font-body text-sm text-center"
+              className="text-white/35 font-body text-sm text-center"
             >
               {challengeTypes.find((t) => t.id === activeTab)?.desc}
             </motion.p>
@@ -478,15 +676,28 @@ export function PricingPreview() {
         {/* ─── CARDS ─── */}
         <div className="md:hidden">
           <AnimatePresence mode="wait">
-            <motion.div key={activeTab} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-              <MobileCarousel plans={currentPlans} challengeType={activeTab} />
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <MobileCarousel
+                plans={currentPlans}
+                challengeType={activeTab}
+              />
             </motion.div>
           </AnimatePresence>
         </div>
 
         <div className="hidden md:block">
           <AnimatePresence mode="wait">
-            <DesktopGrid key={activeTab} plans={currentPlans} challengeType={activeTab} />
+            <DesktopGrid
+              key={activeTab}
+              plans={currentPlans}
+              challengeType={activeTab}
+            />
           </AnimatePresence>
         </div>
 
@@ -495,17 +706,18 @@ export function PricingPreview() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-14 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 px-5 py-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm"
+          className="mt-14 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 px-5 py-4 bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm"
         >
-          <div className="flex items-center flex-wrap justify-center gap-4 text-[10px] text-white/40 font-mono uppercase tracking-[0.1em]">
+          <div className="flex items-center flex-wrap justify-center gap-4 text-[10px] text-white/35 font-mono uppercase tracking-[0.1em]">
             <div className="flex items-center gap-1.5">
               <Shield className="w-3.5 h-3.5 text-[#C7A257]" /> SSL Secured
             </div>
-            <div className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+            <div className="hidden sm:block w-1 h-1 bg-white/15" />
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#C7A257]" /> Instant Account Gen
+              <Clock className="w-3.5 h-3.5 text-[#C7A257]" /> Instant Account
+              Gen
             </div>
-            <div className="hidden sm:block w-1 h-1 rounded-full bg-white/20" />
+            <div className="hidden sm:block w-1 h-1 bg-white/15" />
             <div className="flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5 text-[#C7A257]" /> Crypto Available
             </div>
@@ -513,13 +725,13 @@ export function PricingPreview() {
 
           <Link
             href="/pricing"
-            className="flex items-center gap-2 group px-5 py-2.5 rounded-xl bg-transparent border border-white/10 text-[10px] text-white hover:bg-white/5 transition-colors font-mono uppercase tracking-widest active:scale-95"
+            className="group relative flex items-center gap-2 px-5 py-2.5 bg-transparent border border-white/[0.08] text-[10px] text-white/70 hover:bg-white/[0.04] hover:border-white/[0.15] transition-all font-mono uppercase tracking-widest active:scale-95 overflow-hidden"
           >
-            Compare Full Details
-            <ArrowRight className="w-3.5 h-3.5 text-[#C7A257] group-hover:translate-x-1 transition-transform" />
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#C7A257]/[0.06] to-transparent group-hover:translate-x-full duration-700 ease-out" />
+            <span className="relative z-10">Compare Full Details</span>
+            <ArrowRight className="w-3.5 h-3.5 text-[#C7A257] relative z-10 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

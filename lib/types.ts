@@ -29,6 +29,8 @@ export interface Challenge {
   daily_drawdown: number;
   trading_days: number;
   min_trading_days: number;
+  current_drawdown?: number;
+  current_daily_drawdown?: number;
   created_at: string;
   updated_at: string;
   funded_at?: string;

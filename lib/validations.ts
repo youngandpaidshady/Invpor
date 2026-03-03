@@ -100,6 +100,8 @@ export const contactSchema = z.object({
   message: z.string().trim().min(20, "Message must be at least 20 characters").max(5000, "Message is too long"),
 });
 
+
+
 // ===========================================
 // Type Exports
 // ===========================================
@@ -111,3 +113,4 @@ export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
 export type PurchaseInput = z.infer<typeof purchaseSchema>;
 export type PayoutRequestInput = z.infer<typeof payoutRequestSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
+

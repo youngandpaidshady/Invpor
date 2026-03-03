@@ -1,101 +1,104 @@
-/**
- * Simple in-memory rate limiter using a sliding window algorithm.
- * 
- * Note: In a production serverless environment (like Vercel), this in-memory cache
- * will be reset frequently. For robust rate limiting across multiple lambdas,
- * use Redis (e.g., Upstash).
- */
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-interface RateLimitConfig {
-    uniqueTokenPerInterval?: number; // Max number of unique IPs to track
-    interval?: number; // Window size in ms
+// ===========================================
+// Upstash Redis Rate Limiter
+// ===========================================
+// Persistent across serverless cold starts.
+// Free tier: 10,000 commands/day — more than enough for rate limiting.
+
+const redis =
+    process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+        ? new Redis({
+            url: process.env.UPSTASH_REDIS_REST_URL,
+            token: process.env.UPSTASH_REDIS_REST_TOKEN,
+        })
+        : null;
+
+// Different rate limit tiers
+const limiters = {
+    /**
+     * Auth endpoints (login, signup, reset-password): 5 requests per 60s
+     */
+    auth: redis
+        ? new Ratelimit({
+            redis,
+            limiter: Ratelimit.slidingWindow(5, "60 s"),
+            prefix: "rl:auth",
+            analytics: true,
+        })
+        : null,
+
+    /**
+     * General API: 30 requests per 60s
+     */
+    api: redis
+        ? new Ratelimit({
+            redis,
+            limiter: Ratelimit.slidingWindow(30, "60 s"),
+            prefix: "rl:api",
+            analytics: true,
+        })
+        : null,
+
+    /**
+     * Checkout: 3 requests per 60s (prevent spamming payment creation)
+     */
+    checkout: redis
+        ? new Ratelimit({
+            redis,
+            limiter: Ratelimit.slidingWindow(3, "60 s"),
+            prefix: "rl:checkout",
+            analytics: true,
+        })
+        : null,
+};
+
+export type RateLimitTier = keyof typeof limiters;
+
+export interface RateLimitResult {
+    allowed: boolean;
+    remaining: number;
+    resetAt: number; // Unix timestamp (ms)
 }
 
-export class RateLimiter {
-    private tokenCache: Map<string, number[]>;
-    private uniqueTokenPerInterval: number;
-    private interval: number;
-    private lastCleanup: number;
-    private cleanupInterval: number;
+/**
+ * Check if a request is allowed under the rate limit.
+ *
+ * @param identifier - Unique identifier (IP address, user ID, etc.)
+ * @param tier - Which rate limit tier to apply (default: "api")
+ * @returns RateLimitResult with allowed status, remaining requests, and reset time
+ */
+export async function checkRateLimit(
+    identifier: string,
+    tier: RateLimitTier = "api"
+): Promise<RateLimitResult> {
+    const limiter = limiters[tier];
 
-    constructor(config: RateLimitConfig = {}) {
-        this.tokenCache = new Map();
-        this.uniqueTokenPerInterval = config.uniqueTokenPerInterval || 500;
-        this.interval = config.interval || 60000; // Default 1 minute
-        this.lastCleanup = Date.now();
-        this.cleanupInterval = 60000; // Cleanup every 60 seconds
+    // If Redis is not configured (dev mode), allow all requests
+    if (!limiter) {
+        return {
+            allowed: true,
+            remaining: 999,
+            resetAt: Date.now() + 60_000,
+        };
     }
 
-    /**
-     * Remove stale entries from the cache to prevent memory leaks.
-     */
-    private cleanup(now: number) {
-        if (now - this.lastCleanup < this.cleanupInterval) return;
-        this.lastCleanup = now;
-
-        const windowStart = now - this.interval;
-        const keysToDelete: string[] = [];
-
-        for (const [key, timestamps] of this.tokenCache.entries()) {
-            const active = timestamps.filter(t => t > windowStart);
-            if (active.length === 0) {
-                keysToDelete.push(key);
-            } else {
-                this.tokenCache.set(key, active);
-            }
-        }
-
-        for (const key of keysToDelete) {
-            this.tokenCache.delete(key);
-        }
-    }
-
-    /**
-     * Check if a token (IP) has exceeded the limit.
-     * @param token Unique identifier (e.g., IP address)
-     * @param limit Max requests allowed in the interval
-     * @returns { success: boolean, limit: number, remaining: number, reset: number }
-     */
-    check(token: string, limit: number) {
-        const now = Date.now();
-        const windowStart = now - this.interval;
-
-        // Periodic cleanup
-        this.cleanup(now);
-
-        let timestamps = this.tokenCache.get(token) || [];
-
-        // Filter out timestamps outside the window
-        timestamps = timestamps.filter(timestamp => timestamp > windowStart);
-
-        const currentUsage = timestamps.length;
-        const isRateLimited = currentUsage >= limit;
-        const remaining = isRateLimited ? 0 : limit - currentUsage - 1;
-
-        // Calculate reset time
-        const oldestTimestamp = timestamps[0] || now;
-        const reset = oldestTimestamp + this.interval;
-
-        if (!isRateLimited) {
-            timestamps.push(now);
-            this.tokenCache.set(token, timestamps);
-
-            // Hard cap on cache size
-            if (this.tokenCache.size > this.uniqueTokenPerInterval) {
-                const firstKey = this.tokenCache.keys().next().value;
-                if (firstKey) this.tokenCache.delete(firstKey);
-            }
-        }
+    try {
+        const result = await limiter.limit(identifier);
 
         return {
-            success: !isRateLimited,
-            limit,
-            remaining,
-            reset
+            allowed: result.success,
+            remaining: result.remaining,
+            resetAt: result.reset,
+        };
+    } catch (error) {
+        // If Redis is down, fail open (allow the request) rather than blocking users
+        console.error("[RateLimit] Redis error, failing open:", error);
+        return {
+            allowed: true,
+            remaining: 0,
+            resetAt: Date.now() + 60_000,
         };
     }
 }
-
-// Singleton instances for different use cases if needed, 
-// but usually instantiated where used or exported as a helper.
-export const globalRateLimiter = new RateLimiter({ interval: 60 * 1000 }); // 1 minute window

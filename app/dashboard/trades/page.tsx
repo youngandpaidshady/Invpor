@@ -19,7 +19,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
 } from "lucide-react";
-import { fetchTradeHistory } from "@/lib/services/mock-api";
+import { createClient } from "@/lib/supabase/client";
 
 type TradeType = "buy" | "sell";
 
@@ -39,7 +39,7 @@ interface Trade {
   challengeName: string;
 }
 
-// Convert API trade to UI trade format
+// Convert DB trade to UI trade format
 function mapApiTrade(apiTrade: {
   id: string;
   symbol: string;
@@ -50,6 +50,7 @@ function mapApiTrade(apiTrade: {
   profit_loss?: number;
   opened_at: string;
   closed_at?: string;
+  challenge_id?: string;
 }): Trade {
   const openTime = new Date(apiTrade.opened_at);
   const closeTime = apiTrade.closed_at ? new Date(apiTrade.closed_at) : openTime;
@@ -69,8 +70,8 @@ function mapApiTrade(apiTrade: {
     closeTime: apiTrade.closed_at || apiTrade.opened_at,
     duration: `${hours}h ${mins}m`,
     pips: Math.round((apiTrade.profit_loss || 0) / (apiTrade.lot_size * 10)),
-    challengeId: "ch-001",
-    challengeName: "$25K Challenge",
+    challengeId: apiTrade.challenge_id || "unknown",
+    challengeName: "Challenge",
   };
 }
 
@@ -107,14 +108,24 @@ export default function TradesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedTrade, setSelectedTrade] = useState<Trade | null>(null);
 
-  // Load trades from API
+  // Load trades from Supabase
   useEffect(() => {
     const loadTrades = async () => {
       setLoading(true);
       try {
-        const response = await fetchTradeHistory({ limit: 100 });
-        if (response.data) {
-          setTrades(response.data.map(mapApiTrade));
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data } = await supabase
+          .from("trades")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("opened_at", { ascending: false })
+          .limit(100);
+
+        if (data) {
+          setTrades(data.map(mapApiTrade));
         }
       } catch (error) {
         console.error("Failed to load trades:", error);

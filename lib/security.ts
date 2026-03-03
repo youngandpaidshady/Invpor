@@ -73,51 +73,9 @@ export function verifyCsrfToken(token: string, maxAge = 3600000): boolean {
 // ===========================================
 // XSS Sanitization
 // ===========================================
+// NOTE: sanitizeHtml() and sanitizeObject() have been removed from this file.
+// Use the canonical versions from '@/lib/sanitize' instead.
 
-const HTML_ENTITIES: Record<string, string> = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#x27;",
-  "/": "&#x2F;",
-  "`": "&#96;",
-  "=": "&#x3D;",
-};
-
-/**
- * Sanitize string to prevent XSS attacks
- */
-export function sanitizeHtml(input: string): string {
-  return input.replace(/[&<>"'`=/]/g, (char) => HTML_ENTITIES[char] || char);
-}
-
-/**
- * Sanitize object values recursively
- */
-export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
-  const sanitized: Record<string, unknown> = {};
-
-  for (const [key, value] of Object.entries(obj)) {
-    if (typeof value === "string") {
-      sanitized[key] = sanitizeHtml(value);
-    } else if (Array.isArray(value)) {
-      sanitized[key] = value.map((item) =>
-        typeof item === "string"
-          ? sanitizeHtml(item)
-          : typeof item === "object" && item !== null
-            ? sanitizeObject(item as Record<string, unknown>)
-            : item
-      );
-    } else if (typeof value === "object" && value !== null) {
-      sanitized[key] = sanitizeObject(value as Record<string, unknown>);
-    } else {
-      sanitized[key] = value;
-    }
-  }
-
-  return sanitized as T;
-}
 
 // ===========================================
 // Input Validation Helpers

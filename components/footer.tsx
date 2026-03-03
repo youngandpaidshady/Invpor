@@ -12,8 +12,7 @@ const links = {
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "Careers", href: "/careers" },
-    { label: "Blog", href: "/blog" },
+    { label: "Affiliates", href: "/affiliates" },
   ],
   legal: [
     { label: "Terms", href: "/terms" },

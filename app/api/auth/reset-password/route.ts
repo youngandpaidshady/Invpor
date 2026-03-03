@@ -2,22 +2,18 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { sanitizeObject } from "@/lib/sanitize";
+import { resetPasswordSchema } from "@/lib/validations";
 
-const resetPasswordSchema = z.object({
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(128, "Password is too long")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number"),
-});
+// Pick only the password field — this route doesn't receive confirmPassword
+const routeSchema = resetPasswordSchema.innerType().pick({ password: true });
+
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
     // Validate input
-    const validatedData = resetPasswordSchema.parse(body);
+    const validatedData = routeSchema.parse(body);
     const sanitized = sanitizeObject(validatedData as unknown as Record<string, unknown>);
 
     const supabase = await createClient();

@@ -2,28 +2,67 @@
 
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { useState, useMemo, useRef } from "react";
-import { motion, AnimatePresence, useInView, useMotionValue, useMotionTemplate } from "framer-motion";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useMotionValue,
+  useMotionTemplate,
+  useSpring,
+} from "framer-motion";
 import Link from "next/link";
 import {
   Search,
-  Plus,
-  Minus,
+  ChevronDown,
   HelpCircle,
   ArrowUpRight,
   Crosshair,
   Wallet,
   Settings,
   MessageSquare,
+  ArrowRight,
+  Sparkles,
+  X,
 } from "lucide-react";
 
 /**
- * FAQ Page — 21st.dev Premium Design System
+ * FAQ Page — 21st.dev Spawn Engine Build
  *
- * Asymmetric hero, left-aligned heading, search with gold focus ring,
- * animated category filter pills, card-void accordion with corner accents,
- * radial spotlight on expanded answers.
+ * 🧬 DNA Axes:
+ *   Layout:      Stacked vertical panels with numbered indices
+ *   Surface:     Glass card + backdrop-blur-xl + border-white/10
+ *   Motion:      Spring-physics height expansion + staggered children fade-up
+ *   Mood:        Luxurious — gold accent lines, uppercase headings, slow easing
+ *   Composition: Standalone FAQ block with search + category filters
+ *
+ * 🌀 Chaos Modifiers:
+ *   1. Holographic sheen — sweep on hover
+ *   2. Glow pulse — active accordion emits gold box-shadow pulse
+ *   3. Noise grain — feTurbulence overlay
+ *   4. Magnetic cursor spotlight — radial-gradient follows mouse
  */
+
+/* ─── CONSTANTS ─── */
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, ease: EASE },
+};
+
+const staggerContainer = {
+  animate: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+};
+
+const staggerItem = {
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
+
+/* ─── DATA ─── */
 
 type Category = "all" | "getting-started" | "trading" | "payouts";
 
@@ -31,18 +70,19 @@ const categories: {
   id: Category;
   label: string;
   icon: typeof HelpCircle;
+  count: number;
 }[] = [
-    { id: "all", label: "All", icon: HelpCircle },
-    { id: "getting-started", label: "Getting Started", icon: Crosshair },
-    { id: "trading", label: "Trading Rules", icon: Settings },
-    { id: "payouts", label: "Payouts", icon: Wallet },
+    { id: "all", label: "All Questions", icon: HelpCircle, count: 16 },
+    { id: "getting-started", label: "Getting Started", icon: Crosshair, count: 6 },
+    { id: "trading", label: "Trading Rules", icon: Settings, count: 6 },
+    { id: "payouts", label: "Payouts", icon: Wallet, count: 4 },
   ];
 
 const faqs = [
   {
     category: "getting-started",
     q: "What is BraxleyNevim and how does it work?",
-    a: "BraxleyNevim is a proprietary trading firm that funds skilled traders. Pass our evaluation challenge and we'll give you a funded account with real capital. You keep up to 90% of the profits you generate.",
+    a: "BraxleyNevim is a proprietary trading firm that provides capital to qualified traders. Complete our evaluation challenge to demonstrate consistent profitability, and we will allocate a funded account with real capital. You retain up to 90% of the profits you generate.",
   },
   {
     category: "getting-started",
@@ -121,7 +161,59 @@ const faqs = [
   },
 ];
 
-/* ─── FAQ ITEM ─── */
+/* ─── FLOATING PARTICLE DOTS (Background) ─── */
+
+function ParticleField() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 30 }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2 + 1,
+        duration: Math.random() * 6 + 8,
+        delay: Math.random() * 4,
+      })),
+    []
+  );
+
+  if (!isMounted) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute bg-[#C7A257]/20"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0.15, 0.5, 0.15],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ─── FAQ ITEM — Floating Card with Glass Surface ─── */
 
 function FAQItem({
   faq,
@@ -137,9 +229,13 @@ function FAQItem({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const spotlight = useMotionTemplate`radial-gradient(400px circle at ${mouseX}px ${mouseY}px, rgba(199,162,87,0.06), transparent 80%)`;
+  const spotlight = useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, rgba(199,162,87,0.06), transparent 80%)`;
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLDivElement>) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
@@ -147,69 +243,161 @@ function FAQItem({
 
   return (
     <motion.div
-      className={`group relative border overflow-hidden transition-colors duration-300 ${isOpen
-        ? "bg-[#0A0A0A] border-[#C7A257]/20 shadow-[0_0_25px_rgba(199,162,87,0.04)]"
-        : "bg-[#040404] border-white/[0.05] hover:border-white/[0.12]"
-        }`}
-      onMouseMove={handleMouseMove}
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.03 }}
+      transition={{ delay: index * 0.06, duration: 0.5, ease: EASE }}
+      onMouseMove={handleMouseMove}
+      className="group relative"
     >
-      {/* Spotlight Effect */}
+      {/* Chaos Modifier #4: Magnetic cursor spotlight */}
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 mix-blend-screen"
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-[1]"
         style={{ background: spotlight }}
       />
 
-      <button
-        onClick={onToggle}
-        className="relative z-10 w-full px-6 py-6 text-left flex items-start justify-between gap-6 outline-none focus-visible:ring-1 focus-visible:ring-[#C7A257]/50"
-        aria-expanded={isOpen}
+      {/* Chaos Modifier #3: Noise grain overlay */}
+      <div
+        className="absolute inset-0 z-[2] mix-blend-overlay opacity-[0.15] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Chaos Modifier #1: Holographic sheen sweep */}
+      <div className="absolute inset-0 z-[3] -translate-x-full bg-gradient-to-r from-transparent via-white/[0.07] to-transparent skew-x-[20deg] pointer-events-none opacity-0 group-hover:opacity-100 group-hover:translate-x-[200%] transition-all duration-[1200ms] ease-in-out" />
+
+      {/* === Floating Card Surface === */}
+      <div
+        className={`relative z-10 border backdrop-blur-xl transition-all duration-500 ${isOpen
+          ? "bg-white/[0.05] border-[#C7A257]/25 shadow-[0_8px_40px_rgba(199,162,87,0.08)] -translate-y-1"
+          : "bg-white/[0.015] border-white/[0.06] hover:border-white/[0.14] hover:bg-white/[0.03] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)]"
+          }`}
       >
-        <div className="flex items-center gap-4">
-          <span className="font-mono text-xs text-white/30 shrink-0">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <span className={`font-display text-base sm:text-lg uppercase tracking-tight transition-colors duration-300 ${isOpen ? "text-[#C7A257]" : "text-white group-hover:text-[#C7A257]/80"
-            }`}>
-            {faq.q}
-          </span>
-        </div>
-
-        <div className="shrink-0 pt-1">
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`flex items-center justify-center w-7 h-7 border transition-colors duration-300 ${isOpen
-              ? "bg-[#C7A257] text-black border-[#C7A257]"
-              : "bg-white/[0.03] text-white/40 border-white/[0.08] group-hover:text-white"
-              }`}
-          >
-            {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-          </motion.div>
-        </div>
-      </button>
-
-      <AnimatePresence>
+        {/* Chaos Modifier #2: Glow pulse ring on active card */}
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{
-              height: { type: "spring", stiffness: 200, damping: 25 },
-              opacity: { duration: 0.2 },
+            className="absolute inset-0 pointer-events-none z-0"
+            animate={{
+              boxShadow: [
+                "0 0 20px rgba(199,162,87,0.04)",
+                "0 0 40px rgba(199,162,87,0.10)",
+                "0 0 20px rgba(199,162,87,0.04)",
+              ],
             }}
-            className="overflow-hidden relative z-10"
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+
+        <button
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          className="relative z-10 w-full px-5 sm:px-7 py-5 sm:py-6 text-left flex items-center justify-between gap-5 outline-none focus-visible:ring-1 focus-visible:ring-[#C7A257]/50 active:scale-[0.995] transition-transform"
+        >
+          <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+            {/* Numbered Index */}
+            <span
+              className={`font-mono text-[11px] tabular-nums shrink-0 w-7 text-center transition-all duration-300 ${isOpen
+                ? "text-[#C7A257] font-semibold"
+                : "text-white/15 group-hover:text-white/30"
+                }`}
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            {/* Gold accent bar */}
+            <div
+              className={`w-[2px] h-5 shrink-0 transition-all duration-500 ${isOpen
+                ? "bg-gradient-to-b from-[#C7A257] to-[#C7A257]/30"
+                : "bg-white/[0.06] group-hover:bg-white/[0.12]"
+                }`}
+            />
+
+            {/* Question */}
+            <span
+              className={`text-sm sm:text-[15px] leading-relaxed transition-colors duration-300 ${isOpen
+                ? "text-white font-medium"
+                : "text-white/55 group-hover:text-white/85"
+                }`}
+            >
+              {faq.q}
+            </span>
+          </div>
+
+          {/* Chevron with spring overshoot */}
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 18 }}
+            className="shrink-0"
           >
-            <div className="px-6 pb-6 pt-0 text-white/50 font-body text-base leading-relaxed pl-[3.25rem] max-w-3xl border-t border-transparent">
-              {faq.a}
+            <div
+              className={`flex items-center justify-center w-7 h-7 border transition-all duration-400 ${isOpen
+                ? "bg-[#C7A257] border-[#C7A257] text-black"
+                : "bg-white/[0.02] border-white/[0.08] text-white/25 group-hover:text-white/50 group-hover:border-white/[0.16]"
+                }`}
+            >
+              <ChevronDown className="w-3.5 h-3.5" strokeWidth={2} />
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </button>
+
+        {/* Expandable Content */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{
+                height: { type: "spring", stiffness: 200, damping: 25 },
+                opacity: { duration: 0.25, delay: 0.05 },
+              }}
+              className="overflow-hidden relative z-10"
+            >
+              <div className="px-5 sm:px-7 pb-6 pt-1">
+                <div className="pl-[52px] sm:pl-[60px]">
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.1, ease: EASE }}
+                    className="text-white/40 text-sm sm:text-[15px] leading-[1.75] max-w-2xl"
+                  >
+                    {faq.a}
+                  </motion.p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── STAT COUNTER ─── */
+
+function StatCounter({
+  value,
+  label,
+  delay = 0,
+}: {
+  value: string;
+  label: string;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay, ease: EASE }}
+      className="text-center sm:text-left"
+    >
+      <div className="font-mono text-2xl sm:text-3xl text-[#C7A257] font-medium tracking-wider tabular-nums">
+        {value}
+      </div>
+      <div className="text-[10px] uppercase tracking-[0.25em] text-white/25 mt-1 font-mono">
+        {label}
+      </div>
     </motion.div>
   );
 }
@@ -222,6 +410,8 @@ export default function FAQPage() {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const heroRef = useRef<HTMLElement>(null);
   const heroInView = useInView(heroRef, { once: true });
+  const contentRef = useRef<HTMLElement>(null);
+  const contentInView = useInView(contentRef, { once: true, margin: "-80px" });
 
   const filteredFaqs = useMemo(() => {
     let result = faqs;
@@ -242,69 +432,142 @@ export default function FAQPage() {
     return result;
   }, [searchQuery, activeCategory]);
 
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery("");
+    setOpenIndex(null);
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#010101] text-white selection:bg-[#C7A257] selection:text-black">
       <Navbar />
 
-      {/* ═══════════════════════════════════
-           HERO — Asymmetric left-aligned
-         ═══════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════
+           HERO — Asymmetric layout with particle field
+         ═══════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden border-b border-white/[0.04]"
+        className="relative pt-28 pb-16 lg:pt-40 lg:pb-24 overflow-hidden"
       >
-        <div className="absolute top-0 right-1/4 w-[800px] h-[800px] bg-[#C7A257]/[0.03] rounded-full blur-[200px] pointer-events-none -translate-y-1/2" />
-        <div className="absolute inset-0 noise-overlay opacity-50 mix-blend-overlay pointer-events-none" />
+        {/* Background layers */}
+        <div className="absolute inset-0 void-spotlight" />
+        <div className="absolute inset-0 bg-noise opacity-[0.2] pointer-events-none mix-blend-overlay" />
+        <div className="absolute inset-0 grid-pattern opacity-[0.03]" />
+        <ParticleField />
+
+        {/* Ambient glow orbs */}
+        <div className="absolute top-0 right-[15%] w-[700px] h-[700px] bg-[#C7A257]/[0.035] rounded-full blur-[200px] pointer-events-none -translate-y-1/2" />
+        <div className="absolute bottom-0 left-[5%] w-[400px] h-[400px] bg-[#C7A257]/[0.02] rounded-full blur-[150px] pointer-events-none translate-y-1/2" />
+
+        {/* Diagonal accent lines */}
+        <div
+          className="absolute top-0 right-[25%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#C7A257]/8 to-transparent pointer-events-none"
+          style={{ transform: "rotate(-8deg)", transformOrigin: "top" }}
+        />
+        <div
+          className="absolute top-0 right-[30%] w-[1px] h-full bg-gradient-to-b from-transparent via-[#C7A257]/4 to-transparent pointer-events-none"
+          style={{ transform: "rotate(-12deg)", transformOrigin: "top" }}
+        />
 
         <div className="container-wide relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center justify-center p-3 sm:p-4 bg-white/[0.03] border border-white/[0.08] mb-6 glow-pulse">
-              <HelpCircle className="w-6 h-6 text-[#C7A257]" />
-            </div>
+          <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-end">
+            {/* Left : Text content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, ease: EASE }}
+            >
+              {/* Eyebrow */}
+              <div className="inline-flex items-center gap-2.5 mb-6">
+                <div className="w-1.5 h-1.5 bg-[#C7A257] animate-pulse" />
+                <span className="text-xs uppercase tracking-[0.25em] text-[#C7A257] font-mono font-medium">
+                  Support Center
+                </span>
+              </div>
 
-            <h1 className="font-display text-5xl lg:text-7xl uppercase text-white mb-6 tracking-tight">
-              FREQUENTLY
-              <br />
-              ASKED <span className="text-[#C7A257]">QUESTIONS</span>
-            </h1>
+              {/* Title */}
+              <h1
+                className="font-display text-white mb-6 uppercase tracking-wider leading-[0.85]"
+                style={{ fontSize: "clamp(2.8rem, 9vw, 7.5rem)" }}
+              >
+                FREQUENTLY
+                <br />
+                ASKED{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C7A257] via-[#F0D78C] to-[#C7A257] shimmer-gold">
+                  QUESTIONS
+                </span>
+              </h1>
 
-            <p className="text-white/40 text-lg sm:text-xl font-body leading-relaxed max-w-2xl mb-12">
-              Everything you need to know about evaluations, funded accounts,
-              trading rules, and payouts. Clear rules, no ambiguity.
-            </p>
+              {/* Subtitle */}
+              <p className="text-white/30 text-base sm:text-lg font-body leading-relaxed max-w-lg mb-10">
+                Everything you need to know about evaluations, funded accounts,
+                trading rules, and payouts.
+              </p>
 
-            {/* Search */}
-            <div className="relative max-w-xl group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-[#C7A257] transition-colors" />
-              <input
-                type="text"
-                placeholder="Search questions..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setOpenIndex(null);
-                }}
-                className="w-full pl-12 pr-4 py-4 bg-[#0A0A0A] border border-white/[0.08] text-white placeholder-white/30 font-mono text-sm tracking-wide focus:outline-none focus:border-[#C7A257]/40 focus:ring-1 focus:ring-[#C7A257]/20 transition-all rounded-none"
-              />
-            </div>
-          </motion.div>
+              {/* Search Input */}
+              <div className="relative max-w-xl group/search">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within/search:text-[#C7A257] transition-colors duration-300" />
+                <input
+                  type="text"
+                  placeholder="Search questions..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setOpenIndex(null);
+                  }}
+                  className="w-full pl-12 pr-10 py-4 bg-white/[0.02] border border-white/[0.08] text-white placeholder-white/20 font-mono text-sm tracking-wide backdrop-blur-xl focus:outline-none focus:border-[#C7A257]/40 focus:ring-1 focus:ring-[#C7A257]/20 focus:bg-white/[0.04] transition-all duration-300"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={handleClearSearch}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/30 hover:text-white/60 transition-colors"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Right : Stat counters */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+              className="hidden lg:flex flex-col gap-8 pb-4"
+            >
+              <StatCounter value="16+" label="Questions" delay={0.4} />
+              <StatCounter value="3" label="Categories" delay={0.5} />
+              <StatCounter value="24/7" label="Support" delay={0.6} />
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════
-           CATEGORY TABS + FAQ LIST
-         ═══════════════════════════════════ */}
-      <section className="py-20 lg:py-32 relative">
+      {/* ═══════════════════════════════════════════
+           CATEGORY TABS + FAQ ACCORDION LIST
+         ═══════════════════════════════════════════ */}
+      <section
+        ref={contentRef}
+        className="relative py-16 lg:py-24 border-b border-white/[0.04]"
+      >
+        <div className="absolute inset-0 bg-noise opacity-[0.15] pointer-events-none mix-blend-overlay" />
+
         <div className="container-wide relative z-10">
-          {/* Category filters */}
-          <div className="flex flex-wrap gap-3 mb-16 pb-8 border-b border-white/[0.04]">
+          {/* Category filter tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={contentInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="flex flex-wrap gap-2 mb-12 pb-8 border-b border-white/[0.06]"
+          >
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.id;
+              const currentCount =
+                cat.id === "all"
+                  ? faqs.length
+                  : faqs.filter((f) => f.category === cat.id).length;
+
               return (
                 <button
                   key={cat.id}
@@ -312,98 +575,165 @@ export default function FAQPage() {
                     setActiveCategory(cat.id);
                     setOpenIndex(null);
                   }}
-                  className={`relative flex items-center gap-2 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] transition-all duration-300 overflow-hidden border ${isActive
-                    ? "border-[#C7A257]/40 text-[#C7A257]"
-                    : "border-white/[0.08] text-white/50 hover:border-white/[0.15] hover:text-white"
+                  className={`relative flex items-center gap-2.5 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.12em] border transition-all duration-300 overflow-hidden active:scale-95 ${isActive
+                    ? "text-[#C7A257] border-[#C7A257]/30"
+                    : "text-white/30 border-white/[0.06] hover:border-white/[0.12] hover:text-white/55"
                     }`}
                 >
                   {isActive && (
-                    <motion.div
-                      layoutId="activeCategoryBg"
-                      className="absolute inset-0 bg-[#C7A257]/[0.08]"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    <motion.span
+                      layoutId="faqCategoryActive"
+                      className="absolute inset-0 bg-[#C7A257]/[0.06]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30,
+                      }}
                     />
                   )}
-                  <Icon className="w-4 h-4 relative z-10" />
+                  <Icon
+                    className="w-3.5 h-3.5 relative z-10"
+                    strokeWidth={1.5}
+                  />
                   <span className="relative z-10">{cat.label}</span>
+                  <span
+                    className={`relative z-10 ml-1 text-[10px] font-mono ${isActive ? "text-[#C7A257]/60" : "text-white/15"
+                      }`}
+                  >
+                    {currentCount}
+                  </span>
                 </button>
               );
             })}
-          </div>
+          </motion.div>
 
-          {/* FAQ List */}
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col gap-3">
-              {filteredFaqs.map((faq, i) => (
-                <FAQItem
-                  key={`${activeCategory}-${i}`}
-                  faq={faq}
-                  index={i}
-                  isOpen={openIndex === i}
-                  onToggle={() =>
-                    setOpenIndex(openIndex === i ? null : i)
-                  }
-                />
-              ))}
+          {/* FAQ List — Floating Cards */}
+          <div className="max-w-3xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${activeCategory}-${searchQuery}`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col gap-3"
+              >
+                {filteredFaqs.map((faq, i) => (
+                  <FAQItem
+                    key={`${activeCategory}-${i}`}
+                    faq={faq}
+                    index={i}
+                    isOpen={openIndex === i}
+                    onToggle={() =>
+                      setOpenIndex(openIndex === i ? null : i)
+                    }
+                  />
+                ))}
+              </motion.div>
+            </AnimatePresence>
 
-              {filteredFaqs.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-24 border border-white/[0.05] bg-[#0A0A0A]"
+            {/* Empty state */}
+            {filteredFaqs.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-24"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-white/[0.03] border border-white/[0.06] mb-6">
+                  <HelpCircle className="w-7 h-7 text-white/12" />
+                </div>
+                <p className="text-white/25 text-sm mb-2">
+                  No results for{" "}
+                  <span className="text-white/40 font-mono">
+                    &quot;{searchQuery}&quot;
+                  </span>
+                </p>
+                <p className="text-white/15 text-xs mb-6">
+                  Try a different search term or browse by category
+                </p>
+                <button
+                  onClick={handleClearSearch}
+                  className="text-[#C7A257] text-xs font-mono uppercase tracking-[0.15em] hover:text-[#F0D78C] transition-colors active:scale-95"
                 >
-                  <Search className="w-12 h-12 text-white/20 mx-auto mb-6" />
-                  <p className="text-white/40 text-sm mb-4 font-mono">
-                    No results for &quot;{searchQuery}&quot;
-                  </p>
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="text-[#C7A257] text-xs font-mono uppercase tracking-[0.15em] hover:text-[#C7A257]/80 transition-colors"
-                  >
-                    Clear search
-                  </button>
-                </motion.div>
-              )}
-            </div>
+                  Clear search
+                </button>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════
-           CTA — Contact support
-         ═══════════════════════════════════ */}
-      <section className="py-24 relative overflow-hidden border-t border-white/[0.04] bg-[#0A0A0A]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(199,162,87,0.05)_0%,transparent_60%)] pointer-events-none" />
+      {/* ═══════════════════════════════════════════
+           CTA — Contact support glass card
+         ═══════════════════════════════════════════ */}
+      <section className="relative py-24 lg:py-36 overflow-hidden">
+        <div className="absolute inset-0 void-spotlight" />
+        <div className="absolute inset-0 bg-noise opacity-[0.2] pointer-events-none mix-blend-overlay" />
 
-        <div className="container-wide relative z-10 text-center max-w-3xl mx-auto">
-          <p className="inline-block px-4 py-1.5 border border-[#C7A257]/20 bg-[#C7A257]/5 text-[#C7A257] text-xs font-mono uppercase tracking-[0.1em] mb-8">
-            Still have questions?
-          </p>
-          <h2 className="font-display text-4xl lg:text-5xl uppercase text-white mb-6 tracking-tight">
-            CONTACT <span className="text-[#C7A257]">SUPPORT</span>
-          </h2>
-          <p className="text-white/40 text-lg font-body leading-relaxed mb-10">
-            Our team responds within 2 hours. Available 24/7 via live chat,
-            email, or Discord.
-          </p>
+        {/* Ambient glow */}
+        <div className="absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-[#C7A257]/[0.03] rounded-full blur-[180px] pointer-events-none translate-y-1/2" />
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/support"
-              className="inline-flex h-14 items-center justify-center bg-[#C7A257] px-8 font-mono text-sm tracking-widest text-[#050507] uppercase transition-all duration-300 hover:bg-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C7A257] active:scale-95"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Contact Support
-              <ArrowUpRight className="w-4 h-4 ml-2" />
-            </Link>
-            <Link
-              href="/rules"
-              className="inline-flex h-14 items-center justify-center border border-white/10 bg-transparent px-8 font-mono text-sm tracking-widest text-white uppercase transition-all duration-300 hover:bg-white/5 active:scale-95"
-            >
-              View Trading Rules
-            </Link>
-          </div>
+        <div className="container-wide relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="relative border border-white/[0.06] bg-white/[0.015] backdrop-blur-xl p-8 sm:p-12 lg:p-16 overflow-hidden"
+          >
+            {/* Corner accents */}
+            <div className="absolute top-0 left-0 w-10 h-[2px] bg-[#C7A257]/40" />
+            <div className="absolute top-0 left-0 w-[2px] h-10 bg-[#C7A257]/40" />
+            <div className="absolute bottom-0 right-0 w-10 h-[2px] bg-[#C7A257]/40" />
+            <div className="absolute bottom-0 right-0 w-[2px] h-10 bg-[#C7A257]/40" />
+
+            {/* Holographic sheen on card hover */}
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent skew-x-[20deg] pointer-events-none group-hover:translate-x-[200%] transition-all duration-[1500ms] ease-in-out" />
+
+            <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-center relative z-10">
+              <div>
+                <div className="inline-flex items-center gap-2.5 mb-4">
+                  <Sparkles className="w-3.5 h-3.5 text-[#C7A257]" />
+                  <span className="text-xs uppercase tracking-[0.25em] text-[#C7A257] font-mono font-medium">
+                    Still have questions?
+                  </span>
+                </div>
+                <h2
+                  className="font-display uppercase tracking-wider leading-[0.9] text-white mb-4"
+                  style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
+                >
+                  GET IN{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C7A257] to-[#F0D78C]">
+                    TOUCH
+                  </span>
+                </h2>
+                <p className="text-white/30 text-sm sm:text-base font-body leading-relaxed max-w-md">
+                  Our team responds within 2 hours. Available 24/7 via live
+                  chat, email, or Discord.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/contact"
+                  className="group/cta relative inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#C7A257] text-black font-body font-bold uppercase tracking-widest text-sm border border-[#C7A257] overflow-hidden transition-all hover:shadow-[0_0_35px_rgba(199,162,87,0.25)] active:scale-95"
+                >
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover/cta:translate-x-full duration-700 ease-out" />
+                  <MessageSquare className="w-4 h-4 relative z-10" />
+                  <span className="relative z-10">Contact Support</span>
+                  <ArrowUpRight className="w-4 h-4 relative z-10" />
+                </Link>
+                <Link
+                  href="/rules"
+                  className="group/rules relative inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-transparent border border-white/[0.10] text-white/70 font-body uppercase tracking-[0.15em] text-sm overflow-hidden transition-all hover:border-[#C7A257]/30 hover:text-[#C7A257] active:scale-95"
+                >
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#C7A257]/[0.06] to-transparent group-hover/rules:translate-x-full duration-700 ease-out" />
+                  <span className="relative z-10">View Trading Rules</span>
+                  <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover/rules:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -411,4 +741,3 @@ export default function FAQPage() {
     </main>
   );
 }
-

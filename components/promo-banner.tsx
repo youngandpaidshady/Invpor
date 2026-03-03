@@ -53,7 +53,7 @@ export function PromoBanner() {
               <div className="flex items-center gap-2">
                 <Tag className="w-4 h-4" />
                 <span className="font-medium">
-                  Use code <span className="font-bold">ALPHA25</span> for 25% off
+                  Use code <span className="font-bold">BN25</span> for 25% off
                 </span>
               </div>
 

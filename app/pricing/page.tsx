@@ -14,9 +14,8 @@ import {
   Target,
   AlertTriangle,
   BarChart3,
-  Users,
-  ChevronDown,
   Flame,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 
@@ -382,33 +381,37 @@ const whyUsItems = [
   },
 ];
 
-/* ─── METRIC ROW COMPONENT ─── */
+/* ─── METRIC CAPSULE — matches homepage card design ─── */
 
-function MetricRow({
+function MetricCapsule({
   label,
   value,
   icon: Icon,
-  danger = false,
+  primary = false,
 }: {
   label: string;
   value: string;
   icon: LucideIcon;
-  danger?: boolean;
+  primary?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between py-2.5 px-3 bg-white/[0.04] border border-white/[0.05] rounded-lg group-hover:bg-white/[0.08] group-hover:border-white/[0.1] transition-all backdrop-blur-md shadow-[0_2px_8px_rgba(0,0,0,0.2)]">
-      <div className="flex items-center gap-2">
+    <div
+      className={`rounded-lg py-3 px-3.5 flex flex-col items-center gap-1.5 transition-all backdrop-blur-md ${primary
+        ? "bg-[#C7A257]/[0.04] border border-[#C7A257]/[0.12] hover:bg-[#C7A257]/[0.08] hover:border-[#C7A257]/[0.2]"
+        : "bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.1]"
+        }`}
+    >
+      <div className="flex items-center gap-1.5 text-white/40">
         <Icon
-          className={`w-3.5 h-3.5 ${danger ? "text-red-400/70" : "text-[#C7A257]/60"}`}
+          className={`w-3 h-3 ${primary ? "text-[#C7A257]" : "text-white/30"}`}
           strokeWidth={1.5}
         />
-        <span className="text-[11px] text-white/40 font-mono uppercase tracking-wider">
+        <span className="text-[9px] uppercase font-mono tracking-[0.1em]">
           {label}
         </span>
       </div>
       <span
-        className={`text-sm font-mono font-bold ${danger ? "text-red-400" : "text-white"
-          }`}
+        className={`font-mono text-sm font-semibold ${primary ? "text-white" : "text-white/60"}`}
       >
         {value}
       </span>
@@ -517,8 +520,6 @@ function PricingCard({
   plan: PlanData;
   challengeType: string;
 }) {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <SpotlightCard isPopular={plan.isPopular}>
       <div
@@ -534,6 +535,7 @@ function PricingCard({
         {plan.isPopular && (
           <div className="absolute inset-0 bg-gradient-to-b from-[#C7A257]/[0.05] to-transparent pointer-events-none z-0 rounded-2xl" />
         )}
+
         {/* Popular badge */}
         {plan.isPopular && (
           <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
@@ -552,18 +554,21 @@ function PricingCard({
         )}
 
         <div className="p-4 lg:p-6 flex flex-col flex-grow">
-          {/* Header */}
-          <div className="mb-4">
-            <div className="text-[9px] uppercase tracking-[0.2em] text-[#C7A257]/60 font-mono mb-1">
+          {/* Header — Name */}
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-[#C7A257]/60 font-mono font-medium">
               {plan.name}
             </div>
-            <div className="font-display text-4xl lg:text-5xl uppercase tracking-wider text-white group-hover:text-[#C7A257] transition-colors duration-300">
-              {plan.size}
-            </div>
+            {plan.isPopular && <div className="w-4 h-px bg-[#C7A257]/40" />}
+          </div>
+
+          {/* Account Size */}
+          <div className="font-display text-4xl lg:text-5xl uppercase tracking-wider text-white group-hover:text-[#C7A257] transition-colors duration-300 mb-4">
+            {plan.size}
           </div>
 
           {/* Price */}
-          <div className="flex items-baseline gap-3 mb-4 pb-4 border-b border-[#1a1a1a]">
+          <div className="flex items-baseline gap-3 mb-5 pb-5 border-b border-white/[0.06]">
             <span className="text-3xl font-mono text-white tracking-tight font-bold">
               ${plan.price}
             </span>
@@ -577,21 +582,20 @@ function PricingCard({
             </span>
           </div>
 
-          {/* Comparison metrics */}
-          <div className="space-y-0.5 mb-4">
-            <MetricRow label="Profit Target" value={plan.profitTarget} icon={Target} />
-            <MetricRow label="Max Drawdown" value={plan.maxDrawdown} icon={BarChart3} danger />
-            <MetricRow label="Daily Drawdown" value={plan.dailyDrawdown} icon={BarChart3} danger />
-            <MetricRow label="Profit Split" value={`${plan.profitSplit}%`} icon={TrendingUp} />
-            <MetricRow label="Leverage" value={plan.leverage} icon={Shield} />
+          {/* 2×2 Metric Capsule Grid */}
+          <div className="grid grid-cols-2 gap-2 mb-5">
+            <MetricCapsule label="Profit Target" value={plan.profitTarget} icon={Target} primary />
+            <MetricCapsule label="Profit Split" value={`${plan.profitSplit}%`} icon={TrendingUp} primary />
+            <MetricCapsule label="Max Drawdown" value={plan.maxDrawdown} icon={BarChart3} />
+            <MetricCapsule label="Daily DD" value={plan.dailyDrawdown} icon={BarChart3} />
           </div>
 
           {/* Feature chips */}
-          <div className="flex flex-wrap gap-1 mb-3">
-            {plan.features.slice(0, expanded ? plan.features.length : 2).map((f) => (
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {plan.features.map((f) => (
               <span
                 key={f}
-                className="inline-flex items-center gap-1 text-[10px] px-2.5 py-1 bg-white/[0.03] border border-white/[0.06] text-white/50 font-mono uppercase tracking-wider"
+                className="inline-flex items-center gap-1 text-[10px] px-2.5 py-1 bg-white/[0.03] border border-white/[0.06] text-white/50 font-mono uppercase tracking-wider rounded-md"
               >
                 <Check className="w-2.5 h-2.5 text-[#C7A257]/60" strokeWidth={2.5} />
                 {f}
@@ -599,53 +603,7 @@ function PricingCard({
             ))}
           </div>
 
-          {/* Expandable details */}
-          {plan.features.length > 2 && (
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.15em] text-white/30 hover:text-[#C7A257]/70 transition-colors mb-4"
-            >
-              {expanded ? "Show Less" : `+${plan.features.length - 2} More`}
-              <ChevronDown
-                className={`w-3 h-3 transition-transform ${expanded ? "rotate-180" : ""}`}
-                strokeWidth={2}
-              />
-            </button>
-          )}
-
-          {/* Expanded details panel */}
-          <AnimatePresence>
-            {expanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: EASE_SNAPPY }}
-                className="overflow-hidden mb-4"
-              >
-                <div className="space-y-1 pt-3 border-t border-[#1a1a1a]">
-                  <MetricRow label="Platform" value={plan.platform} icon={Shield} />
-                  <MetricRow label="Min Trading Days" value={plan.minTradingDays} icon={Clock} />
-                  <div className="mt-3 p-3 bg-[#C7A257]/[0.03] border border-[#C7A257]/10">
-                    <div className="text-[9px] uppercase tracking-[0.2em] text-[#C7A257]/60 font-mono mb-2">
-                      Refundable fee policy
-                    </div>
-                    <p className="text-[11px] text-white/40 font-body leading-relaxed">
-                      Your evaluation fee is automatically refunded alongside your primary withdrawal upon successfully passing the challenge phases.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Social proof */}
-          <div className="flex items-center gap-2 mb-4 text-[10px] text-white/25 font-mono">
-            <Users className="w-3 h-3" strokeWidth={1.5} />
-            <span>{plan.socialProof}</span>
-          </div>
-
-          {/* CTA — Shimmer button */}
+          {/* CTA */}
           <div className="mt-auto">
             <motion.div
               whileHover={{ scale: 1.03 }}
@@ -654,7 +612,7 @@ function PricingCard({
             >
               <Link
                 href={`/checkout/${challengeType.toLowerCase().replace("-", "")}-${plan.size.replace("$", "").toLowerCase()}`}
-                className={`shimmer-button flex items-center justify-center gap-2 w-full py-3 text-xs font-bold font-mono uppercase tracking-[0.15em] border transition-all ${plan.isPopular
+                className={`shimmer-button flex items-center justify-center gap-2 w-full py-3 rounded-lg text-xs font-bold font-mono uppercase tracking-[0.15em] border transition-all ${plan.isPopular
                   ? "bg-[#C7A257] border-[#C7A257] text-black hover:shadow-[0_0_30px_rgba(199,162,87,0.3)]"
                   : "bg-transparent border-[#222222] text-white/60 hover:text-[#C7A257] hover:border-[#C7A257]/40"
                   }`}
@@ -792,7 +750,7 @@ function ComparisonMatrix({ plans, challengeType }: { plans: PlanData[]; challen
             >
               <Link
                 href={`/checkout/${challengeType.toLowerCase().replace("-", "")}-${plan.size.replace("$", "").toLowerCase()}`}
-                className={`shimmer-button flex items-center justify-center gap-2 w-full py-3 text-[10px] font-bold font-mono uppercase tracking-[0.15em] border transition-all ${plan.isPopular
+                className={`shimmer-button flex items-center justify-center gap-2 w-full py-3 rounded-lg text-[10px] font-bold font-mono uppercase tracking-[0.15em] border transition-all ${plan.isPopular
                   ? "bg-[#C7A257] border-[#C7A257] text-black"
                   : "bg-transparent border-[#222222] text-white/60 hover:text-[#C7A257] hover:border-[#C7A257]/40"
                   }`}

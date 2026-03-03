@@ -8,40 +8,37 @@ import { useRef, useState, useEffect } from "react";
 
 /**
  * About Page - Editorial Magazine Style
- * 
- * Not corporate. Not AI-generated. Human.
- * Tell a real story.
  */
 
 const team = [
   {
-    initials: "AC",
-    name: "Alex Chen",
-    role: "Founder",
-    quote: "Got tired of prop firms treating traders like ATMs.",
+    initials: "BN",
+    name: "Executive Team",
+    role: "Chief Executive Officer",
+    quote: "Our mandate is simple — align our success with the success of every trader we fund.",
     color: "#ff6b35"
   },
   {
-    initials: "SW",
-    name: "Sarah Williams",
-    role: "Head of Trading",
-    quote: "15 years at Goldman taught me what NOT to do.",
+    initials: "TM",
+    name: "Trading Division",
+    role: "Head of Risk & Trading",
+    quote: "Institutional-grade risk management is the foundation of sustainable funded trading.",
     color: "#10b981"
   },
   {
-    initials: "MJ",
-    name: "Marcus Johnson",
-    role: "CTO",
-    quote: "Built systems. Broke systems. Now I build them right.",
+    initials: "TS",
+    name: "Technology Division",
+    role: "Chief Technology Officer",
+    quote: "We engineer systems for reliability, speed, and transparency at every layer.",
     color: "#3b82f6"
   },
 ];
 
 const timeline = [
-  { year: "2021", event: "Had enough", desc: "Quit our jobs. Started in a garage. (Cliché, we know.)" },
-  { year: "2022", event: "First 1,000", desc: "Hit 1,000 funded traders. Realized we were onto something." },
-  { year: "2023", event: "$5M paid", desc: "Crossed $5 million in payouts. Still no VC money." },
-  { year: "2024", event: "10,000+", desc: "Global community. Still bootstrapped. Still trader-owned." },
+  { year: "2021", event: "Founded", desc: "BraxleyNevim established with a mandate to build a trader-first proprietary funding firm." },
+  { year: "2022", event: "1,000 Traders Funded", desc: "Reached our first milestone of 1,000 funded accounts across multiple asset classes." },
+  { year: "2023", event: "$5M in Payouts", desc: "Exceeded $5 million in total trader payouts. Privately held, self-funded, zero external capital." },
+  { year: "2024", event: "Global Expansion", desc: "Operating across 60+ countries with an active community of over 10,000 funded traders." },
 ];
 
 export default function AboutPage() {
@@ -104,7 +101,7 @@ export default function AboutPage() {
             className="mb-8 lg:ml-[8%]"
           >
             <span className="text-[10px] text-white/30 uppercase tracking-[0.4em] font-mono">
-              Issue №024 — About
+              About BraxleyNevim
             </span>
           </motion.div>
 
@@ -116,10 +113,10 @@ export default function AboutPage() {
               transition={{ delay: 0.1 }}
             >
               <span className="block text-[12vw] lg:text-[8vw] font-black leading-[0.85] tracking-tighter">
-                We&apos;re not
+                Built by
               </span>
               <span className="block text-[12vw] lg:text-[8vw] font-black leading-[0.85] tracking-tighter">
-                a <span className="text-[#ff6b35] italic font-light">prop firm.</span>
+                <span className="text-[#ff6b35] italic font-light">traders.</span>
               </span>
             </motion.h1>
 
@@ -129,8 +126,8 @@ export default function AboutPage() {
               transition={{ delay: 0.3 }}
               className="mt-10 text-xl lg:text-2xl text-white/50 font-light max-w-xl leading-relaxed"
             >
-              We&apos;re traders who got sick of the bullshit.
-              So we built something different.
+              BraxleyNevim is a proprietary trading firm engineered around one principle:
+              when traders succeed, we succeed.
             </motion.p>
           </div>
         </div>
@@ -145,18 +142,18 @@ export default function AboutPage() {
             </span>
 
             <p className="mt-8 text-3xl lg:text-4xl font-light text-white/80 leading-relaxed">
-              Most prop firms are designed for you to fail.
+              The funded trading industry needed a higher standard.
             </p>
 
             <p className="mt-6 text-lg text-white/40 font-light leading-relaxed">
-              Impossible targets. Hidden fees. Rules that contradict each other.
-              Support that doesn&apos;t speak English. Payouts that never come.
-              <span className="text-white/60"> We&apos;ve been there.</span>
+              Too many firms operate with opaque rules, unreasonable drawdown parameters, and delayed payouts.
+              Traders deserve clear terms, fair evaluations, and a firm that pays on time — every time.
+              <span className="text-white/60"> That conviction is what drives BraxleyNevim.</span>
             </p>
 
             <p className="mt-6 text-lg text-white/40 font-light leading-relaxed">
-              We lost money. We lost time. We lost faith in the industry.
-              <span className="text-[#ff6b35]"> Then we got angry.</span>
+              We studied the shortcomings of existing firms and built our infrastructure from the ground up —
+              <span className="text-[#ff6b35]"> transparent parameters, rapid payouts, and dedicated support.</span>
             </p>
           </div>
         </div>
@@ -261,7 +258,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="lg:ml-[8%]">
             <span className="text-[10px] text-white/30 uppercase tracking-[0.4em] font-mono">
-              The idiots behind this
+              Leadership
             </span>
 
             <div className="mt-12 grid md:grid-cols-3 gap-8">
@@ -297,21 +294,21 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="lg:ml-[8%] max-w-3xl">
             <span className="text-[10px] text-white/30 uppercase tracking-[0.4em] font-mono">
-              What we actually believe
+              Our Principles
             </span>
 
             <div className="mt-12 space-y-6">
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Your success = our success. Literally. We only profit when you do.
+                <span className="text-[#ff6b35]">→</span> Alignment of interest — our revenue model is built on trader profitability, not on failed evaluations.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Rules should be simple enough to fit on a napkin.
+                <span className="text-[#ff6b35]">→</span> Transparent parameters — every rule is documented, consistent, and publicly available before purchase.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Payouts should be fast. Same-day or we failed.
+                <span className="text-[#ff6b35]">→</span> Rapid settlement — payouts processed within 24 hours of approval, with full audit trails.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Support should be humans, not chatbots.
+                <span className="text-[#ff6b35]">→</span> Dedicated support — every inquiry handled by experienced professionals, not automated systems.
               </p>
             </div>
           </div>
@@ -322,11 +319,11 @@ export default function AboutPage() {
       <section className="py-24 border-t border-white/[0.05]">
         <div className="container mx-auto px-6 lg:px-12 text-center">
           <p className="text-white/30 text-sm uppercase tracking-[0.3em] mb-4">
-            Still reading?
+            Ready to begin?
           </p>
           <h2 className="text-4xl lg:text-6xl font-black mb-8">
-            Prove us right.<br />
-            <span className="text-[#ff6b35]">Get funded.</span>
+            Start your evaluation.<br />
+            <span className="text-[#ff6b35]">Trade with our capital.</span>
           </h2>
           <div className="flex justify-center gap-4">
             <Link
@@ -341,7 +338,7 @@ export default function AboutPage() {
 
       {/* Edition marker */}
       <div className="fixed bottom-6 left-6 text-[10px] text-white/10 font-mono tracking-wider z-40">
-        №024
+        BraxleyNevim Ltd
       </div>
 
       <Footer />

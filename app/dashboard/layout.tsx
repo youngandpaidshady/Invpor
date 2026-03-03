@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Wallet,
@@ -15,7 +15,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { BottomTabBar } from "@/components/ui/bottom-tab-bar";
-import { MOCK_USER_STATE } from "@/lib/mock-data";
+import { createClient } from "@/lib/supabase/client";
 
 const sidebarLinks = [
   { href: "/dashboard", icon: LayoutDashboard, label: "Overview" },
@@ -33,6 +33,48 @@ export default function DashboardLayout({
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  // Real user data from Supabase
+  const [userName, setUserName] = useState("Trader");
+  const [userInitials, setUserInitials] = useState("T");
+  const [accountStatus, setAccountStatus] = useState<"challenge" | "funded">("challenge");
+  const [accountSize, setAccountSize] = useState(0);
+  const [phaseName, setPhaseName] = useState("Phase 1");
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const name = user.user_metadata?.full_name || user.email?.split("@")[0] || "Trader";
+      setUserName(name);
+      setUserInitials(name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2));
+
+      // Fetch active challenge
+      const { data: challenge } = await supabase
+        .from("challenges")
+        .select("status, account_size, phase, type")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (challenge) {
+        setAccountSize(challenge.account_size || 0);
+        setAccountStatus(challenge.status === "funded" ? "funded" : "challenge");
+        setPhaseName(challenge.status === "funded" ? "Funded" : `Phase ${challenge.phase || 1}`);
+      }
+    };
+    loadUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -107,9 +149,9 @@ export default function DashboardLayout({
             <div className="hidden sm:block">
               <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">Account Status</div>
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full animate-pulse ${MOCK_USER_STATE.account.status === 'funded' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                <span className={`font-bold text-sm ${MOCK_USER_STATE.account.status === 'funded' ? 'text-emerald-500' : 'text-amber-500'}`}>
-                  {MOCK_USER_STATE.account.phaseName}
+                <span className={`w-2 h-2 rounded-full animate-pulse ${accountStatus === 'funded' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                <span className={`font-bold text-sm ${accountStatus === 'funded' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                  {phaseName}
                 </span>
               </div>
             </div>
@@ -123,11 +165,11 @@ export default function DashboardLayout({
             <div className="h-8 w-px bg-border/50" />
             <div className="hidden sm:flex items-center gap-3">
               <div className="text-right hidden md:block">
-                <div className="font-medium text-sm">{MOCK_USER_STATE.profile.name}</div>
-                <div className="text-xs text-muted-foreground">${MOCK_USER_STATE.account.accountSize.toLocaleString()} Challenge</div>
+                <div className="font-medium text-sm">{userName}</div>
+                <div className="text-xs text-muted-foreground">${accountSize.toLocaleString()} Challenge</div>
               </div>
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#E8C878] flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg shadow-primary/20">
-                {MOCK_USER_STATE.profile.avatarInitials}
+                {userInitials}
               </div>
             </div>
             {/* Mobile Menu Trigger would go here */}

@@ -54,10 +54,10 @@ interface PromoCode {
 }
 
 const validPromoCodes: Record<string, number> = {
-  ALPHA10: 10,
+  BN10: 10,
   WELCOME15: 15,
   TRADER20: 20,
-  VIP25: 25,
+  BN25: 25,
 };
 
 const CRYPTO_DISCOUNT = 5; // 5% off for crypto payments

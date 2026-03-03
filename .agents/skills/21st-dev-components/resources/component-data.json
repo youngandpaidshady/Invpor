@@ -1,0 +1,1554 @@
+{
+  "tokens": {
+    "shadows": {
+      "glow_lg": "0 0 40px rgba(var(--brand-rgb), 0.4)", 
+      "bloom": "0 0 60px 20px rgba(var(--brand-rgb), 0.15)"
+    }, 
+    "colors": {
+      "dark_premium": {
+        "foreground": "hsl(0 0% 98%)", 
+        "primary": "hsl(var(--brand-hue) 80% 55%)", 
+        "background": "hsl(0 0% 3.9%)"
+      }
+    }
+  }, 
+  "version": "2.0", 
+  "name": "21st.dev Exhaustive Components Dataset", 
+  "components": [
+    {
+      "count": 10, 
+      "name": "Announcements", 
+      "archetypes": [
+        {
+          "name": "Premium Announcements Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Announcements", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "announcements"
+    }, 
+    {
+      "count": 33, 
+      "name": "Backgrounds", 
+      "archetypes": [
+        {
+          "name": "Premium Backgrounds Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Backgrounds", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "extra_high", 
+      "slug": "backgrounds"
+    }, 
+    {
+      "count": 12, 
+      "name": "Borders", 
+      "archetypes": [
+        {
+          "name": "Premium Borders Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Borders", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "borders"
+    }, 
+    {
+      "count": 34, 
+      "name": "Calls to Action", 
+      "archetypes": [
+        {
+          "name": "Premium Calls to Action Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Calls to Action", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "calls-to-action"
+    }, 
+    {
+      "count": 16, 
+      "name": "Clients", 
+      "archetypes": [
+        {
+          "name": "Premium Clients Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Clients", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "clients"
+    }, 
+    {
+      "count": 6, 
+      "name": "Comparisons", 
+      "archetypes": [
+        {
+          "name": "Premium Comparisons Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Comparisons", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "comparisons"
+    }, 
+    {
+      "count": 6, 
+      "name": "Docks", 
+      "archetypes": [
+        {
+          "name": "Premium Docks Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Docks", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "docks"
+    }, 
+    {
+      "count": 36, 
+      "name": "Features", 
+      "archetypes": [
+        {
+          "name": "Premium Features Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Features", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "High-Conversion Landing Page", 
+      "priority": "high", 
+      "slug": "features"
+    }, 
+    {
+      "count": 14, 
+      "name": "Footers", 
+      "archetypes": [
+        {
+          "name": "Premium Footers Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Footers", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "High-Conversion Landing Page", 
+      "priority": "high", 
+      "slug": "footers"
+    }, 
+    {
+      "count": 73, 
+      "name": "Heroes", 
+      "archetypes": [
+        {
+          "name": "Premium Heroes Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Heroes", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "extra_high", 
+      "slug": "heroes"
+    }, 
+    {
+      "count": 31, 
+      "name": "Hooks", 
+      "archetypes": [
+        {
+          "name": "Premium Hooks Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Hooks", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "hooks"
+    }, 
+    {
+      "count": 26, 
+      "name": "Images", 
+      "archetypes": [
+        {
+          "name": "Premium Images Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Images", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "images"
+    }, 
+    {
+      "count": 2, 
+      "name": "Maps", 
+      "archetypes": [
+        {
+          "name": "Premium Maps Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Maps", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "maps"
+    }, 
+    {
+      "count": 11, 
+      "name": "Navigation Menus", 
+      "archetypes": [
+        {
+          "name": "Premium Navigation Menus Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Navigation Menus", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "navigation-menus"
+    }, 
+    {
+      "count": 17, 
+      "name": "Pricing Sections", 
+      "archetypes": [
+        {
+          "name": "Premium Pricing Sections Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Pricing Sections", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "High-Conversion Landing Page", 
+      "priority": "high", 
+      "slug": "pricing-sections"
+    }, 
+    {
+      "count": 24, 
+      "name": "Scroll Areas", 
+      "archetypes": [
+        {
+          "name": "Premium Scroll Areas Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Scroll Areas", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "scroll-areas"
+    }, 
+    {
+      "count": 15, 
+      "name": "Shaders", 
+      "archetypes": [
+        {
+          "name": "Premium Shaders Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Shaders", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "shaders"
+    }, 
+    {
+      "count": 15, 
+      "name": "Testimonials", 
+      "archetypes": [
+        {
+          "name": "Premium Testimonials Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Testimonials", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "High-Conversion Landing Page", 
+      "priority": "high", 
+      "slug": "testimonials"
+    }, 
+    {
+      "count": 58, 
+      "name": "Texts", 
+      "archetypes": [
+        {
+          "name": "Premium Texts Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Texts", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "texts"
+    }, 
+    {
+      "count": 9, 
+      "name": "Videos", 
+      "archetypes": [
+        {
+          "name": "Premium Videos Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Videos", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "videos"
+    }, 
+    {
+      "count": 40, 
+      "name": "Accordions", 
+      "archetypes": [
+        {
+          "name": "Premium Accordions Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Accordions", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "accordions"
+    }, 
+    {
+      "count": 30, 
+      "name": "AI Chats", 
+      "archetypes": [
+        {
+          "name": "Premium AI Chats Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated AI Chats", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "AI Dashboard, ChatGPT-style", 
+      "priority": "high", 
+      "slug": "ai-chats"
+    }, 
+    {
+      "count": 23, 
+      "name": "Alerts", 
+      "archetypes": [
+        {
+          "name": "Premium Alerts Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Alerts", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "alerts"
+    }, 
+    {
+      "count": 17, 
+      "name": "Avatars", 
+      "archetypes": [
+        {
+          "name": "Premium Avatars Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Avatars", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "avatars"
+    }, 
+    {
+      "count": 25, 
+      "name": "Badges", 
+      "archetypes": [
+        {
+          "name": "Premium Badges Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Badges", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "badges"
+    }, 
+    {
+      "count": 130, 
+      "name": "Buttons", 
+      "archetypes": [
+        {
+          "name": "Premium Buttons Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Buttons", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "extra_high", 
+      "slug": "buttons"
+    }, 
+    {
+      "count": 34, 
+      "name": "Calendars", 
+      "archetypes": [
+        {
+          "name": "Premium Calendars Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Calendars", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "calendars"
+    }, 
+    {
+      "count": 79, 
+      "name": "Cards", 
+      "archetypes": [
+        {
+          "name": "Premium Cards Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Cards", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "extra_high", 
+      "slug": "cards"
+    }, 
+    {
+      "count": 16, 
+      "name": "Carousels", 
+      "archetypes": [
+        {
+          "name": "Premium Carousels Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Carousels", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "carousels"
+    }, 
+    {
+      "count": 19, 
+      "name": "Checkboxes", 
+      "archetypes": [
+        {
+          "name": "Premium Checkboxes Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Checkboxes", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "checkboxes"
+    }, 
+    {
+      "count": 12, 
+      "name": "Date Pickers", 
+      "archetypes": [
+        {
+          "name": "Premium Date Pickers Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Date Pickers", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "date-pickers"
+    }, 
+    {
+      "count": 37, 
+      "name": "Dialogs / Modals", 
+      "archetypes": [
+        {
+          "name": "Premium Dialogs / Modals Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Dialogs / Modals", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "dialogs--modals"
+    }, 
+    {
+      "count": 25, 
+      "name": "Dropdowns", 
+      "archetypes": [
+        {
+          "name": "Premium Dropdowns Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Dropdowns", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "dropdowns"
+    }, 
+    {
+      "count": 1, 
+      "name": "Empty States", 
+      "archetypes": [
+        {
+          "name": "Premium Empty States Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Empty States", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "empty-states"
+    }, 
+    {
+      "count": 2, 
+      "name": "File Trees", 
+      "archetypes": [
+        {
+          "name": "Premium File Trees Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated File Trees", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "file-trees"
+    }, 
+    {
+      "count": 7, 
+      "name": "File Uploads", 
+      "archetypes": [
+        {
+          "name": "Premium File Uploads Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated File Uploads", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "file-uploads"
+    }, 
+    {
+      "count": 23, 
+      "name": "Forms", 
+      "archetypes": [
+        {
+          "name": "Premium Forms Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Forms", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "forms"
+    }, 
+    {
+      "count": 10, 
+      "name": "Icons", 
+      "archetypes": [
+        {
+          "name": "Premium Icons Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Icons", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "icons"
+    }, 
+    {
+      "count": 102, 
+      "name": "Inputs", 
+      "archetypes": [
+        {
+          "name": "Premium Inputs Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Inputs", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "inputs"
+    }, 
+    {
+      "count": 13, 
+      "name": "Links", 
+      "archetypes": [
+        {
+          "name": "Premium Links Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Links", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "links"
+    }, 
+    {
+      "count": 18, 
+      "name": "Menus", 
+      "archetypes": [
+        {
+          "name": "Premium Menus Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Menus", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "menus"
+    }, 
+    {
+      "count": 5, 
+      "name": "Notifications", 
+      "archetypes": [
+        {
+          "name": "Premium Notifications Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Notifications", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "notifications"
+    }, 
+    {
+      "count": 18, 
+      "name": "Numbers", 
+      "archetypes": [
+        {
+          "name": "Premium Numbers Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Numbers", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "numbers"
+    }, 
+    {
+      "count": 20, 
+      "name": "Paginations", 
+      "archetypes": [
+        {
+          "name": "Premium Paginations Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Paginations", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "paginations"
+    }, 
+    {
+      "count": 23, 
+      "name": "Popovers", 
+      "archetypes": [
+        {
+          "name": "Premium Popovers Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Popovers", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "popovers"
+    }, 
+    {
+      "count": 22, 
+      "name": "Radio Groups", 
+      "archetypes": [
+        {
+          "name": "Premium Radio Groups Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Radio Groups", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "radio-groups"
+    }, 
+    {
+      "count": 62, 
+      "name": "Selects", 
+      "archetypes": [
+        {
+          "name": "Premium Selects Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Selects", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "selects"
+    }, 
+    {
+      "count": 10, 
+      "name": "Sidebars", 
+      "archetypes": [
+        {
+          "name": "Premium Sidebars Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Sidebars", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "sidebars"
+    }, 
+    {
+      "count": 4, 
+      "name": "Sign Ins", 
+      "archetypes": [
+        {
+          "name": "Premium Sign Ins Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Sign Ins", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "sign-ins"
+    }, 
+    {
+      "count": 4, 
+      "name": "Sign ups", 
+      "archetypes": [
+        {
+          "name": "Premium Sign ups Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Sign ups", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "sign-ups"
+    }, 
+    {
+      "count": 45, 
+      "name": "Sliders", 
+      "archetypes": [
+        {
+          "name": "Premium Sliders Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Sliders", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "sliders"
+    }, 
+    {
+      "count": 21, 
+      "name": "Spinner Loaders", 
+      "archetypes": [
+        {
+          "name": "Premium Spinner Loaders Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Spinner Loaders", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "spinner-loaders"
+    }, 
+    {
+      "count": 30, 
+      "name": "Tables", 
+      "archetypes": [
+        {
+          "name": "Premium Tables Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Tables", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "tables"
+    }, 
+    {
+      "count": 38, 
+      "name": "Tabs", 
+      "archetypes": [
+        {
+          "name": "Premium Tabs Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Tabs", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "tabs"
+    }, 
+    {
+      "count": 6, 
+      "name": "Tags", 
+      "archetypes": [
+        {
+          "name": "Premium Tags Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Tags", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "tags"
+    }, 
+    {
+      "count": 22, 
+      "name": "Text Areas", 
+      "archetypes": [
+        {
+          "name": "Premium Text Areas Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Text Areas", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "text-areas"
+    }, 
+    {
+      "count": 2, 
+      "name": "Toasts", 
+      "archetypes": [
+        {
+          "name": "Premium Toasts Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Toasts", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "toasts"
+    }, 
+    {
+      "count": 12, 
+      "name": "Toggles", 
+      "archetypes": [
+        {
+          "name": "Premium Toggles Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Toggles", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "toggles"
+    }, 
+    {
+      "count": 28, 
+      "name": "Tooltips", 
+      "archetypes": [
+        {
+          "name": "Premium Tooltips Base", 
+          "techniques": [
+            "Framer Motion layoutId", 
+            "cva() variants", 
+            "Lucide React Icons", 
+            "Accessible Radix primitives"
+          ]
+        }, 
+        {
+          "name": "Magnetic/Animated Tooltips", 
+          "techniques": [
+            "useMotionValue tracking", 
+            "Hover-glow box-shadow transitions", 
+            "Spring physics bounds"
+          ]
+        }
+      ], 
+      "vibe": "Premium SaaS, Deep Tech, Consumer App", 
+      "priority": "high", 
+      "slug": "tooltips"
+    }
+  ], 
+  "description": "Complete dataset of all 59 component categories, automatically tracking variants and architectural paradigms."
+}

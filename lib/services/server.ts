@@ -1,4 +1,4 @@
-"use server";
+// Server-only data-fetching utilities (not server actions)
 
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -82,7 +82,7 @@ export async function fetchDashboardStats(): Promise<DashboardStats> {
 
     // Drawdown calculations
     const maxDrawdownAmount = startBalance * (challenge.max_drawdown / 100);
-    const currentDrawdown = challenge.current_drawdown || 0; // Assuming this is updated by a backend process or trigger
+    const currentDrawdown = challenge.current_drawdown || 0;
     const maxDrawdownUsed = (currentDrawdown / maxDrawdownAmount) * 100;
 
     return {
@@ -123,8 +123,8 @@ export async function fetchTradingRules(): Promise<TradingRule[]> {
 
     // Calculate current percentages
     // Note: These should ideally be calculated from reliable backend sources or recent trades
-    const currentDrawdownPercent = (challenge.current_drawdown / startBalance) * 100;
-    const currentDailyDrawdownPercent = (challenge.current_daily_drawdown / startBalance) * 100;
+    const currentDrawdownPercent = ((challenge.current_drawdown || 0) / startBalance) * 100;
+    const currentDailyDrawdownPercent = ((challenge.current_daily_drawdown || 0) / startBalance) * 100;
 
     const profitTargetPercent = (challenge.profit_target);
     const currentProfitPercent = ((currentBalance - startBalance) / startBalance) * 100;
@@ -388,6 +388,15 @@ export async function requestPayout(data: PayoutRequest): Promise<{ success: boo
 
     if (!challenge) {
         return { success: false, message: "No eligible funded account found." };
+    }
+
+    // ★ Validate payout amount against available profit
+    const availableProfit = challenge.current_balance - challenge.start_balance;
+    if (data.amount <= 0) {
+        return { success: false, message: "Payout amount must be positive." };
+    }
+    if (data.amount > availableProfit) {
+        return { success: false, message: `Payout amount exceeds available profit ($${availableProfit.toFixed(2)}).` };
     }
 
     // Insert payout request

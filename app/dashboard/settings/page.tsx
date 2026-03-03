@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   User,
@@ -17,10 +17,11 @@ import {
   EyeOff,
   Smartphone,
 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<
-    "profile" | "security" | "notifications" | "dev"
+    "profile" | "security" | "notifications"
   >("profile");
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -28,12 +29,29 @@ export default function SettingsPage() {
 
   // Profile Form
   const [profileData, setProfileData] = useState({
-    fullName: "John Doe",
-    email: "john@example.com",
-    phone: "+1 234 567 8900",
-    country: "United States",
-    timezone: "America/New_York",
+    fullName: "",
+    email: "",
+    phone: "",
+    country: "",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
+
+  // Load real user data
+  useEffect(() => {
+    const load = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      setProfileData({
+        fullName: user.user_metadata?.full_name || "",
+        email: user.email || "",
+        phone: user.user_metadata?.phone || "",
+        country: user.user_metadata?.country || "",
+        timezone: user.user_metadata?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
+    };
+    load();
+  }, []);
 
   // Password Form
   const [passwordData, setPasswordData] = useState({
@@ -66,9 +84,23 @@ export default function SettingsPage() {
     setError(null);
     setSuccess(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSuccess("Profile updated successfully!");
-    setIsLoading(false);
+    try {
+      const supabase = createClient();
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: {
+          full_name: profileData.fullName,
+          phone: profileData.phone,
+          country: profileData.country,
+          timezone: profileData.timezone,
+        },
+      });
+      if (updateError) throw updateError;
+      setSuccess("Profile updated successfully!");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to update profile");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
@@ -83,10 +115,25 @@ export default function SettingsPage() {
       return;
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSuccess("Password changed successfully!");
-    setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
-    setIsLoading(false);
+    if (passwordData.newPassword.length < 8) {
+      setError("Password must be at least 8 characters");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const supabase = createClient();
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: passwordData.newPassword,
+      });
+      if (updateError) throw updateError;
+      setSuccess("Password changed successfully!");
+      setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to change password");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleNotificationsSubmit = async (e: React.FormEvent) => {
@@ -104,7 +151,6 @@ export default function SettingsPage() {
     { id: "profile", label: "Profile", icon: User },
     { id: "security", label: "Security", icon: Shield },
     { id: "notifications", label: "Notifications", icon: Bell },
-    { id: "dev", label: "Developer", icon: AlertCircle },
   ] as const;
 
   return (
@@ -611,48 +657,6 @@ export default function SettingsPage() {
         </motion.div>
       )}
 
-      {/* Developer Tab */}
-      {activeTab === "dev" && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-foreground/[0.02] border border-border rounded-xl p-6"
-        >
-          <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
-            <code className="bg-muted px-2 py-0.5 rounded text-sm">DEV</code>
-            Developer Settings
-          </h2>
-
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4 mb-6">
-            <h3 className="font-semibold text-amber-500 mb-2 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4" />
-              Demo Mode
-            </h3>
-            <p className="text-sm text-foreground/70">
-              Toggle between &quot;Challenge&quot; and &quot;Funded&quot; states to verify UI behavior.
-              Note: This is a client-side simulation. Real persistence requires a backend update.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-background border border-border rounded-lg">
-              <div>
-                <p className="font-medium">Account Status</p>
-                <p className="text-sm text-foreground/60">Current: Challenge (Unfunded)</p>
-              </div>
-              <button
-                onClick={() => {
-                  // In a real app, this would call a server action to update the user's status
-                  alert("To toggle state: Edit `lib/mock-data.ts` and change `status` to 'funded'. (Hot-reload will update the UI)");
-                }}
-                className="px-4 py-2 border border-border rounded-lg hover:bg-muted"
-              >
-                Toggle Status
-              </button>
-            </div>
-          </div>
-        </motion.div>
-      )}
     </div>
   );
 }

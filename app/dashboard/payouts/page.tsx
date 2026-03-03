@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   DollarSign,
@@ -105,7 +105,7 @@ const fundedAccounts = [
   { id: "fa-002", name: "$25K Funded Account", availableBalance: 1450 },
 ];
 
-import { MOCK_USER_STATE } from "@/lib/mock-data";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 export default function PayoutsPage() {
@@ -115,9 +115,65 @@ export default function PayoutsPage() {
   const [paymentMethod, setPaymentMethod] = useState<"bank" | "crypto">("bank");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [filterStatus, setFilterStatus] = useState<PayoutStatus | "all">("all");
+  const [isFunded, setIsFunded] = useState<boolean | null>(null);
+  const [payouts, setPayouts] = useState<Payout[]>([]);
+  const [fundedAccounts, setFundedAccounts] = useState<{ id: string; name: string; availableBalance: number }[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { setIsFunded(false); return; }
+
+      // Check for funded challenges
+      const { data: challenges } = await supabase
+        .from("challenges")
+        .select("id, account_size, current_balance, start_balance, status")
+        .eq("user_id", user.id)
+        .eq("status", "funded");
+
+      if (!challenges || challenges.length === 0) {
+        setIsFunded(false);
+        return;
+      }
+
+      setIsFunded(true);
+      setFundedAccounts(challenges.map(c => ({
+        id: c.id,
+        name: `$${(c.account_size || 0).toLocaleString()} Funded Account`,
+        availableBalance: Math.max(0, (c.current_balance || 0) - (c.start_balance || 0)),
+      })));
+
+      // Fetch payout history
+      const { data: payoutData } = await supabase
+        .from("payouts")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (payoutData) {
+        setPayouts(payoutData.map((p: { id: string; amount: number; method: string; status: string; challenge_id: string; created_at: string; processed_at?: string; transaction_id?: string }) => ({
+          id: p.id,
+          amount: p.amount,
+          method: (p.method || "bank") as "bank" | "crypto",
+          status: (p.status || "pending") as PayoutStatus,
+          challengeName: `Challenge ${p.challenge_id?.slice(-6) || ""} `,
+          requestedAt: p.created_at,
+          processedAt: p.processed_at,
+          transactionId: p.transaction_id,
+        })));
+      }
+    };
+    loadData();
+  }, []);
+
+  // Loading state
+  if (isFunded === null) {
+    return <div className="flex items-center justify-center min-h-[400px] text-foreground/60">Loading...</div>;
+  }
 
   // If user is not funded, show Locked View
-  if (MOCK_USER_STATE.account.status !== 'funded') {
+  if (!isFunded) {
     return (
       <div className="space-y-6">
         <div>
@@ -148,15 +204,15 @@ export default function PayoutsPage() {
     );
   }
 
-  const filteredPayouts = mockPayouts.filter(
+  const filteredPayouts = payouts.filter(
     (payout) => filterStatus === "all" || payout.status === filterStatus
   );
 
-  const totalWithdrawn = mockPayouts
+  const totalWithdrawn = payouts
     .filter((p) => p.status === "completed")
     .reduce((sum, p) => sum + p.amount, 0);
 
-  const pendingAmount = mockPayouts
+  const pendingAmount = payouts
     .filter((p) => p.status === "pending" || p.status === "processing")
     .reduce((sum, p) => sum + p.amount, 0);
 

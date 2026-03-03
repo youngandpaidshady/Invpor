@@ -30,8 +30,8 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-[#050507]/95 backdrop-blur-xl border-b border-[#1C1C22]"
-          : "bg-transparent"
+        ? "bg-[#050507]/95 backdrop-blur-xl border-b border-[#1C1C22]"
+        : "bg-transparent"
         }`}
     >
       <nav className="container-wide">
@@ -39,10 +39,10 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-8 h-8 bg-arctic flex items-center justify-center transition-shadow group-hover:shadow-glow-arctic-sm">
-              <span className="font-display text-[#050507] text-lg">A</span>
+              <span className="font-display text-[#050507] text-lg">B</span>
             </div>
             <span className="font-display text-lg tracking-wider text-[#E8E8ED] hidden sm:block">
-              ALPHA<span className="text-arctic">TRADER</span>
+              BRAXLEY<span className="text-arctic">NEVIM</span>
             </span>
           </Link>
 
