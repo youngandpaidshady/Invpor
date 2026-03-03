@@ -76,7 +76,7 @@ export default function ScalingPage() {
             <div
                 className="fixed top-0 right-0 w-[60%] h-[50%] pointer-events-none z-0"
                 style={{
-                    background: "radial-gradient(ellipse at 80% 20%, rgba(255,107,53,0.08) 0%, transparent 50%)",
+                    background: "radial-gradient(ellipse at 80% 20%, rgba(199,162,87,0.08) 0%, transparent 50%)",
                     transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
                 }}
             />
@@ -102,7 +102,7 @@ export default function ScalingPage() {
                             className="mb-6"
                         >
                             <span className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 text-xs text-white/50 uppercase tracking-[0.2em] font-mono">
-                                <TrendingUp className="w-4 h-4 text-[#ff6b35]" />
+                                <TrendingUp className="w-4 h-4 text-[#C7A257]" />
                                 Growth System
                             </span>
                         </motion.div>
@@ -117,7 +117,7 @@ export default function ScalingPage() {
                             <span
                                 className="block text-transparent bg-clip-text"
                                 style={{
-                                    backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                                    backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                                     WebkitBackgroundClip: "text",
                                 }}
                             >
@@ -173,7 +173,7 @@ export default function ScalingPage() {
                         className="text-3xl lg:text-4xl font-black mb-16 tracking-tight"
                     >
                         SCALING<br />
-                        <span className="text-[#ff6b35]">PROGRESSION</span>
+                        <span className="text-[#C7A257]">PROGRESSION</span>
                     </motion.h2>
 
                     <div className="space-y-4">
@@ -184,16 +184,16 @@ export default function ScalingPage() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className={`relative bg-white/[0.02] border ${tier.active ? 'border-[#ff6b35]/40' : 'border-white/10'} p-6 lg:p-8 hover:border-white/20 transition-all group`}
+                                className={`relative bg-white/[0.02] border ${tier.active ? 'border-[#C7A257]/40' : 'border-white/10'} p-6 lg:p-8 hover:border-white/20 transition-all group`}
                             >
                                 {/* Active indicator */}
                                 {tier.active && (
-                                    <div className="absolute -left-px top-0 bottom-0 w-1 bg-[#ff6b35]" />
+                                    <div className="absolute -left-px top-0 bottom-0 w-1 bg-[#C7A257]" />
                                 )}
 
                                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                                     <div className="flex items-center gap-6">
-                                        <div className={`w-16 h-16 ${tier.active ? 'bg-[#ff6b35]/20 text-[#ff6b35]' : 'bg-white/5 text-white/40'} font-mono text-2xl font-bold flex items-center justify-center`}>
+                                        <div className={`w-16 h-16 ${tier.active ? 'bg-[#C7A257]/20 text-[#C7A257]' : 'bg-white/5 text-white/40'} font-mono text-2xl font-bold flex items-center justify-center`}>
                                             {tier.level}
                                         </div>
                                         <div>
@@ -209,11 +209,11 @@ export default function ScalingPage() {
                                         </div>
                                         <div>
                                             <div className="text-xs text-white/30 uppercase tracking-wider font-mono mb-1">Profit Split</div>
-                                            <div className="text-[#ff6b35] font-mono font-bold">{tier.profitSplit}</div>
+                                            <div className="text-[#C7A257] font-mono font-bold">{tier.profitSplit}</div>
                                         </div>
                                         <div className="flex items-center">
                                             {tier.active ? (
-                                                <span className="px-4 py-2 bg-[#ff6b35] text-white text-xs font-mono uppercase tracking-wider">
+                                                <span className="px-4 py-2 bg-[#C7A257] text-white text-xs font-mono uppercase tracking-wider">
                                                     Current
                                                 </span>
                                             ) : (
@@ -257,7 +257,7 @@ export default function ScalingPage() {
                                 transition={{ delay: i * 0.1 }}
                                 className="bg-white/[0.02] border border-white/10 p-8"
                             >
-                                <benefit.icon className="w-10 h-10 text-[#ff6b35] mb-6" />
+                                <benefit.icon className="w-10 h-10 text-[#C7A257] mb-6" />
                                 <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
                                 <p className="text-white/40 font-light leading-relaxed">{benefit.description}</p>
                             </motion.div>
@@ -276,7 +276,7 @@ export default function ScalingPage() {
                         className="text-3xl lg:text-4xl font-black mb-16 tracking-tight text-center"
                     >
                         HOW IT<br />
-                        <span className="text-[#ff6b35]">WORKS</span>
+                        <span className="text-[#C7A257]">WORKS</span>
                     </motion.h2>
 
                     <div className="max-w-3xl mx-auto space-y-0">
@@ -294,7 +294,7 @@ export default function ScalingPage() {
                                 transition={{ delay: i * 0.1 }}
                                 className="flex items-start gap-6 py-6 border-b border-white/5 last:border-0"
                             >
-                                <div className="w-8 h-8 bg-[#ff6b35]/20 text-[#ff6b35] font-mono font-bold text-sm flex items-center justify-center flex-shrink-0">
+                                <div className="w-8 h-8 bg-[#C7A257]/20 text-[#C7A257] font-mono font-bold text-sm flex items-center justify-center flex-shrink-0">
                                     {i + 1}
                                 </div>
                                 <div className="flex items-center gap-3 flex-1">

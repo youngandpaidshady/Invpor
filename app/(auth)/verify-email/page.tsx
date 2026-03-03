@@ -98,7 +98,7 @@ function VerifyEmailContent() {
     return (
       <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#0a0a0a]">
         <div className="flex flex-col items-center">
-          <Loader2 className="w-12 h-12 animate-spin text-[#ff6b35] mb-4" />
+          <Loader2 className="w-12 h-12 animate-spin text-[#C7A257] mb-4" />
           <p className="text-white/40 font-mono text-sm uppercase tracking-wider">Verifying...</p>
         </div>
       </div>
@@ -217,7 +217,7 @@ function VerifyEmailContent() {
                   Try Again
                   <ArrowRight className="w-4 h-4" />
                 </span>
-                <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-[#C7A257] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </Link>
               <Link
                 href="/login"
@@ -247,7 +247,7 @@ function VerifyEmailContent() {
       <div
         className="absolute top-0 right-0 w-[60%] h-[60%] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 70% 30%, rgba(255,107,53,0.1) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 70% 30%, rgba(199,162,87,0.1) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
         }}
       />
@@ -265,7 +265,7 @@ function VerifyEmailContent() {
       {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 p-6 lg:p-10 flex justify-between items-center z-20">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#ff6b35] transition-colors">
+          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#C7A257] transition-colors">
             A
           </div>
           <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
@@ -281,10 +281,10 @@ function VerifyEmailContent() {
         className="w-full max-w-md p-6 relative z-10"
       >
         <div className="bg-white/[0.03] border border-white/10 p-10 text-center relative">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C7A257]/50 to-transparent" />
 
-          <div className="w-20 h-20 bg-[#ff6b35]/10 border border-[#ff6b35]/20 flex items-center justify-center mx-auto mb-8">
-            <Mail className="w-10 h-10 text-[#ff6b35]" />
+          <div className="w-20 h-20 bg-[#C7A257]/10 border border-[#C7A257]/20 flex items-center justify-center mx-auto mb-8">
+            <Mail className="w-10 h-10 text-[#C7A257]" />
           </div>
 
           <h1 className="text-3xl font-black text-white mb-4 tracking-tight">
@@ -292,7 +292,7 @@ function VerifyEmailContent() {
             <span
               className="text-transparent bg-clip-text"
               style={{
-                backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                 WebkitBackgroundClip: "text",
               }}
             >
@@ -368,7 +368,7 @@ export default function VerifyEmailPage() {
     <Suspense
       fallback={
         <div className="min-h-screen w-full flex items-center justify-center bg-[#0a0a0a]">
-          <Loader2 className="w-12 h-12 animate-spin text-[#ff6b35]" />
+          <Loader2 className="w-12 h-12 animate-spin text-[#C7A257]" />
         </div>
       }
     >

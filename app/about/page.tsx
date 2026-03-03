@@ -16,7 +16,7 @@ const team = [
     name: "Executive Team",
     role: "Chief Executive Officer",
     quote: "Our mandate is simple — align our success with the success of every trader we fund.",
-    color: "#ff6b35"
+    color: "#C7A257"
   },
   {
     initials: "TM",
@@ -88,7 +88,7 @@ export default function AboutPage() {
         {/* Light leak */}
         <div className="absolute top-[-10%] left-[-20%] w-[60%] h-[60%] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at 40% 40%, rgba(255,107,53,0.1) 0%, transparent 50%)",
+            background: "radial-gradient(ellipse at 40% 40%, rgba(199,162,87,0.1) 0%, transparent 50%)",
             transform: `translate(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px)`,
           }}
         />
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 Built by
               </span>
               <span className="block text-[12vw] lg:text-[8vw] font-black leading-[0.85] tracking-tighter">
-                <span className="text-[#ff6b35] italic font-light">traders.</span>
+                <span className="text-[#C7A257] italic font-light">traders.</span>
               </span>
             </motion.h1>
 
@@ -153,7 +153,7 @@ export default function AboutPage() {
 
             <p className="mt-6 text-lg text-white/40 font-light leading-relaxed">
               We studied the shortcomings of existing firms and built our infrastructure from the ground up —
-              <span className="text-[#ff6b35]"> transparent parameters, rapid payouts, and dedicated support.</span>
+              <span className="text-[#C7A257]"> transparent parameters, rapid payouts, and dedicated support.</span>
             </p>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <div className="text-6xl lg:text-8xl font-extralight text-white tracking-tight">
-                $12<span className="text-[#ff6b35]">M</span>
+                $12<span className="text-[#C7A257]">M</span>
               </div>
               <div className="text-[10px] text-white/30 uppercase tracking-[0.3em] mt-2">
                 Paid to traders
@@ -239,7 +239,7 @@ export default function AboutPage() {
                   transition={{ delay: i * 0.1 }}
                   className="group relative pl-20"
                 >
-                  <span className="absolute left-0 text-4xl font-extralight text-[#ff6b35] opacity-50 group-hover:opacity-100 transition-opacity">
+                  <span className="absolute left-0 text-4xl font-extralight text-[#C7A257] opacity-50 group-hover:opacity-100 transition-opacity">
                     {item.year}
                   </span>
                   <div>
@@ -280,7 +280,7 @@ export default function AboutPage() {
                   </div>
 
                   <p className="text-xl font-bold text-white">{member.name}</p>
-                  <p className="text-sm text-[#ff6b35] mb-4">{member.role}</p>
+                  <p className="text-sm text-[#C7A257] mb-4">{member.role}</p>
                   <p className="text-white/40 font-light italic">&ldquo;{member.quote}&rdquo;</p>
                 </motion.div>
               ))}
@@ -299,16 +299,16 @@ export default function AboutPage() {
 
             <div className="mt-12 space-y-6">
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Alignment of interest — our revenue model is built on trader profitability, not on failed evaluations.
+                <span className="text-[#C7A257]">→</span> Alignment of interest — our revenue model is built on trader profitability, not on failed evaluations.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Transparent parameters — every rule is documented, consistent, and publicly available before purchase.
+                <span className="text-[#C7A257]">→</span> Transparent parameters — every rule is documented, consistent, and publicly available before purchase.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Rapid settlement — payouts processed within 24 hours of approval, with full audit trails.
+                <span className="text-[#C7A257]">→</span> Rapid settlement — payouts processed within 24 hours of approval, with full audit trails.
               </p>
               <p className="text-2xl font-light text-white/80 leading-relaxed">
-                <span className="text-[#ff6b35]">→</span> Dedicated support — every inquiry handled by experienced professionals, not automated systems.
+                <span className="text-[#C7A257]">→</span> Dedicated support — every inquiry handled by experienced professionals, not automated systems.
               </p>
             </div>
           </div>
@@ -323,7 +323,7 @@ export default function AboutPage() {
           </p>
           <h2 className="text-4xl lg:text-6xl font-black mb-8">
             Start your evaluation.<br />
-            <span className="text-[#ff6b35]">Trade with our capital.</span>
+            <span className="text-[#C7A257]">Trade with our capital.</span>
           </h2>
           <div className="flex justify-center gap-4">
             <Link

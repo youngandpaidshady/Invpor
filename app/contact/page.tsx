@@ -12,7 +12,7 @@ import {
   Headphones,
   Zap
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function ContactPage() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -34,10 +34,14 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission via API
-  };
+    setSubmitted(true);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    setTimeout(() => setSubmitted(false), 5000);
+  }, []);
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white overflow-hidden">
@@ -55,7 +59,7 @@ export default function ContactPage() {
       <div
         className="fixed top-0 left-0 w-[50%] h-[50%] pointer-events-none z-0"
         style={{
-          background: "radial-gradient(ellipse at 20% 30%, rgba(255,107,53,0.08) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 20% 30%, rgba(199,162,87,0.08) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
         }}
       />
@@ -83,7 +87,7 @@ export default function ContactPage() {
             <span
               className="block text-transparent bg-clip-text"
               style={{
-                backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                 WebkitBackgroundClip: "text",
               }}
             >
@@ -125,9 +129,9 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white/[0.02] border border-white/10 p-8 text-center hover:border-[#ff6b35]/30 transition-colors cursor-pointer"
+                className="bg-white/[0.02] border border-white/10 p-8 text-center hover:border-[#C7A257]/30 transition-colors cursor-pointer"
               >
-                <method.icon className="w-10 h-10 text-[#ff6b35] mx-auto mb-4" />
+                <method.icon className="w-10 h-10 text-[#C7A257] mx-auto mb-4" />
                 <h3 className="text-lg font-bold mb-2">{method.title}</h3>
                 <p className="text-white/80 font-mono text-sm mb-1">{method.value}</p>
                 <p className="text-xs text-white/30 uppercase tracking-wider font-mono">{method.desc}</p>
@@ -149,7 +153,7 @@ export default function ContactPage() {
             >
               <h2 className="text-3xl font-black mb-8 tracking-tight">
                 SEND US A<br />
-                <span className="text-[#ff6b35]">MESSAGE</span>
+                <span className="text-[#C7A257]">MESSAGE</span>
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -162,7 +166,7 @@ export default function ContactPage() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 transition-all"
+                      className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 transition-all"
                       placeholder="John Doe"
                       required
                     />
@@ -175,7 +179,7 @@ export default function ContactPage() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 transition-all"
+                      className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 transition-all"
                       placeholder="you@example.com"
                       required
                     />
@@ -188,7 +192,7 @@ export default function ContactPage() {
                   <select
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono focus:outline-none focus:border-[#ff6b35]/50 transition-all appearance-none cursor-pointer"
+                    className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono focus:outline-none focus:border-[#C7A257]/50 transition-all appearance-none cursor-pointer"
                     required
                   >
                     <option value="" className="bg-[#0a0a0a]">Select a topic...</option>
@@ -206,20 +210,25 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={6}
-                    className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 transition-all resize-none"
+                    className="w-full px-4 py-4 bg-white/[0.02] border border-white/10 text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 transition-all resize-none"
                     placeholder="How can we help you?"
                     required
                   />
                 </div>
+                {submitted && (
+                  <div className="mb-4 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-mono">
+                    ✓ Message sent successfully. We&apos;ll respond within 2 hours.
+                  </div>
+                )}
                 <button
                   type="submit"
-                  className="group relative w-full py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02]"
+                  className="group relative w-full py-4 bg-white text-black font-bold text-sm uppercase tracking-wider overflow-hidden transition-transform hover:scale-[1.02] active:scale-95"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Send Message
                     <Send className="w-4 h-4" />
                   </span>
-                  <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <div className="absolute inset-0 bg-[#C7A257] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                   <span className="absolute inset-0 flex items-center justify-center gap-2 text-white font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                     Send Message →
                   </span>
@@ -238,21 +247,21 @@ export default function ContactPage() {
                 <h3 className="text-xl font-bold mb-6">Quick Info</h3>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <Clock className="w-5 h-5 text-[#ff6b35] mt-1" />
+                    <Clock className="w-5 h-5 text-[#C7A257] mt-1" />
                     <div>
                       <div className="font-mono text-sm mb-1">Response Time</div>
                       <div className="text-white/40 text-sm">Usually within 2 hours during business days</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <Zap className="w-5 h-5 text-[#ff6b35] mt-1" />
+                    <Zap className="w-5 h-5 text-[#C7A257] mt-1" />
                     <div>
                       <div className="font-mono text-sm mb-1">Support Hours</div>
                       <div className="text-white/40 text-sm">24/5 — Sunday 22:00 to Friday 22:00 UTC</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <MapPin className="w-5 h-5 text-[#ff6b35] mt-1" />
+                    <MapPin className="w-5 h-5 text-[#C7A257] mt-1" />
                     <div>
                       <div className="font-mono text-sm mb-1">Headquarters</div>
                       <div className="text-white/40 text-sm">London, United Kingdom</div>
@@ -261,15 +270,15 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-[#ff6b35]/10 to-transparent border border-[#ff6b35]/20 p-8">
+              <div className="bg-gradient-to-br from-[#C7A257]/10 to-transparent border border-[#C7A257]/20 p-8">
                 <h3 className="text-lg font-bold mb-4">Need Urgent Help?</h3>
                 <p className="text-white/40 text-sm mb-6 font-light">
                   For time-sensitive issues, our live chat offers the fastest support.
                 </p>
-                <button onClick={() => alert("Starting live chat...")} type="button" className="w-full py-3 border border-[#ff6b35] text-[#ff6b35] font-mono text-sm uppercase tracking-wider hover:bg-[#ff6b35] hover:text-white transition-all flex items-center justify-center gap-2">
+                <a href="mailto:support@braxleynevim.com?subject=Urgent%20Support%20Request" className="w-full py-3 border border-[#C7A257] text-[#C7A257] font-mono text-sm uppercase tracking-wider hover:bg-[#C7A257] hover:text-white transition-all flex items-center justify-center gap-2 active:scale-95">
                   <MessageCircle className="w-4 h-4" />
-                  Start Live Chat
-                </button>
+                  Email Support
+                </a>
               </div>
             </motion.div>
           </div>

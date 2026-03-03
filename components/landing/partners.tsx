@@ -37,9 +37,9 @@ export function Partners() {
             {[...platforms, ...platforms, ...platforms].map((platform, index) => (
               <div
                 key={`${platform.name}-${index}`}
-                className="flex-shrink-0 mx-4 flex items-center gap-3 px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl hover:border-[#ff6b35]/30 transition-colors group"
+                className="flex-shrink-0 mx-4 flex items-center gap-3 px-6 py-3 bg-white/[0.02] border border-white/5 rounded-xl hover:border-[#C7A257]/30 transition-colors group"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#ff6b35]/10 flex items-center justify-center font-bold text-[#ff6b35] text-sm group-hover:scale-110 transition-transform">
+                <div className="w-10 h-10 rounded-lg bg-[#C7A257]/10 flex items-center justify-center font-bold text-[#C7A257] text-sm group-hover:scale-110 transition-transform">
                   {platform.abbr}
                 </div>
                 <span className="font-medium text-white/80 whitespace-nowrap">

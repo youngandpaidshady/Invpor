@@ -17,7 +17,7 @@ const links = {
   legal: [
     { label: "Terms", href: "/terms" },
     { label: "Privacy", href: "/privacy" },
-    { label: "Refunds", href: "/refund" },
+    { label: "Refunds", href: "/refunds" },
     { label: "Risk", href: "/risk" },
   ],
 };
@@ -32,10 +32,10 @@ export function Footer() {
           <div className="col-span-2">
             <Link href="/" className="inline-flex items-center gap-3 mb-6">
               <div className="w-8 h-8 bg-arctic flex items-center justify-center">
-                <span className="font-display text-[#050507] text-lg">A</span>
+                <span className="font-display text-[#050507] text-lg">B</span>
               </div>
               <span className="font-display text-lg tracking-wider text-[#E8E8ED]">
-                ALPHA<span className="text-arctic">TRADER</span>
+                BRAXLEY<span className="text-arctic">NEVIM</span>
               </span>
             </Link>
             <p className="text-sm text-[#6B6B76] max-w-xs leading-relaxed mb-6 font-body">

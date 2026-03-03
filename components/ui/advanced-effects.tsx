@@ -89,7 +89,7 @@ interface FloatingParticlesProps {
     color?: string;
 }
 
-export function FloatingParticles({ count = 20, color = "#ff6b35" }: FloatingParticlesProps) {
+export function FloatingParticles({ count = 20, color = "#C7A257" }: FloatingParticlesProps) {
     // Pure CSS floating particles
     const [particles, setParticles] = useState<{ id: number; style: React.CSSProperties }[]>([]);
 
@@ -176,7 +176,7 @@ interface GlowingOrbProps {
     className?: string;
 }
 
-export function GlowingOrb({ size = 200, color = "#ff6b35", className = "" }: GlowingOrbProps) {
+export function GlowingOrb({ size = 200, color = "#C7A257", className = "" }: GlowingOrbProps) {
     return (
         <div
             className={`absolute rounded-full blur-3xl pointer-events-none animate-pulse-slow ${className}`}

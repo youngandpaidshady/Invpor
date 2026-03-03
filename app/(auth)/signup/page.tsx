@@ -141,7 +141,7 @@ export default function SignupPage() {
                 Didn&apos;t receive it? Check spam or{" "}
                 <button
                   onClick={() => setSuccess(false)}
-                  className="text-[#ff6b35] hover:underline"
+                  className="text-[#C7A257] hover:underline"
                 >
                   try again
                 </button>
@@ -174,14 +174,14 @@ export default function SignupPage() {
       <div
         className="absolute top-0 left-0 w-[50%] h-[50%] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 20% 20%, rgba(255,107,53,0.12) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 20% 20%, rgba(199,162,87,0.12) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
         }}
       />
       <div
         className="absolute bottom-0 right-0 w-[40%] h-[40%] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 80% 80%, rgba(255,107,53,0.08) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 80% 80%, rgba(199,162,87,0.08) 0%, transparent 50%)",
         }}
       />
 
@@ -198,7 +198,7 @@ export default function SignupPage() {
       {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 p-6 lg:p-10 flex justify-between items-center z-20">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#ff6b35] transition-colors">
+          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#C7A257] transition-colors">
             A
           </div>
           <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
@@ -228,7 +228,7 @@ export default function SignupPage() {
             <span
               className="text-transparent bg-clip-text"
               style={{
-                backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                 WebkitBackgroundClip: "text",
               }}
             >
@@ -242,7 +242,7 @@ export default function SignupPage() {
 
         {/* Card */}
         <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 p-8 relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C7A257]/50 to-transparent" />
 
           {/* Error Message */}
           {error && (
@@ -269,7 +269,7 @@ export default function SignupPage() {
                   {...register("full_name")}
                   type="text"
                   autoComplete="name"
-                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 focus:bg-white/[0.04] transition-all ${errors.full_name ? "border-red-500/50" : "border-white/10"
+                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/[0.04] transition-all ${errors.full_name ? "border-red-500/50" : "border-white/10"
                     }`}
                   placeholder="John Doe"
                 />
@@ -293,7 +293,7 @@ export default function SignupPage() {
                   {...register("email")}
                   type="email"
                   autoComplete="email"
-                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 focus:bg-white/[0.04] transition-all ${errors.email ? "border-red-500/50" : "border-white/10"
+                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/[0.04] transition-all ${errors.email ? "border-red-500/50" : "border-white/10"
                     }`}
                   placeholder="you@example.com"
                 />
@@ -317,7 +317,7 @@ export default function SignupPage() {
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
-                  className={`w-full pl-12 pr-12 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 focus:bg-white/[0.04] transition-all ${errors.password ? "border-red-500/50" : "border-white/10"
+                  className={`w-full pl-12 pr-12 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/[0.04] transition-all ${errors.password ? "border-red-500/50" : "border-white/10"
                     }`}
                   placeholder="••••••••"
                 />
@@ -354,15 +354,15 @@ export default function SignupPage() {
                 {...register("agree_terms")}
                 type="checkbox"
                 id="agree_terms"
-                className="w-4 h-4 mt-0.5 bg-white/[0.02] border border-white/20 rounded-none accent-[#ff6b35]"
+                className="w-4 h-4 mt-0.5 bg-white/[0.02] border border-white/20 rounded-none accent-[#C7A257]"
               />
               <label htmlFor="agree_terms" className="text-xs text-white/40 leading-relaxed">
                 I agree to the{" "}
-                <Link href="/terms" className="text-[#ff6b35] hover:underline">
+                <Link href="/terms" className="text-[#C7A257] hover:underline">
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-[#ff6b35] hover:underline">
+                <Link href="/privacy" className="text-[#C7A257] hover:underline">
                   Privacy Policy
                 </Link>
               </label>
@@ -393,7 +393,7 @@ export default function SignupPage() {
                   </>
                 )}
               </span>
-              <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-[#C7A257] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <span className="absolute inset-0 flex items-center justify-center gap-2 text-white font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                 Create Account →
               </span>
@@ -406,7 +406,7 @@ export default function SignupPage() {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-[#ff6b35] hover:text-[#ff6b35]/80 font-semibold transition-colors"
+            className="text-[#C7A257] hover:text-[#C7A257]/80 font-semibold transition-colors"
           >
             Sign In →
           </Link>

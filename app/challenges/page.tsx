@@ -41,7 +41,7 @@ export default function ChallengesPage() {
             <div
                 className="fixed top-0 left-1/2 -translate-x-1/2 w-[80%] h-[50%] pointer-events-none z-0"
                 style={{
-                    background: "radial-gradient(ellipse at 50% 10%, rgba(255,107,53,0.1) 0%, transparent 50%)",
+                    background: "radial-gradient(ellipse at 50% 10%, rgba(199,162,87,0.1) 0%, transparent 50%)",
                     transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
                 }}
             />
@@ -66,7 +66,7 @@ export default function ChallengesPage() {
                         className="mb-6"
                     >
                         <span className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 text-xs text-white/50 uppercase tracking-[0.2em] font-mono">
-                            <Trophy className="w-4 h-4 text-[#ff6b35]" />
+                            <Trophy className="w-4 h-4 text-[#C7A257]" />
                             Choose Your Path
                         </span>
                     </motion.div>
@@ -81,7 +81,7 @@ export default function ChallengesPage() {
                         <span
                             className="block text-transparent bg-clip-text"
                             style={{
-                                backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                                backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                                 WebkitBackgroundClip: "text",
                             }}
                         >
@@ -117,7 +117,7 @@ export default function ChallengesPage() {
                                 icon: Zap,
                                 title: "1-Step",
                                 desc: "Fast-track your funding with a single evaluation phase.",
-                                color: "#ff6b35",
+                                color: "#C7A257",
                                 popular: true
                             },
                             {
@@ -130,11 +130,11 @@ export default function ChallengesPage() {
                         ].map((feature, i) => (
                             <div
                                 key={i}
-                                className={`relative p-8 bg-white/[0.02] border ${feature.popular ? 'border-[#ff6b35]/50' : 'border-white/10'} hover:border-white/20 transition-all group`}
+                                className={`relative p-8 bg-white/[0.02] border ${feature.popular ? 'border-[#C7A257]/50' : 'border-white/10'} hover:border-white/20 transition-all group`}
                             >
                                 {feature.popular && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                                        <span className="px-3 py-1 bg-[#ff6b35] text-white text-xs font-mono uppercase tracking-wider">
+                                        <span className="px-3 py-1 bg-[#C7A257] text-white text-xs font-mono uppercase tracking-wider">
                                             Popular
                                         </span>
                                     </div>

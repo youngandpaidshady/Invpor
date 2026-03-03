@@ -95,8 +95,8 @@ function BentoGrid() {
 
           <div className="relative z-10">
             <div className="text-[10px] sm:text-xs uppercase font-mono tracking-widest text-[#C7A257] mb-2">Pro Tier</div>
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-display text-white mb-1">NANOBANANA</div>
-            <div className="text-lg sm:text-xl lg:text-2xl font-display text-white/70">PRO 3</div>
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-display text-white mb-1">BRAXLEY</div>
+            <div className="text-lg sm:text-xl lg:text-2xl font-display text-white/70">NEVIM</div>
 
             <div className="mt-8 space-y-3">
               <div className="flex items-center justify-between text-xs font-mono">

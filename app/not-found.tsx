@@ -29,7 +29,7 @@ export default function NotFound() {
           <span
             className="text-transparent bg-clip-text"
             style={{
-              backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+              backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
               WebkitBackgroundClip: "text",
             }}
           >

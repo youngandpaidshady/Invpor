@@ -53,7 +53,7 @@ export default function AffiliatesPage() {
             <div
                 className="fixed top-0 right-0 w-[60%] h-[50%] pointer-events-none z-0"
                 style={{
-                    background: "radial-gradient(ellipse at 80% 20%, rgba(255,107,53,0.1) 0%, transparent 50%)",
+                    background: "radial-gradient(ellipse at 80% 20%, rgba(199,162,87,0.1) 0%, transparent 50%)",
                     transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
                 }}
             />
@@ -80,7 +80,7 @@ export default function AffiliatesPage() {
                                 className="mb-6"
                             >
                                 <span className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 text-xs text-white/50 uppercase tracking-[0.2em] font-mono">
-                                    <DollarSign className="w-4 h-4 text-[#ff6b35]" />
+                                    <DollarSign className="w-4 h-4 text-[#C7A257]" />
                                     Partner Program
                                 </span>
                             </motion.div>
@@ -95,7 +95,7 @@ export default function AffiliatesPage() {
                                 <span
                                     className="block text-transparent bg-clip-text"
                                     style={{
-                                        backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                                        backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                                         WebkitBackgroundClip: "text",
                                     }}
                                 >
@@ -142,7 +142,7 @@ export default function AffiliatesPage() {
                                 { value: "Lifetime", label: "Attribution", icon: Trophy },
                             ].map((stat, i) => (
                                 <div key={i} className="bg-white/[0.02] border border-white/10 p-6">
-                                    <stat.icon className="w-6 h-6 text-[#ff6b35] mb-4" />
+                                    <stat.icon className="w-6 h-6 text-[#C7A257] mb-4" />
                                     <div className="text-2xl font-mono font-light text-white/90 mb-1">{stat.value}</div>
                                     <div className="text-xs text-white/30 uppercase tracking-wider font-mono">{stat.label}</div>
                                 </div>
@@ -170,7 +170,7 @@ export default function AffiliatesPage() {
                         className="text-3xl lg:text-4xl font-black mb-16 tracking-tight text-center"
                     >
                         COMMISSION<br />
-                        <span className="text-[#ff6b35]">TIERS</span>
+                        <span className="text-[#C7A257]">TIERS</span>
                     </motion.h2>
 
                     <div className="grid md:grid-cols-4 gap-4 max-w-5xl mx-auto">
@@ -181,17 +181,17 @@ export default function AffiliatesPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className={`relative bg-white/[0.02] border ${i === 3 ? 'border-[#ff6b35]/50' : 'border-white/10'} p-8 text-center`}
+                                className={`relative bg-white/[0.02] border ${i === 3 ? 'border-[#C7A257]/50' : 'border-white/10'} p-8 text-center`}
                             >
                                 {i === 3 && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                                        <span className="px-3 py-1 bg-[#ff6b35] text-white text-xs font-mono uppercase tracking-wider">
+                                        <span className="px-3 py-1 bg-[#C7A257] text-white text-xs font-mono uppercase tracking-wider">
                                             Best
                                         </span>
                                     </div>
                                 )}
                                 <div className="text-xs text-white/30 uppercase tracking-wider font-mono mb-4">{tier.tier}</div>
-                                <div className="text-5xl font-black text-[#ff6b35] mb-2">{tier.commission}</div>
+                                <div className="text-5xl font-black text-[#C7A257] mb-2">{tier.commission}</div>
                                 <div className="text-sm text-white/40 font-mono">{tier.referrals} referrals</div>
                             </motion.div>
                         ))}
@@ -209,7 +209,7 @@ export default function AffiliatesPage() {
                         className="text-3xl lg:text-4xl font-black mb-16 tracking-tight"
                     >
                         HOW IT<br />
-                        <span className="text-[#ff6b35]">WORKS</span>
+                        <span className="text-[#C7A257]">WORKS</span>
                     </motion.h2>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -241,10 +241,10 @@ export default function AffiliatesPage() {
                                 transition={{ delay: i * 0.1 }}
                                 className="bg-white/[0.02] border border-white/10 p-8 relative"
                             >
-                                <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#ff6b35] flex items-center justify-center font-mono font-bold text-sm">
+                                <div className="absolute -top-4 -left-4 w-8 h-8 bg-[#C7A257] flex items-center justify-center font-mono font-bold text-sm">
                                     {item.step}
                                 </div>
-                                <item.icon className="w-10 h-10 text-[#ff6b35] mb-6" />
+                                <item.icon className="w-10 h-10 text-[#C7A257] mb-6" />
                                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                                 <p className="text-white/40 font-light leading-relaxed">{item.description}</p>
                             </motion.div>
@@ -265,7 +265,7 @@ export default function AffiliatesPage() {
                                 className="text-3xl lg:text-4xl font-black mb-8 tracking-tight"
                             >
                                 PROFESSIONAL<br />
-                                <span className="text-[#ff6b35]">TOOLS</span>
+                                <span className="text-[#C7A257]">TOOLS</span>
                             </motion.h2>
                             <p className="text-lg text-white/40 mb-10 font-light leading-relaxed">
                                 Get access to a full suite of marketing materials, real-time analytics, and dedicated support to maximize your earnings.
@@ -279,7 +279,7 @@ export default function AffiliatesPage() {
                                     "Deep link generator"
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3 text-white/60">
-                                        <div className="w-2 h-2 bg-[#ff6b35]" />
+                                        <div className="w-2 h-2 bg-[#C7A257]" />
                                         <span className="font-mono text-sm">{item}</span>
                                     </li>
                                 ))}
@@ -292,7 +292,7 @@ export default function AffiliatesPage() {
                             className="bg-white/[0.02] border border-white/10 p-8"
                         >
                             <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-6">
-                                <BarChart3 className="w-6 h-6 text-[#ff6b35]" />
+                                <BarChart3 className="w-6 h-6 text-[#C7A257]" />
                                 <span className="font-bold">Affiliate Dashboard</span>
                             </div>
                             <div className="space-y-6">
@@ -306,7 +306,7 @@ export default function AffiliatesPage() {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-white/40 font-mono text-sm">Commission Rate</span>
-                                    <span className="font-mono text-[#ff6b35]">25%</span>
+                                    <span className="font-mono text-[#C7A257]">25%</span>
                                 </div>
                                 <div className="flex justify-between items-center pt-4 border-t border-white/5">
                                     <span className="text-white/60 font-mono text-sm">This Month</span>
@@ -327,12 +327,12 @@ export default function AffiliatesPage() {
                         viewport={{ once: true }}
                         className="relative border border-white/10 p-12 lg:p-20 text-center"
                     >
-                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/50 to-transparent" />
+                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C7A257]/50 to-transparent" />
 
-                        <Gift className="w-16 h-16 text-[#ff6b35] mx-auto mb-8" />
+                        <Gift className="w-16 h-16 text-[#C7A257] mx-auto mb-8" />
                         <h2 className="text-4xl lg:text-5xl font-black mb-6 tracking-tight">
                             START EARNING<br />
-                            <span className="text-[#ff6b35]">TODAY</span>
+                            <span className="text-[#C7A257]">TODAY</span>
                         </h2>
                         <p className="text-lg text-white/40 mb-10 max-w-xl mx-auto font-light">
                             Join hundreds of affiliates earning passive income by promoting the world&apos;s best prop firm.

@@ -39,7 +39,7 @@ export default function Error({
 
         <h1 className="text-4xl lg:text-5xl font-black mb-4 tracking-tight text-white">
           SOMETHING<br />
-          <span className="text-[#ff6b35]">BROKE</span>
+          <span className="text-[#C7A257]">BROKE</span>
         </h1>
 
         <p className="text-white/40 mb-10 font-light">

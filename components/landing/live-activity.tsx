@@ -39,7 +39,7 @@ const getTypeLabel = (type: string) => {
 const getTypeColor = (type: string) => {
   switch (type) {
     case "funded": return "text-emerald-400";
-    case "payout": return "text-[#ff6b35]";
+    case "payout": return "text-[#C7A257]";
     case "passed": return "text-blue-400";
     default: return "text-white/50";
   }

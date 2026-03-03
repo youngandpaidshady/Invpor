@@ -95,7 +95,7 @@ export default function RiskPage() {
       <div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[60%] h-[40%] pointer-events-none z-0"
         style={{
-          background: "radial-gradient(ellipse at 50% 20%, rgba(255,107,53,0.08) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 50% 20%, rgba(199,162,87,0.08) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
         }}
       />
@@ -205,9 +205,9 @@ export default function RiskPage() {
 
             {/* Related Links */}
             <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
-              <Link href="/terms" className="text-[#ff6b35] hover:underline text-sm font-mono">Terms of Service →</Link>
-              <Link href="/rules" className="text-[#ff6b35] hover:underline text-sm font-mono">Trading Rules →</Link>
-              <Link href="/contact" className="text-[#ff6b35] hover:underline text-sm font-mono">Contact Support →</Link>
+              <Link href="/terms" className="text-[#C7A257] hover:underline text-sm font-mono">Terms of Service →</Link>
+              <Link href="/rules" className="text-[#C7A257] hover:underline text-sm font-mono">Trading Rules →</Link>
+              <Link href="/contact" className="text-[#C7A257] hover:underline text-sm font-mono">Contact Support →</Link>
             </div>
           </div>
         </div>

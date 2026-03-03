@@ -163,7 +163,7 @@ export default function ForgotPasswordPage() {
       <div
         className="absolute top-0 right-0 w-[50%] h-[50%] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 80% 30%, rgba(255,107,53,0.1) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 80% 30%, rgba(199,162,87,0.1) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
         }}
       />
@@ -181,7 +181,7 @@ export default function ForgotPasswordPage() {
       {/* Top bar */}
       <div className="absolute top-0 left-0 right-0 p-6 lg:p-10 flex justify-between items-center z-20">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#ff6b35] transition-colors">
+          <div className="w-10 h-10 bg-white flex items-center justify-center font-black text-black text-lg group-hover:bg-[#C7A257] transition-colors">
             A
           </div>
           <span className="text-white/60 font-medium hidden sm:block group-hover:text-white transition-colors">
@@ -201,8 +201,8 @@ export default function ForgotPasswordPage() {
         className="w-full max-w-md p-6 relative z-10"
       >
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-[#ff6b35]/10 border border-[#ff6b35]/20 flex items-center justify-center mx-auto mb-6">
-            <Mail className="w-8 h-8 text-[#ff6b35]" />
+          <div className="w-16 h-16 bg-[#C7A257]/10 border border-[#C7A257]/20 flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-8 h-8 text-[#C7A257]" />
           </div>
 
           <motion.h1
@@ -215,7 +215,7 @@ export default function ForgotPasswordPage() {
             <span
               className="text-transparent bg-clip-text"
               style={{
-                backgroundImage: "linear-gradient(135deg, #ff6b35 0%, #f7c59f 50%, #ff6b35 100%)",
+                backgroundImage: "linear-gradient(135deg, #C7A257 0%, #F0D78C 50%, #C7A257 100%)",
                 WebkitBackgroundClip: "text",
               }}
             >
@@ -229,7 +229,7 @@ export default function ForgotPasswordPage() {
 
         {/* Card */}
         <div className="bg-white/[0.03] backdrop-blur-sm border border-white/10 p-8 relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff6b35]/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C7A257]/50 to-transparent" />
 
           {/* Error Message */}
           {error && (
@@ -257,7 +257,7 @@ export default function ForgotPasswordPage() {
                   type="email"
                   autoComplete="email"
                   autoFocus
-                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#ff6b35]/50 focus:bg-white/[0.04] transition-all ${errors.email ? "border-red-500/50" : "border-white/10"
+                  className={`w-full pl-12 pr-4 py-4 bg-white/[0.02] border text-white font-mono placeholder:text-white/20 focus:outline-none focus:border-[#C7A257]/50 focus:bg-white/[0.04] transition-all ${errors.email ? "border-red-500/50" : "border-white/10"
                     }`}
                   placeholder="you@example.com"
                 />
@@ -289,7 +289,7 @@ export default function ForgotPasswordPage() {
                   </>
                 )}
               </span>
-              <div className="absolute inset-0 bg-[#ff6b35] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-[#C7A257] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <span className="absolute inset-0 flex items-center justify-center gap-2 text-white font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                 Reset Password →
               </span>

@@ -79,7 +79,7 @@ export default function RefundsPage() {
       <div
         className="fixed top-0 right-0 w-[50%] h-[40%] pointer-events-none z-0"
         style={{
-          background: "radial-gradient(ellipse at 70% 30%, rgba(255,107,53,0.06) 0%, transparent 50%)",
+          background: "radial-gradient(ellipse at 70% 30%, rgba(199,162,87,0.06) 0%, transparent 50%)",
           transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
         }}
       />
@@ -105,8 +105,8 @@ export default function RefundsPage() {
           </Link>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-[#ff6b35]/20 flex items-center justify-center">
-              <RefreshCw className="w-7 h-7 text-[#ff6b35]" />
+            <div className="w-14 h-14 bg-[#C7A257]/20 flex items-center justify-center">
+              <RefreshCw className="w-7 h-7 text-[#C7A257]" />
             </div>
             <div>
               <motion.h1
@@ -116,7 +116,7 @@ export default function RefundsPage() {
               >
                 REFUND POLICY
               </motion.h1>
-              <p className="text-white/40 font-mono text-sm mt-1">Last updated: January 15, 2025</p>
+              <p className="text-white/40 font-mono text-sm mt-1">Last updated: March 3, 2026</p>
             </div>
           </div>
 
@@ -193,7 +193,7 @@ export default function RefundsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="border-l-2 border-[#ff6b35]/30 pl-6"
+                className="border-l-2 border-[#C7A257]/30 pl-6"
               >
                 <h2 className="text-xl font-bold mb-3 text-white">{section.title}</h2>
                 <p className="text-white/50 font-light leading-relaxed text-sm">{section.content}</p>
@@ -217,8 +217,8 @@ export default function RefundsPage() {
 
             {/* Related Links */}
             <div className="flex flex-wrap gap-4 pt-8 border-t border-white/5">
-              <Link href="/terms" className="text-[#ff6b35] hover:underline text-sm font-mono">Terms of Service →</Link>
-              <Link href="/contact" className="text-[#ff6b35] hover:underline text-sm font-mono">Contact Support →</Link>
+              <Link href="/terms" className="text-[#C7A257] hover:underline text-sm font-mono">Terms of Service →</Link>
+              <Link href="/contact" className="text-[#C7A257] hover:underline text-sm font-mono">Contact Support →</Link>
             </div>
           </div>
         </div>

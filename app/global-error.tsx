@@ -98,7 +98,7 @@ export default function GlobalError({
                 fontWeight: 900,
                 marginBottom: "1.5rem",
                 letterSpacing: "-0.02em",
-                color: "#ff6b35",
+                color: "#C7A257",
               }}
             >
               BROKE
