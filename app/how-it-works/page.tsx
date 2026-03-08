@@ -249,7 +249,7 @@ export default function HowItWorksPage() {
 
               <h1 className="heading-xl text-[#E8E8ED] mb-6">
                 THE PATH<br />
-                TO <span className="text-arctic">CAPITAL</span>
+                TO&nbsp;<span className="text-arctic">CAPITAL</span>
               </h1>
 
               <p className="text-[#6B6B76] text-lg font-body leading-relaxed max-w-xl mb-12">
@@ -356,7 +356,7 @@ export default function HowItWorksPage() {
               <p className="eyebrow mb-4">Ready?</p>
               <h2 className="heading-lg text-[#E8E8ED] mb-4">
                 START YOUR<br />
-                <span className="text-arctic">EVALUATION</span>
+                &nbsp;<span className="text-arctic">EVALUATION</span>
               </h2>
               <p className="text-[#6B6B76] text-sm font-body leading-relaxed max-w-md">
                 Join thousands of traders who have already secured funded accounts.

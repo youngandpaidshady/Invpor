@@ -62,7 +62,7 @@ export function Navbar() {
                 <span className="font-display text-black text-lg font-bold relative z-10">B</span>
               </motion.div>
               <span className="font-display text-lg tracking-wider text-white/90 hidden sm:block">
-                BRAXLEY<span className="text-[#C7A257]">NEVIM</span>
+                BRAXLEY <span className="text-[#C7A257]">NEVIM</span>
               </span>
             </Link>
 

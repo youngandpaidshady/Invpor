@@ -560,11 +560,11 @@ function PricingCard({
 
           {/* Price */}
           <div className="flex items-baseline gap-3 mb-5 pb-5 border-b border-white/[0.06]">
-            <span className="text-3xl font-mono text-white tracking-tight font-bold">
+            <span suppressHydrationWarning className="text-3xl font-mono text-white tracking-tight font-bold">
               ${plan.price}
             </span>
             {plan.originalPrice && (
-              <span className="text-sm text-white/30 line-through font-mono">
+              <span suppressHydrationWarning className="text-sm text-white/30 line-through font-mono">
                 ${plan.originalPrice}
               </span>
             )}

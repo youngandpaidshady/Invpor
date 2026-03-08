@@ -18,97 +18,98 @@ import {
 } from "lucide-react";
 
 /**
- * Rules Page — Arctic Void Design System
+ * Rules Page — Natural Language Redesign
  *
- * Removed Hero3D / TiltCard dependencies. Everything inline.
- * Sharp corners throughout (radius: 0). card-void surfaces.
- * Arctic cyan + signal colors. Data-dense spec layouts.
- *
- * Aesthetic: Compliance terminal. Precision. Clarity. Authority.
+ * Focuses on clarity, transparency, and a natural tone typical of
+ * leading prop firms like FTMO. Data is structured clearly and
+ * explanations are human-centered.
  */
 
 /* ─── DATA ─── */
 
 const PROFIT_TARGETS = [
   {
-    phase: "PHASE 1",
+    phase: "Step 1",
     target: "8%",
-    condition: "EQUITY GROWTH",
-    status: "ACTIVE",
-    desc: "Demonstrate consistent profitability within risk limits.",
+    condition: "Profit Target",
+    desc: "The goal of Step 1 is to prove you are a disciplined trader. To pass to the next stage, you must reach an 8% profit on your initial account balance without breaching any of the loss limits.",
     icon: TrendingUp,
   },
   {
-    phase: "PHASE 2",
+    phase: "Step 2",
     target: "5%",
-    condition: "EQUITY GROWTH",
-    status: "PENDING",
-    desc: "Validate your strategy with a secondary verification phase.",
-    icon: BarChart3,
+    condition: "Verification",
+    desc: "Step 2 is about consistency. We want to see that your Step 1 results weren't just luck. Reach a 5% profit target, and you'll become a fully funded Braxley Nevim trader.",
+    icon: ShieldAlert,
   },
   {
-    phase: "FUNDED",
-    target: "∞",
-    condition: "PROFIT KEEP",
-    status: "LOCKED",
-    desc: "Trade up to $10M and keep up to 90% of your profits.",
+    phase: "Funded",
+    target: "No Limit",
+    condition: "Funded Trader",
+    desc: "You did it. There are no profit targets to hit anymore. Just trade responsibly, manage your risk, and keep up to 90% of the profits you generate.",
     icon: Zap,
   },
 ];
 
 const DRAWDOWN_LIMITS = [
   {
-    type: "MAX TRAILING DRAWDOWN",
+    type: "Maximum Loss",
     limit: "10%",
-    reset: "NEVER",
-    desc: "The maximum loss allowed from the highest equity point achieved.",
+    reset: "Fixed",
+    desc: "Your account equity and balance must never drop below 90% of your initial account balance. If your starting balance is $100,000, your equity can never fall below $90,000.",
     severity: "critical",
   },
   {
-    type: "DAILY LOSS LIMIT",
+    type: "Maximum Daily Loss",
     limit: "5%",
-    reset: "00:00 UTC",
-    desc: "The maximum loss allowed within a single trading day.",
+    reset: "Midnight CE(S)T",
+    desc: "You are allowed a maximum daily loss of 5% of your initial account balance. This includes both closed trades and open floating losses. The limit resets every day at midnight CE(S)T.",
     severity: "warning",
   },
 ];
 
 const INSTRUMENTS = [
-  { asset: "FOREX", leverage: "1:100", hours: "24/5", pairs: "50+" },
-  { asset: "INDICES", leverage: "1:50", hours: "MARKET", pairs: "15+" },
-  { asset: "COMMODITIES", leverage: "1:50", hours: "23/5", pairs: "10+" },
-  { asset: "CRYPTO", leverage: "1:10", hours: "24/7", pairs: "8+" },
+  { asset: "Forex", leverage: "1:100", hours: "24/5", pairs: "All Majors & Minors" },
+  { asset: "Indices", leverage: "1:50", hours: "Market Hours", pairs: "US30, NAS100, SPX500..." },
+  { asset: "Commodities", leverage: "1:50", hours: "23/5", pairs: "Gold, Silver, US Oil..." },
+  { asset: "Cryptocurrencies", leverage: "1:10", hours: "24/7", pairs: "BTC, ETH, SOL, LTC..." },
 ];
 
 const ALLOWED = [
-  "Weekend position holding",
-  "Automated trading systems (EAs)",
-  "Hedging strategies",
-  "High-frequency scalping",
+  "Trading the news",
+  "Holding trades over the weekend",
+  "Holding trades overnight",
+  "Expert Advisors (EAs)",
+  "Hedging (within the same account)",
 ];
 
 const PROHIBITED = [
-  "Martingale / grid strategies",
-  "Tick scalping / latency arbitrage",
-  "External account copy trading",
+  "High-frequency trading (HFT)",
+  "Tick scalping or latency arbitrage",
+  "Copy trading from external accounts belonging to other people",
+  "Grid trading or Martingale strategies",
 ];
 
 const RULES_FAQ = [
   {
-    q: "Can I hold trades over the weekend?",
-    a: "Yes. Weekend holding is permitted for all accounts unless otherwise specified.",
+    q: "Do I have to trade for a minimum number of days?",
+    a: "No, we have zero minimum trading days on all our evaluation phases. If you hit the profit target on day one, you move to the next step immediately.",
   },
   {
-    q: "Is there a time limit for the challenge?",
-    a: "No. You have unlimited time to complete both Phase 1 and Phase 2.",
+    q: "Are there any time limits to complete the challenge?",
+    a: "Absolutely not. You have unlimited time to hit the profit targets for both Step 1 and Step 2. Trade at your own pace without pressure.",
   },
   {
-    q: "How is the Daily Loss Limit calculated?",
-    a: "It is calculated based on the previous day's end-of-day equity. Resets at 00:00 UTC.",
+    q: "Can I hold my positions over the weekend?",
+    a: "Yes, you are free to hold trades over the weekend and overnight without any restrictions. We don't force you to close positions before the market closes.",
   },
   {
-    q: "What happens if I breach a hard limit?",
-    a: "Your account will be automatically liquidated. You will need to purchase a new challenge.",
+    q: "Is news trading allowed?",
+    a: "Yes, trading during macroeconomic news releases is completely allowed. You can execute trades before, during, and after high-impact news.",
+  },
+  {
+    q: "What happens if I hit the maximum daily loss?",
+    a: "If your equity drops below the daily loss limit, your account will be immediately suspended. You will receive an email stating the breach, and you will need to purchase a new evaluation to try again.",
   },
 ];
 
@@ -201,14 +202,12 @@ export default function RulesPage() {
             </div>
 
             <h1 className="heading-xl text-[#E8E8ED] mb-6">
-              OPERATIONAL
-              <br />
-              <span className="text-arctic">PARAMETERS</span>
+              TRADING &nbsp;
+              <span className="text-arctic">RULES</span>
             </h1>
 
             <p className="text-[#6B6B76] text-lg font-body leading-relaxed max-w-xl">
-              Complete reference for profit objectives, risk limits, permitted
-              strategies, and instrument specifications. Read before trading.
+              We want you to succeed. Our trading rules are designed to be fair, simple, and transparent. We don't hide behind confusing jargon. If you can manage risk, you can trade with our capital.
             </p>
           </motion.div>
         </div>
@@ -355,8 +354,8 @@ export default function RulesPage() {
         <section>
           <SectionHeader
             icon={CheckCircle2}
-            title="Execution Matrix"
-            subtitle="Permitted & Restricted Actions"
+            title="Trading Style"
+            subtitle="What's Allowed & What Isn't"
           />
 
           <div className="grid lg:grid-cols-2 gap-3">
@@ -371,8 +370,8 @@ export default function RulesPage() {
 
               <div className="p-8 relative z-10">
                 <h3 className="flex items-center gap-3 text-[#00FF88] font-mono font-bold text-sm uppercase tracking-[0.15em] mb-8">
-                  <CheckCircle2 className="w-4 h-4" strokeWidth={1.5} />
-                  Permitted Strategies
+                  <CheckCircle2 className="w-5 h-5 shrink-0" strokeWidth={1.5} />
+                  We Encourage
                 </h3>
                 <div className="space-y-3">
                   {ALLOWED.map((item, i) => (
@@ -402,8 +401,8 @@ export default function RulesPage() {
 
               <div className="p-8 relative z-10">
                 <h3 className="flex items-center gap-3 text-signal-red font-mono font-bold text-sm uppercase tracking-[0.15em] mb-8">
-                  <XCircle className="w-4 h-4" strokeWidth={1.5} />
-                  Restricted Actions
+                  <XCircle className="w-5 h-5 shrink-0" strokeWidth={1.5} />
+                  Strictly Forbidden
                 </h3>
                 <div className="space-y-3">
                   {PROHIBITED.map((item, i) => (

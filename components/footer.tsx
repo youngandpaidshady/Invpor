@@ -58,7 +58,7 @@ export function Footer() {
                 <span className="font-display text-black text-lg font-bold">B</span>
               </div>
               <span className="font-display text-lg tracking-wider text-white/90">
-                BRAXLEY<span className="text-[#C7A257]">NEVIM</span>
+                BRAXLEY <span className="text-[#C7A257]">NEVIM</span>
               </span>
             </Link>
             <p className="text-[13px] text-white/30 max-w-xs leading-relaxed mb-8 font-body">
