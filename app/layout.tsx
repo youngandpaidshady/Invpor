@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ToastProvider } from "@/components/ui/toast";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { CanonicalTag } from "@/components/canonical-tag";
 import { APP_NAME, APP_DESCRIPTION } from "@/lib/constants";
 
 const bebasNeue = Bebas_Neue({
@@ -80,6 +81,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <CanonicalTag />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

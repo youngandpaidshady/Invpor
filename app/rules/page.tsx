@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
@@ -158,7 +157,7 @@ export default function RulesPage() {
 
   return (
     <main className="min-h-screen bg-[#050507] text-[#E8E8ED] selection:bg-arctic selection:text-[#050507]">
-      <Navbar />
+
 
       {/* ═══════════════════════════════════
            HERO — Asymmetric, left-aligned
@@ -530,7 +529,7 @@ export default function RulesPage() {
         </section>
       </div>
 
-      <Footer />
+
     </main>
   );
 }

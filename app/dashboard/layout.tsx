@@ -80,22 +80,22 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-full bg-card/50 backdrop-blur-xl border-r border-border transition-all duration-300 z-40 ${isCollapsed ? "w-20" : "w-64"
+        className={`fixed left-0 top-0 h-full bg-[#050505]/80 backdrop-blur-2xl border-r border-white/[0.06] shadow-[4px_0_24px_rgba(0,0,0,0.5)] transition-all duration-300 z-40 ${isCollapsed ? "w-20" : "w-64"
           } hidden lg:block`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-border/50">
           {!isCollapsed && (
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="font-serif font-bold text-primary-foreground text-sm">A</span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C7A257] to-[#A8843F] flex items-center justify-center shadow-[0_0_15px_rgba(199,162,87,0.2)]">
+                <span className="font-display font-bold text-black text-sm">B</span>
               </div>
-              <span className="font-serif font-bold text-lg tracking-tight">BraxleyNevim</span>
+              <span className="font-display font-bold text-lg tracking-wider text-white">BRAXLEY<span className="text-[#C7A257]">NEVIM</span></span>
             </Link>
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className={`w-8 h-8 rounded-lg border border-border/50 flex items-center justify-center hover:bg-muted transition-colors ${isCollapsed ? "mx-auto" : ""}`}
+            className={`w-8 h-8 rounded-lg border border-white/[0.08] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/[0.06] transition-all ${isCollapsed ? "mx-auto" : ""}`}
           >
             <ChevronLeft
               className={`w-4 h-4 transition-transform ${isCollapsed ? "rotate-180" : ""}`}
@@ -111,24 +111,23 @@ export default function DashboardLayout({
               <Link
                 key={link.href}
                 href={link.href}
-                className={`group flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${isActive
-                  ? "bg-primary/10 text-primary border border-primary/20"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                className={`group flex items-center gap-3 px-3 py-3 rounded-lg font-body transition-all ${isActive
+                  ? "bg-[rgba(199,162,87,0.1)] text-[#C7A257] shadow-[inset_2px_0_0_#C7A257]"
+                  : "text-white/50 hover:text-white hover:bg-white/[0.04]"
                   } ${isCollapsed ? "justify-center" : ""}`}
               >
-                <link.icon className={`w-5 h-5 flex-shrink-0 transition-colors ${isActive ? "text-primary" : "group-hover:text-foreground"}`} />
+                <link.icon className={`w-5 h-5 flex-shrink-0 transition-colors ${isActive ? "text-[#C7A257]" : "group-hover:text-white"}`} />
                 {!isCollapsed && <span className="font-medium">{link.label}</span>}
               </Link>
             );
           })}
         </nav>
 
-        {/* Bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border/50 bg-card/20 backdrop-blur-sm">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/[0.06] bg-[#050505]/40 backdrop-blur-md">
           <button
             type="button"
             onClick={() => window.location.href = "/"}
-            className={`flex items-center gap-3 px-3 py-3 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all w-full ${isCollapsed ? "justify-center" : ""}`}
+            className={`flex items-center gap-3 px-3 py-3 rounded-lg font-body text-white/50 hover:text-[#EF4444] hover:bg-[#EF4444]/10 transition-all w-full ${isCollapsed ? "justify-center" : ""}`}
           >
             <LogOut className="w-5 h-5" />
             {!isCollapsed && <span className="font-medium">Logout</span>}
@@ -139,18 +138,18 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className={`flex-1 ${isCollapsed ? "lg:ml-20" : "lg:ml-64"} transition-all duration-300`}>
         {/* Top Bar */}
-        <header className="h-20 bg-background/80 backdrop-blur-xl border-b border-border/50 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
+        <header className="h-20 bg-[#050505]/80 backdrop-blur-2xl border-b border-white/[0.06] flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <Link href="/" className="lg:hidden flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="font-serif font-bold text-primary-foreground text-sm">A</span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C7A257] to-[#A8843F] flex items-center justify-center">
+                <span className="font-display font-bold text-black text-sm">B</span>
               </div>
             </Link>
             <div className="hidden sm:block">
-              <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">Account Status</div>
+              <div className="text-[10px] font-mono text-[#A0A0A0] uppercase tracking-[0.2em] mb-1">Account Equity</div>
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full animate-pulse ${accountStatus === 'funded' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                <span className={`font-bold text-sm ${accountStatus === 'funded' ? 'text-emerald-500' : 'text-amber-500'}`}>
+                <span className={`w-2 h-2 rounded-full animate-pulse-live ${accountStatus === 'funded' ? 'bg-[#22C55E]' : 'bg-[#C7A257]'}`} />
+                <span className={`font-mono font-medium text-[13px] tracking-wider ${accountStatus === 'funded' ? 'text-[#22C55E]' : 'text-[#C7A257]'}`}>
                   {phaseName}
                 </span>
               </div>
@@ -158,17 +157,17 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-4">
-            <button type="button" onClick={() => alert("You have 1 new notification.")} className="relative w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center hover:bg-muted transition-colors">
-              <Bell className="w-5 h-5 text-muted-foreground" />
-              <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-primary" />
+            <button type="button" onClick={() => alert("You have 1 new notification.")} className="relative w-10 h-10 rounded-lg border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.04] transition-all">
+              <Bell className="w-5 h-5 text-white/50" />
+              <span className="absolute top-2 right-2.5 w-2 h-2 rounded-full bg-[#C7A257] shadow-[0_0_10px_#C7A257]" />
             </button>
-            <div className="h-8 w-px bg-border/50" />
+            <div className="h-8 w-px bg-white/[0.08]" />
             <div className="hidden sm:flex items-center gap-3">
               <div className="text-right hidden md:block">
-                <div className="font-medium text-sm">{userName}</div>
-                <div className="text-xs text-muted-foreground">${accountSize.toLocaleString()} Challenge</div>
+                <div className="font-body font-medium text-sm text-white">{userName}</div>
+                <div className="text-xs text-[#A0A0A0] font-mono tracking-wide">${accountSize.toLocaleString()} Challenge</div>
               </div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-[#E8C878] flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg shadow-primary/20">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C7A257] to-[#A8843F] flex items-center justify-center text-black font-bold font-mono tracking-widest shadow-[0_0_15px_rgba(199,162,87,0.3)]">
                 {userInitials}
               </div>
             </div>

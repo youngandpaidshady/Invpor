@@ -177,22 +177,22 @@ export default function PayoutsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold">Payouts</h1>
-          <p className="text-foreground/60">
+          <h1 className="text-3xl lg:text-4xl font-display tracking-widest text-white uppercase mb-2">Payouts</h1>
+          <p className="text-[#A0A0A0] font-mono tracking-widest text-[11px] uppercase">
             Request and track your withdrawals
           </p>
         </div>
 
-        <div className="min-h-[400px] flex flex-col items-center justify-center p-8 border border-dashed border-border rounded-2xl bg-foreground/[0.02] text-center">
-          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-6">
-            <Lock className="w-8 h-8 text-muted-foreground" />
+        <div className="min-h-[400px] flex flex-col items-center justify-center p-8 border border-white/[0.06] rounded-none bg-[#050505]/40 backdrop-blur-xl text-center">
+          <div className="w-16 h-16 bg-white/[0.04] rounded-sm flex items-center justify-center mb-6">
+            <Lock className="w-8 h-8 text-white/40" />
           </div>
-          <h2 className="text-xl font-bold mb-2">Payouts Locked</h2>
-          <p className="text-foreground/60 max-w-md mb-8">
+          <h2 className="font-mono text-[16px] tracking-wider text-[#C7A257] uppercase mb-4">Payouts Locked</h2>
+          <p className="text-[13px] font-body text-[#A0A0A0] max-w-md mb-8 leading-relaxed">
             Payouts are only available for funded traders. Complete your evaluation phase to unlock withdrawals and keep up to 90% of your profits.
           </p>
           <div className="flex gap-4">
-            <Link href="/dashboard" className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors">
+            <Link href="/dashboard" className="px-6 py-3.5 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all rounded-none">
               Return to Dashboard
             </Link>
             <Link href="/rules" className="px-6 py-3 border border-border font-semibold rounded-lg hover:bg-muted transition-colors">
@@ -242,16 +242,16 @@ export default function PayoutsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold">Payouts</h1>
-          <p className="text-foreground/60">
+          <h1 className="text-3xl lg:text-4xl font-display tracking-widest text-white uppercase mb-2">Payouts</h1>
+          <p className="text-[#A0A0A0] font-mono tracking-widest text-[11px] uppercase">
             Request and track your withdrawals
           </p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all rounded-none"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           Request Payout
         </button>
       </div>
@@ -261,15 +261,15 @@ export default function PayoutsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-5 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-6 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-green-400/10 flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-green-400" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-10 h-10 rounded-sm bg-[#22C55E]/10 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 text-[#22C55E]" />
             </div>
           </div>
-          <p className="text-sm text-foreground/60 mb-1">Total Withdrawn</p>
-          <p className="text-2xl font-bold text-green-400">
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Total Withdrawn</p>
+          <p className="text-2xl font-mono text-[#22C55E]">
             ${totalWithdrawn.toLocaleString()}
           </p>
         </motion.div>
@@ -278,15 +278,15 @@ export default function PayoutsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="p-5 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-6 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-10 h-10 rounded-sm bg-amber-400/10 flex items-center justify-center">
               <Clock className="w-5 h-5 text-amber-400" />
             </div>
           </div>
-          <p className="text-sm text-foreground/60 mb-1">Pending</p>
-          <p className="text-2xl font-bold text-amber-400">
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Pending</p>
+          <p className="text-2xl font-mono text-amber-400">
             ${pendingAmount.toLocaleString()}
           </p>
         </motion.div>
@@ -295,28 +295,28 @@ export default function PayoutsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="p-5 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-6 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <DollarSign className="w-5 h-5 text-primary" />
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-10 h-10 rounded-sm bg-[#C7A257]/10 flex items-center justify-center">
+              <DollarSign className="w-5 h-5 text-[#C7A257]" />
             </div>
           </div>
-          <p className="text-sm text-foreground/60 mb-1">Available to Withdraw</p>
-          <p className="text-2xl font-bold">${totalAvailable.toLocaleString()}</p>
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Available to Withdraw</p>
+          <p className="text-2xl font-mono text-white">${totalAvailable.toLocaleString()}</p>
         </motion.div>
       </div>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="relative w-full sm:w-auto">
-          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
+          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C7A257]" />
           <select
             value={filterStatus}
             onChange={(e) =>
               setFilterStatus(e.target.value as PayoutStatus | "all")
             }
-            className="pl-10 pr-8 py-2.5 bg-foreground/[0.02] border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all appearance-none cursor-pointer"
+            className="pl-12 pr-10 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] text-white text-[13px] font-body rounded-none focus:outline-none focus:border-[#C7A257]/50 transition-all appearance-none cursor-pointer min-w-[200px]"
           >
             <option value="all">All Status</option>
             <option value="pending">Pending</option>

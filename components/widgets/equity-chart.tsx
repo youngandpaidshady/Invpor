@@ -39,7 +39,7 @@ function CustomTooltip({
     const profit = payload.find((p) => p.dataKey === "profit")?.value || 0;
 
     return (
-        <div className="bg-card border border-border p-3 shadow-lg">
+        <div className="bg-[#050505]/90 backdrop-blur-xl border border-white/[0.08] p-3 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
             <p className="text-xs text-muted-foreground mb-1">
                 {label ? format(new Date(label), "MMM d, yyyy") : ""}
             </p>
@@ -47,7 +47,7 @@ function CustomTooltip({
                 ${balance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
             </p>
             <p
-                className={`text-sm font-mono ${profit >= 0 ? "text-emerald-500" : "text-destructive"
+                className={`text-[13px] font-mono mt-1 ${profit >= 0 ? "text-[#22C55E]" : "text-[#EF4444]"
                     }`}
             >
                 {profit >= 0 ? "+" : ""}${profit.toLocaleString("en-US", { minimumFractionDigits: 2 })}
@@ -124,18 +124,18 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
     const maxBalance = Math.max(...data.map((d) => d.balance)) * 1.005;
 
     return (
-        <div className={`p-6 lg:p-8 bg-card border border-border ${className}`}>
+        <div className={`p-6 lg:p-8 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] ${className}`}>
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h2 className="text-lg font-semibold font-serif">Equity Curve</h2>
+                    <h2 className="text-[11px] font-mono tracking-[0.2em] text-[#C7A257] uppercase mb-2">Equity Curve</h2>
                     {data.length > 0 && (
-                        <div className="flex items-baseline gap-2 mt-1">
-                            <span className="text-2xl font-mono font-medium">
+                        <div className="flex items-baseline gap-3 mt-1">
+                            <span className="text-3xl font-display tracking-widest text-white">
                                 ${data[data.length - 1]?.balance.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                             </span>
                             <span
-                                className={`text-sm font-mono ${data[data.length - 1]?.profit >= 0 ? "text-emerald-500" : "text-destructive"
+                                className={`text-[13px] font-mono px-2 py-0.5 rounded bg-white/[0.02] ${data[data.length - 1]?.profit >= 0 ? "text-[#22C55E]" : "text-[#EF4444]"
                                     }`}
                             >
                                 {data[data.length - 1]?.profit >= 0 ? "+" : ""}
@@ -146,14 +146,14 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
                 </div>
 
                 {/* Period Selector */}
-                <div className="flex p-1 bg-muted/50 border border-border">
+                <div className="flex p-1 bg-[#111111]/50 border border-white/[0.06] rounded-lg">
                     {PERIODS.map((p) => (
                         <button
                             key={p}
                             onClick={() => setPeriod(p)}
-                            className={`px-3 py-1.5 text-xs font-medium transition-all ${period === p
-                                ? "bg-background text-foreground shadow-sm"
-                                : "text-muted-foreground hover:text-foreground"
+                            className={`px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider transition-all rounded-md ${period === p
+                                ? "bg-white/[0.08] text-white shadow-sm"
+                                : "text-white/40 hover:text-white"
                                 }`}
                         >
                             {p}
@@ -165,15 +165,15 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
             {/* Chart */}
             <div className="h-[300px]">
                 {isLoading ? (
-                    <div className="h-full flex items-center justify-center border border-dashed border-border bg-muted/20">
+                    <div className="h-full flex items-center justify-center border border-dashed border-white/[0.08] bg-white/[0.02]">
                         <div className="text-center">
-                            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">Loading chart...</p>
+                            <div className="w-6 h-6 border-2 border-[#C7A257] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+                            <p className="text-xs font-mono text-[#A0A0A0] uppercase tracking-widest">Loading chart...</p>
                         </div>
                     </div>
                 ) : data.length === 0 ? (
-                    <div className="h-full flex items-center justify-center border border-dashed border-border bg-muted/20">
-                        <p className="text-sm text-muted-foreground">No data available</p>
+                    <div className="h-full flex items-center justify-center border border-dashed border-white/[0.08] bg-white/[0.02]">
+                        <p className="text-xs font-mono text-[#A0A0A0] uppercase tracking-widest">No data available</p>
                     </div>
                 ) : (
                     <div className="w-full h-full min-h-[300px]">
@@ -184,40 +184,42 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
                             >
                                 <defs>
                                     <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0.3} />
-                                        <stop offset="100%" stopColor="hsl(152, 100%, 50%)" stopOpacity={0} />
+                                        <stop offset="0%" stopColor="#C7A257" stopOpacity={0.3} />
+                                        <stop offset="100%" stopColor="#C7A257" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
                                 <CartesianGrid
                                     strokeDasharray="3 3"
-                                    stroke="hsl(0, 0%, 15%)"
+                                    stroke="rgba(255,255,255,0.05)"
                                     vertical={false}
                                 />
                                 <XAxis
                                     dataKey="date"
                                     tickFormatter={(date) => format(new Date(date), "MMM d")}
-                                    stroke="hsl(0, 0%, 40%)"
-                                    fontSize={11}
+                                    stroke="rgba(255,255,255,0.3)"
+                                    fontSize={10}
                                     tickLine={false}
                                     axisLine={false}
+                                    tick={{ fill: "rgba(255,255,255,0.4)" }}
                                 />
                                 <YAxis
                                     domain={[minBalance, maxBalance]}
                                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
-                                    stroke="hsl(0, 0%, 40%)"
-                                    fontSize={11}
+                                    stroke="rgba(255,255,255,0.3)"
+                                    fontSize={10}
                                     tickLine={false}
                                     axisLine={false}
-                                    width={50}
+                                    width={40}
+                                    tick={{ fill: "rgba(255,255,255,0.4)" }}
                                 />
                                 <Tooltip content={<CustomTooltip />} />
                                 <Area
                                     type="monotone"
                                     dataKey="balance"
-                                    stroke="hsl(152, 100%, 50%)"
-                                    strokeWidth={2}
+                                    stroke="#C7A257"
+                                    strokeWidth={3}
                                     fill="url(#equityGradient)"
-                                    animationDuration={300}
+                                    animationDuration={500}
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
@@ -226,8 +228,8 @@ export function EquityChart({ className = "", initialData = [] }: EquityChartPro
             </div>
 
             {/* Live Indicator */}
-            <div className="flex items-center gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+            <div className="flex items-center gap-2 mt-6 text-[10px] font-mono uppercase tracking-widest text-white/40">
+                <span className="w-2 h-2 bg-[#22C55E] rounded-full shadow-[0_0_8px_#22C55E] animate-pulse-live" />
                 <span>Live data • Updates every 5s</span>
             </div>
         </div>

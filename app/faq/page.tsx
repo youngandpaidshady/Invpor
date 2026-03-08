@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import {
   motion,
@@ -439,7 +438,7 @@ export default function FAQPage() {
 
   return (
     <main className="min-h-screen bg-[#010101] text-white selection:bg-[#C7A257] selection:text-black">
-      <Navbar />
+
 
       {/* ═══════════════════════════════════════════
            HERO — Asymmetric layout with particle field
@@ -737,7 +736,7 @@ export default function FAQPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

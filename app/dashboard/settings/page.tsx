@@ -157,14 +157,14 @@ export default function SettingsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold">Account Settings</h1>
-        <p className="text-foreground/60">
+        <h1 className="text-3xl lg:text-4xl font-display tracking-widest text-white uppercase mb-2">Account Settings</h1>
+        <p className="text-[#A0A0A0] font-mono tracking-widest text-[11px] uppercase">
           Manage your account preferences and security
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-border pb-1 overflow-x-auto no-scrollbar scroll-smooth">
+      <div className="flex gap-2 border-b border-white/[0.06] pb-1 overflow-x-auto no-scrollbar scroll-smooth">
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -173,9 +173,9 @@ export default function SettingsPage() {
               setSuccess(null);
               setError(null);
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${activeTab === tab.id
-              ? "bg-primary text-primary-foreground"
-              : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
+            className={`flex items-center gap-2 px-6 py-3 font-mono text-[11px] tracking-wider uppercase transition-all ${activeTab === tab.id
+              ? "bg-[#C7A257] text-black shadow-[0_0_15px_rgba(199,162,87,0.3)]"
+              : "text-white/40 hover:text-white hover:bg-white/[0.04]"
               }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -212,17 +212,17 @@ export default function SettingsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-foreground/[0.02] border border-border rounded-xl p-6"
+          className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8"
         >
-          <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
-            <User className="w-5 h-5 text-primary" />
+          <h2 className="text-[13px] font-mono tracking-[0.2em] text-[#C7A257] uppercase mb-8 flex items-center gap-3">
+            <User className="w-5 h-5" />
             Profile Information
           </h2>
 
-          <form onSubmit={handleProfileSubmit} className="space-y-5">
-            <div className="grid sm:grid-cols-2 gap-5">
+          <form onSubmit={handleProfileSubmit} className="space-y-6">
+            <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Full Name
                 </label>
                 <input
@@ -231,29 +231,29 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     setProfileData({ ...profileData, fullName: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-4 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C7A257]/50" />
                   <input
                     type="email"
                     value={profileData.email}
                     onChange={(e) =>
                       setProfileData({ ...profileData, email: e.target.value })
                     }
-                    className="w-full pl-10 pr-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                    className="w-full pl-11 pr-4 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Phone Number
                 </label>
                 <input
@@ -262,12 +262,12 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     setProfileData({ ...profileData, phone: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-4 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Country
                 </label>
                 <select
@@ -275,7 +275,7 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     setProfileData({ ...profileData, country: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-4 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                 >
                   <option>United States</option>
                   <option>United Kingdom</option>
@@ -286,7 +286,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Timezone
                 </label>
                 <select
@@ -294,7 +294,7 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     setProfileData({ ...profileData, timezone: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-4 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                 >
                   <option value="America/New_York">
                     Eastern Time (US & Canada)
@@ -312,18 +312,20 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-            >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Save className="w-5 h-5" />
-              )}
-              Save Changes
-            </button>
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="px-8 py-3 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                Save Changes
+              </button>
+            </div>
           </form>
         </motion.div>
       )}
@@ -335,20 +337,20 @@ export default function SettingsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-foreground/[0.02] border border-border rounded-xl p-6"
+            className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8"
           >
-            <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
-              <Lock className="w-5 h-5 text-primary" />
+            <h2 className="text-[13px] font-mono tracking-[0.2em] text-[#C7A257] uppercase mb-8 flex items-center gap-3">
+              <Lock className="w-5 h-5" />
               Change Password
             </h2>
 
-            <form onSubmit={handlePasswordSubmit} className="space-y-5">
+            <form onSubmit={handlePasswordSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                   Current Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/40" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C7A257]/50" />
                   <input
                     type={showPasswords.current ? "text" : "password"}
                     value={passwordData.currentPassword}
@@ -358,7 +360,7 @@ export default function SettingsPage() {
                         currentPassword: e.target.value,
                       })
                     }
-                    className="w-full pl-10 pr-12 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                    className="w-full pl-11 pr-12 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                   />
                   <button
                     type="button"
@@ -368,20 +370,20 @@ export default function SettingsPage() {
                         current: !showPasswords.current,
                       })
                     }
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#C7A257]"
                   >
                     {showPasswords.current ? (
-                      <EyeOff className="w-5 h-5" />
+                      <EyeOff className="w-4 h-4" />
                     ) : (
-                      <Eye className="w-5 h-5" />
+                      <Eye className="w-4 h-4" />
                     )}
                   </button>
                 </div>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                     New Password
                   </label>
                   <div className="relative">
@@ -394,7 +396,7 @@ export default function SettingsPage() {
                           newPassword: e.target.value,
                         })
                       }
-                      className="w-full px-4 pr-12 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                      className="w-full px-4 pr-12 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                     />
                     <button
                       type="button"
@@ -404,19 +406,19 @@ export default function SettingsPage() {
                           new: !showPasswords.new,
                         })
                       }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#C7A257]"
                     >
                       {showPasswords.new ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4" />
                       )}
                     </button>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">
+                  <label className="block text-[10px] font-mono tracking-widest text-[#A0A0A0] uppercase mb-3">
                     Confirm New Password
                   </label>
                   <div className="relative">
@@ -429,7 +431,7 @@ export default function SettingsPage() {
                           confirmPassword: e.target.value,
                         })
                       }
-                      className="w-full px-4 pr-12 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                      className="w-full px-4 pr-12 py-3 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none focus:outline-none focus:border-[#C7A257] focus:ring-1 focus:ring-[#C7A257]/50 text-white font-body transition-all"
                     />
                     <button
                       type="button"
@@ -439,30 +441,32 @@ export default function SettingsPage() {
                           confirm: !showPasswords.confirm,
                         })
                       }
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/40 hover:text-foreground"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#C7A257]"
                     >
                       {showPasswords.confirm ? (
-                        <EyeOff className="w-5 h-5" />
+                        <EyeOff className="w-4 h-4" />
                       ) : (
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4" />
                       )}
                     </button>
                   </div>
                 </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Lock className="w-5 h-5" />
-                )}
-                Update Password
-              </button>
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-8 py-3 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Lock className="w-4 h-4" />
+                  )}
+                  Update Password
+                </button>
+              </div>
             </form>
           </motion.div>
 
@@ -471,32 +475,32 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-foreground/[0.02] border border-border rounded-xl p-6"
+            className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8"
           >
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Smartphone className="w-5 h-5 text-primary" />
+            <h2 className="text-[13px] font-mono tracking-[0.2em] text-[#C7A257] uppercase mb-4 flex items-center gap-3">
+              <Smartphone className="w-5 h-5" />
               Two-Factor Authentication
             </h2>
 
-            <p className="text-foreground/60 mb-4">
+            <p className="text-[#A0A0A0] font-body text-[13px] mb-6">
               Add an extra layer of security to your account by enabling
               two-factor authentication.
             </p>
 
-            <div className="flex items-center justify-between p-4 bg-background border border-border rounded-lg">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between p-5 bg-[#111111]/80 border border-white/[0.08] rounded-none">
+              <div className="flex items-center gap-4">
                 <div
-                  className={`w-3 h-3 rounded-full ${is2FAEnabled ? "bg-green-400" : "bg-foreground/30"}`}
+                  className={`w-2.5 h-2.5 rounded-full ${is2FAEnabled ? "bg-[#22C55E] shadow-[0_0_8px_#22C55E]" : "bg-white/20"}`}
                 />
-                <span className="font-medium">
+                <span className="font-mono text-[13px] tracking-wide text-white uppercase">
                   {is2FAEnabled ? "Enabled" : "Disabled"}
                 </span>
               </div>
               <button
                 onClick={() => setIs2FAEnabled(!is2FAEnabled)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${is2FAEnabled
-                  ? "bg-destructive/10 text-destructive hover:bg-destructive/20"
-                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+                className={`px-6 py-2.5 font-mono text-[12px] font-bold uppercase tracking-widest transition-all ${is2FAEnabled
+                  ? "bg-white/[0.04] text-[#EF4444] border border-[#EF4444]/30 hover:bg-[#EF4444]/10"
+                  : "bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black hover:shadow-[0_0_20px_rgba(199,162,87,0.3)]"
                   }`}
               >
                 {is2FAEnabled ? "Disable" : "Enable"}
@@ -509,19 +513,19 @@ export default function SettingsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-destructive/5 border border-destructive/20 rounded-xl p-6"
+            className="bg-[#EF4444]/5 border border-[#EF4444]/20 rounded-none p-6 lg:p-8"
           >
-            <h2 className="text-lg font-semibold mb-2 flex items-center gap-2 text-destructive">
+            <h2 className="text-[13px] font-mono tracking-[0.2em] text-[#EF4444] uppercase mb-4 flex items-center gap-3">
               <Trash2 className="w-5 h-5" />
               Delete Account
             </h2>
 
-            <p className="text-foreground/60 mb-4">
+            <p className="text-[#A0A0A0] font-body text-[13px] mb-6">
               Once you delete your account, there is no going back. Please be
               certain.
             </p>
 
-            <button type="button" onClick={() => { if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) { alert("Account deletion request submitted."); } }} className="px-4 py-2 bg-destructive text-white font-medium rounded-lg hover:bg-destructive/90 transition-colors">
+            <button type="button" onClick={() => { if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) { alert("Account deletion request submitted."); } }} className="px-6 py-3 bg-[#EF4444] text-white font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(239,68,68,0.3)] transition-all">
               Delete Account
             </button>
           </motion.div>
@@ -533,18 +537,18 @@ export default function SettingsPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-foreground/[0.02] border border-border rounded-xl p-6"
+          className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8"
         >
-          <h2 className="text-lg font-semibold mb-6 flex items-center gap-2">
-            <Bell className="w-5 h-5 text-primary" />
+          <h2 className="text-[13px] font-mono tracking-[0.2em] text-[#C7A257] uppercase mb-8 flex items-center gap-3">
+            <Bell className="w-5 h-5" />
             Notification Preferences
           </h2>
 
           <form onSubmit={handleNotificationsSubmit} className="space-y-6">
             {/* Email Notifications */}
             <div>
-              <h3 className="font-medium mb-4 flex items-center gap-2">
-                <Mail className="w-4 h-4 text-foreground/60" />
+              <h3 className="font-mono tracking-widest text-[#A0A0A0] text-[11px] uppercase mb-4 flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#C7A257]" />
                 Email Notifications
               </h3>
               <div className="space-y-3">
@@ -567,11 +571,11 @@ export default function SettingsPage() {
                 ].map((item) => (
                   <label
                     key={item.key}
-                    className="flex items-center justify-between p-4 bg-background border border-border rounded-lg cursor-pointer hover:border-primary/50 transition-colors"
+                    className="flex items-center justify-between p-5 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none cursor-pointer hover:border-[#C7A257]/50 transition-all"
                   >
                     <div>
-                      <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-foreground/60">{item.desc}</p>
+                      <p className="font-body text-[14px] text-white">{item.label}</p>
+                      <p className="text-[12px] text-white/50">{item.desc}</p>
                     </div>
                     <input
                       type="checkbox"
@@ -584,7 +588,7 @@ export default function SettingsPage() {
                           [item.key]: e.target.checked,
                         })
                       }
-                      className="w-5 h-5 rounded border-border text-primary focus:ring-primary/50"
+                      className="w-5 h-5 rounded-none border-white/[0.2] bg-black/50 text-[#C7A257] focus:ring-[#C7A257]/50"
                     />
                   </label>
                 ))}
@@ -593,8 +597,8 @@ export default function SettingsPage() {
 
             {/* Push Notifications */}
             <div>
-              <h3 className="font-medium mb-4 flex items-center gap-2">
-                <Smartphone className="w-4 h-4 text-foreground/60" />
+              <h3 className="font-mono tracking-widest text-[#A0A0A0] text-[11px] uppercase mb-4 flex items-center gap-2 mt-8">
+                <Smartphone className="w-4 h-4 text-[#C7A257]" />
                 Push Notifications
               </h3>
               <div className="space-y-3">
@@ -617,11 +621,11 @@ export default function SettingsPage() {
                 ].map((item) => (
                   <label
                     key={item.key}
-                    className="flex items-center justify-between p-4 bg-background border border-border rounded-lg cursor-pointer hover:border-primary/50 transition-colors"
+                    className="flex items-center justify-between p-5 bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none cursor-pointer hover:border-[#C7A257]/50 transition-all"
                   >
                     <div>
-                      <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-foreground/60">{item.desc}</p>
+                      <p className="font-body text-[14px] text-white">{item.label}</p>
+                      <p className="text-[12px] text-white/50">{item.desc}</p>
                     </div>
                     <input
                       type="checkbox"
@@ -634,25 +638,27 @@ export default function SettingsPage() {
                           [item.key]: e.target.checked,
                         })
                       }
-                      className="w-5 h-5 rounded border-border text-primary focus:ring-primary/50"
+                      className="w-5 h-5 rounded-none border-white/[0.2] bg-black/50 text-[#C7A257] focus:ring-[#C7A257]/50"
                     />
                   </label>
                 ))}
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-            >
-              {isLoading ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <Save className="w-5 h-5" />
-              )}
-              Save Preferences
-            </button>
+            <div className="pt-6 border-t border-white/[0.06]">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="px-8 py-3 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                Save Preferences
+              </button>
+            </div>
           </form>
         </motion.div>
       )}

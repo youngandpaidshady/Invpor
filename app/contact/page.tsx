@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -53,7 +52,7 @@ export default function ContactPage() {
         }}
       />
 
-      <Navbar />
+
 
       {/* Light leaks */}
       <div
@@ -285,7 +284,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

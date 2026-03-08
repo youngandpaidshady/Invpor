@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
@@ -78,7 +77,7 @@ export default function AboutPage() {
         <div className="absolute right-[8%] top-0 bottom-0 w-px bg-white/[0.02]" />
       </div>
 
-      <Navbar />
+
 
       {/* Hero - Editorial manifesto */}
       <motion.section
@@ -341,7 +340,7 @@ export default function AboutPage() {
         BraxleyNevim Ltd
       </div>
 
-      <Footer />
+
     </main>
   );
 }

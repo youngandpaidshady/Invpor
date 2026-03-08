@@ -56,8 +56,8 @@ export default async function DashboardPage() {
       changePercent: `${balanceChange >= 0 ? "+" : ""}${balanceChangePercent}%`,
       positive: balanceChange >= 0,
       icon: <DollarSign className="w-5 h-5" />,
-      gradient: "from-emerald-500/20 to-transparent",
-      iconColor: "text-emerald-500",
+      gradient: "from-[rgba(34,197,94,0.3)] to-transparent",
+      iconColor: "text-[#22C55E]",
     },
     {
       label: "Daily P&L",
@@ -68,9 +68,9 @@ export default async function DashboardPage() {
       icon: <TrendingUp className="w-5 h-5" />,
       gradient:
         stats.dailyPnL >= 0
-          ? "from-primary/20 to-transparent"
-          : "from-destructive/20 to-transparent",
-      iconColor: stats.dailyPnL >= 0 ? "text-primary" : "text-destructive",
+          ? "from-[rgba(199,162,87,0.3)] to-transparent"
+          : "from-[#EF4444]/20 to-transparent",
+      iconColor: stats.dailyPnL >= 0 ? "text-[#C7A257]" : "text-[#EF4444]",
     },
     {
       label: "Profit Target",
@@ -79,8 +79,8 @@ export default async function DashboardPage() {
       changePercent: `${stats.profitTargetPercent}% reached`,
       positive: true,
       icon: <Target className="w-5 h-5" />,
-      gradient: "from-blue-500/20 to-transparent",
-      iconColor: "text-blue-500",
+      gradient: "from-[rgba(168,132,63,0.3)] to-transparent",
+      iconColor: "text-[#A8843F]",
     },
     {
       label: "Max Drawdown",
@@ -89,8 +89,8 @@ export default async function DashboardPage() {
       changePercent: "",
       positive: stats.maxDrawdownUsed < 80,
       icon: <AlertTriangle className="w-5 h-5" />,
-      gradient: "from-amber-500/20 to-transparent",
-      iconColor: "text-amber-500",
+      gradient: "from-[#EF4444]/20 to-transparent",
+      iconColor: "text-[#EF4444]",
     },
   ];
 
@@ -99,13 +99,13 @@ export default async function DashboardPage() {
       {/* Welcome Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif font-bold mb-2">
+          <h1 className="text-4xl lg:text-5xl font-display tracking-widest text-white mb-3 uppercase">
             Welcome back,{" "}
-            <span className="text-primary">{firstName}</span>
+            <span className="text-[#C7A257] drop-shadow-[0_0_15px_rgba(199,162,87,0.4)]">{firstName}</span>
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-[13px] text-[#A0A0A0] font-mono tracking-wide uppercase">
             Current Phase:{" "}
-            <span className="text-foreground font-semibold">{phaseName}</span>
+            <span className="text-white font-medium">{phaseName}</span>
           </p>
         </div>
         <DashboardActions isFunded={isFunded} />

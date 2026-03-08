@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
@@ -206,7 +205,7 @@ export default function HowItWorksPage() {
 
   return (
     <main className="bg-[#050507] text-[#E8E8ED] selection:bg-arctic selection:text-[#050507]">
-      <Navbar />
+
       <ProgressBar />
 
       {/* ═══════════════════════════════════
@@ -379,7 +378,7 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

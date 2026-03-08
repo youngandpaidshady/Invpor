@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { RefreshCw, ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
@@ -73,7 +72,7 @@ export default function RefundsPage() {
         }}
       />
 
-      <Navbar />
+
 
       {/* Light leak */}
       <div
@@ -224,7 +223,7 @@ export default function RefundsPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

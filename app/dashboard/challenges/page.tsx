@@ -169,16 +169,16 @@ export default function ChallengesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold">My Challenges</h1>
-          <p className="text-foreground/60">
+          <h1 className="text-3xl lg:text-4xl font-display tracking-widest text-white uppercase mb-2">My Challenges</h1>
+          <p className="text-[#A0A0A0] font-mono tracking-widest text-[11px] uppercase">
             Track and manage your trading challenges
           </p>
         </div>
         <Link
           href="/pricing"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+          className="inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all rounded-none"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           Start New Challenge
         </Link>
       </div>
@@ -188,41 +188,41 @@ export default function ChallengesPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-5 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <p className="text-sm text-foreground/60 mb-1">Total Challenges</p>
-          <p className="text-2xl font-bold">{stats.total}</p>
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Total Challenges</p>
+          <p className="text-2xl font-mono text-white">{stats.total}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="p-4 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-5 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <p className="text-sm text-foreground/60 mb-1">Active</p>
-          <p className="text-2xl font-bold text-blue-400">{stats.active}</p>
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Active</p>
+          <p className="text-2xl font-mono text-blue-400">{stats.active}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="p-4 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-5 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <p className="text-sm text-foreground/60 mb-1">Funded</p>
-          <p className="text-2xl font-bold text-amber-400">{stats.funded}</p>
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Funded</p>
+          <p className="text-2xl font-mono text-amber-400">{stats.funded}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="p-4 bg-foreground/[0.02] border border-border rounded-xl"
+          className="p-5 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none"
         >
-          <p className="text-sm text-foreground/60 mb-1">Pass Rate</p>
-          <p className="text-2xl font-bold text-green-400">
+          <p className="font-mono tracking-widest text-[#A0A0A0] text-[10px] uppercase mb-2">Pass Rate</p>
+          <p className="text-2xl font-mono text-[#22C55E]">
             {stats.total > 0
               ? Math.round(
-                  ((stats.passed + stats.funded) / stats.total) * 100
-                )
+                ((stats.passed + stats.funded) / stats.total) * 100
+              )
               : 0}
             %
           </p>
@@ -387,13 +387,12 @@ export default function ChallengesPage() {
                           </div>
                           <div className="h-2 bg-foreground/10 rounded-full overflow-hidden">
                             <div
-                              className={`h-full rounded-full transition-all ${
-                                drawdownPercent > 70
+                              className={`h-full rounded-full transition-all ${drawdownPercent > 70
                                   ? "bg-red-400"
                                   : drawdownPercent > 50
                                     ? "bg-amber-400"
                                     : "bg-green-400"
-                              }`}
+                                }`}
                               style={{
                                 width: `${Math.min(drawdownPercent, 100)}%`,
                               }}

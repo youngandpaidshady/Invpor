@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { CTASection } from "@/components/sections/cta-section";
 import { motion } from "framer-motion";
 import { TrendingUp, DollarSign, ChevronRight, Trophy, Zap, CheckCircle, ArrowRight } from "lucide-react";
@@ -70,7 +69,7 @@ export default function ScalingPage() {
                 }}
             />
 
-            <Navbar />
+
 
             {/* Light leaks */}
             <div
@@ -323,7 +322,7 @@ export default function ScalingPage() {
             </section>
 
             <CTASection />
-            <Footer />
+
         </main>
     );
 }

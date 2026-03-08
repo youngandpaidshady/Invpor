@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FileText, ArrowLeft } from "lucide-react";
@@ -74,7 +73,7 @@ export default function TermsPage() {
         }}
       />
 
-      <Navbar />
+
 
       {/* Light leak */}
       <div
@@ -177,7 +176,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

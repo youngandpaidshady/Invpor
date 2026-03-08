@@ -236,8 +236,8 @@ export default function KYCPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold">KYC Verification</h1>
-          <p className="text-foreground/60">
+          <h1 className="text-3xl lg:text-4xl font-display tracking-widest text-white uppercase mb-2">KYC Verification</h1>
+          <p className="text-[#A0A0A0] font-mono tracking-widest text-[11px] uppercase">
             Complete identity verification to unlock payouts
           </p>
         </div>
@@ -339,16 +339,16 @@ export default function KYCPage() {
       ) : (
         <>
           {/* Progress Indicator */}
-          <div className="bg-foreground/[0.02] border border-border rounded-xl p-6">
+          <div className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold">Upload Progress</h3>
-              <span className="text-sm text-foreground/60">
+              <h3 className="font-mono tracking-[0.2em] text-[#C7A257] text-[11px] uppercase">Upload Progress</h3>
+              <span className="font-mono text-white/50 text-[10px] uppercase tracking-widest">
                 {uploadedCount} of {requiredCount} required documents
               </span>
             </div>
-            <div className="h-2 bg-foreground/10 rounded-full overflow-hidden">
+            <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-primary rounded-full"
+                className="h-full bg-[#C7A257] shadow-[0_0_10px_rgba(199,162,87,0.5)] rounded-full"
                 initial={{ width: 0 }}
                 animate={{
                   width: `${(uploadedCount / requiredCount) * 100}%`,
@@ -359,11 +359,11 @@ export default function KYCPage() {
           </div>
 
           {/* Info Box */}
-          <div className="bg-foreground/[0.02] border border-border rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-foreground/70">
-                <p className="font-medium text-foreground mb-1">
+          <div className="bg-[#111111]/80 backdrop-blur-md border border-white/[0.08] rounded-none p-5">
+            <div className="flex items-start gap-4">
+              <Info className="w-5 h-5 text-[#C7A257] flex-shrink-0 mt-0.5" />
+              <div className="text-[13px] font-body text-[#A0A0A0]">
+                <p className="font-mono tracking-wider text-white text-[11px] uppercase mb-2">
                   Why do we need verification?
                 </p>
                 <p>
@@ -389,30 +389,30 @@ export default function KYCPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`bg-foreground/[0.02] border rounded-xl overflow-hidden transition-colors ${upload.status === "uploaded"
-                      ? "border-green-400/50"
-                      : "border-border"
+                  className={`bg-[#050505]/40 backdrop-blur-xl border rounded-none overflow-hidden transition-colors ${upload.status === "uploaded"
+                    ? "border-[#22C55E]/50 shadow-[0_0_15px_rgba(34,197,94,0.1)]"
+                    : "border-white/[0.06]"
                     }`}
                 >
                   {/* Card Header */}
-                  <div className="p-4 border-b border-border">
+                  <div className="p-5 border-b border-white/[0.06]">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
                         <div
-                          className={`w-10 h-10 rounded-lg flex items-center justify-center ${upload.status === "uploaded"
-                              ? "bg-green-400/10"
-                              : "bg-foreground/5"
+                          className={`w-10 h-10 rounded-sm flex items-center justify-center ${upload.status === "uploaded"
+                            ? "bg-[#22C55E]/10"
+                            : "bg-white/[0.04]"
                             }`}
                         >
                           {upload.status === "uploaded" ? (
-                            <CheckCircle className="w-5 h-5 text-green-400" />
+                            <CheckCircle className="w-5 h-5 text-[#22C55E]" />
                           ) : (
-                            <DocIcon className="w-5 h-5 text-foreground/60" />
+                            <DocIcon className="w-5 h-5 text-white/40" />
                           )}
                         </div>
                         <div>
-                          <h4 className="font-semibold">{doc.label}</h4>
-                          <p className="text-xs text-foreground/60">
+                          <h4 className="font-mono text-[13px] tracking-wider text-white uppercase">{doc.label}</h4>
+                          <p className="font-mono text-[10px] tracking-widest text-[#A0A0A0] uppercase">
                             {isRequired ? "Required" : "Optional"}
                           </p>
                         </div>
@@ -420,7 +420,7 @@ export default function KYCPage() {
                       {upload.status === "uploaded" && (
                         <button
                           onClick={() => handleRemoveFile(doc.type)}
-                          className="p-2 rounded-lg hover:bg-red-400/10 text-foreground/60 hover:text-red-400 transition-colors"
+                          className="p-2 rounded hover:bg-[#EF4444]/10 text-white/40 hover:text-[#EF4444] transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -452,7 +452,7 @@ export default function KYCPage() {
                       <div
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => handleDrop(doc.type, e)}
-                        className="relative border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 hover:bg-primary/5 transition-colors flex flex-col items-center justify-center gap-2"
+                        className="relative border-2 border-dashed border-white/[0.08] rounded-none p-8 text-center hover:border-[#C7A257]/50 hover:bg-[#C7A257]/5 transition-colors flex flex-col items-center justify-center gap-3 bg-[#111111]/50"
                       >
                         <input
                           ref={(el) => {
@@ -463,29 +463,29 @@ export default function KYCPage() {
                           onChange={(e) => handleFileChange(doc.type, e)}
                           className="hidden"
                         />
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-                          <Upload className="w-6 h-6 text-primary" />
+                        <div className="w-12 h-12 rounded-full bg-[#C7A257]/10 flex items-center justify-center mb-2">
+                          <Upload className="w-6 h-6 text-[#C7A257]" />
                         </div>
                         <div className="space-y-1">
-                          <p className="font-medium">
+                          <p className="font-body text-[13px] text-white">
                             Drag & drop your file here
                           </p>
-                          <p className="text-sm text-foreground/60">
+                          <p className="font-mono text-[10px] tracking-widest text-[#A0A0A0] uppercase">
                             or
                           </p>
                           <button
                             onClick={() => fileInputRefs.current[doc.type]?.click()}
-                            className="px-4 py-2 bg-background border border-border rounded-lg text-sm font-semibold hover:bg-muted transition-colors shadow-sm"
+                            className="mt-2 px-6 py-2.5 bg-white/[0.04] border border-white/[0.08] rounded-none font-mono text-[11px] uppercase tracking-widest hover:bg-white/[0.08] transition-colors text-white"
                           >
                             Browse Files
                           </button>
                         </div>
-                        <p className="text-xs text-foreground/40 mt-2">
+                        <p className="font-mono text-[10px] tracking-widest text-[#EF4444]/70 uppercase mt-4">
                           Max file size: 10MB
                         </p>
                       </div>
                     )}
-                    <p className="text-xs text-foreground/50 mt-3">
+                    <p className="text-[12px] font-body text-[#A0A0A0] mt-4">
                       {doc.description}
                     </p>
                   </div>
@@ -495,11 +495,11 @@ export default function KYCPage() {
           </div>
 
           {/* Submit Section */}
-          <div className="bg-foreground/[0.02] border border-border rounded-xl p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] rounded-none p-6 lg:p-8 mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
               <div>
-                <h3 className="font-semibold mb-1">Ready to Submit?</h3>
-                <p className="text-sm text-foreground/60">
+                <h3 className="font-mono tracking-[0.2em] text-[#C7A257] text-[13px] uppercase mb-2">Ready to Submit?</h3>
+                <p className="text-[13px] font-body text-[#A0A0A0]">
                   {canSubmit()
                     ? "All required documents uploaded. Submit for review."
                     : "Please upload all required documents before submitting."}
@@ -508,17 +508,17 @@ export default function KYCPage() {
               <button
                 onClick={handleSubmit}
                 disabled={!canSubmit() || isSubmitting}
-                className="px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-8 py-3.5 bg-gradient-to-r from-[#C7A257] to-[#B8933E] text-black font-mono text-[12px] font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(199,162,87,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3 rounded-none whitespace-nowrap"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin" />
                     Submitting...
                   </>
                 ) : (
                   <>
                     Submit for Verification
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4" />
                   </>
                 )}
               </button>

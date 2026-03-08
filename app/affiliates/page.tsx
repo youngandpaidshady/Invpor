@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import {
     DollarSign,
@@ -47,7 +46,7 @@ export default function AffiliatesPage() {
                 }}
             />
 
-            <Navbar />
+
 
             {/* Light leaks */}
             <div
@@ -348,7 +347,7 @@ export default function AffiliatesPage() {
                 </div>
             </section>
 
-            <Footer />
+
         </main>
     );
 }

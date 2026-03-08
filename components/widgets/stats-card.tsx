@@ -35,33 +35,40 @@ export function StatsCard({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="group relative p-6 bg-card border border-border overflow-hidden hover:border-white/30 transition-all duration-300"
+            className="group relative p-6 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] overflow-hidden hover:border-[#C7A257]/30 hover:shadow-[0_0_30px_rgba(199,162,87,0.1)] transition-all duration-500"
         >
             {/* Background Gradient */}
             <div
-                className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradient} blur-[40px] opacity-50 group-hover:opacity-100 transition-opacity`}
+                className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none`}
+            />
+            {/* Noise texture overlay */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay z-0"
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                }}
             />
 
             <div className="relative z-10">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-5">
                     <div
-                        className={`w-10 h-10 bg-background border border-border flex items-center justify-center ${iconColor}`}
+                        className={`w-10 h-10 rounded-lg bg-[#111]/50 border border-white/[0.08] shadow-inner flex items-center justify-center ${iconColor} group-hover:scale-110 transition-transform duration-500`}
                     >
                         {icon}
                     </div>
-                    <button className="text-muted-foreground hover:text-foreground transition-colors">
+                    <button className="text-white/30 hover:text-[#C7A257] transition-colors">
                         <MoreHorizontal className="w-5 h-5" />
                     </button>
                 </div>
 
-                <div className="text-2xl font-bold mb-1 tracking-tight font-mono">
+                <div className="text-3xl font-display tracking-widest text-white mb-2">
                     {value}
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2 text-[13px] font-body">
                     {changePercent && (
                         <span
-                            className={`flex items-center gap-0.5 font-medium ${positive ? "text-emerald-500" : "text-destructive"
+                            className={`flex items-center gap-1 font-medium px-2 py-0.5 rounded ${positive ? "bg-[#22C55E]/10 text-[#22C55E]" : "bg-[#EF4444]/10 text-[#EF4444]"
                                 }`}
                         >
                             {positive ? (
@@ -72,10 +79,10 @@ export function StatsCard({
                             {changePercent}
                         </span>
                     )}
-                    {change && <span className="text-muted-foreground">{change}</span>}
+                    {change && <span className="text-white/50">{change}</span>}
                 </div>
 
-                <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider mt-4 opacity-60">
+                <div className="text-[10px] text-[#A0A0A0] font-mono uppercase tracking-[0.2em] mt-5 group-hover:text-[#C7A257]/70 transition-colors">
                     {label}
                 </div>
             </div>
@@ -88,15 +95,15 @@ export function StatsCard({
  */
 export function StatsCardSkeleton() {
     return (
-        <div className="relative p-6 bg-card border border-border overflow-hidden">
+        <div className="relative p-6 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] overflow-hidden rounded-none">
             <div className="animate-pulse">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 bg-muted" />
-                    <div className="w-5 h-5 bg-muted" />
+                <div className="flex items-center justify-between mb-5">
+                    <div className="w-10 h-10 bg-white/[0.05] rounded-lg" />
+                    <div className="w-5 h-5 bg-white/[0.05] rounded" />
                 </div>
-                <div className="h-8 bg-muted w-24 mb-2" />
-                <div className="h-4 bg-muted w-20 mb-4" />
-                <div className="h-3 bg-muted w-28" />
+                <div className="h-8 bg-white/[0.05] w-24 mb-3 rounded" />
+                <div className="h-4 bg-white/[0.05] w-32 mb-5 rounded" />
+                <div className="h-3 bg-white/[0.05] w-20 rounded" />
             </div>
         </div>
     );

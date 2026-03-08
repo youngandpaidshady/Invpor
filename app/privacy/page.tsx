@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Shield, ArrowLeft } from "lucide-react";
@@ -74,7 +73,7 @@ export default function PrivacyPage() {
         }}
       />
 
-      <Navbar />
+
 
       {/* Light leak */}
       <div
@@ -177,7 +176,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { AlertTriangle, ArrowLeft, TrendingDown, DollarSign, Clock, Brain } from "lucide-react";
@@ -89,7 +88,7 @@ export default function RiskPage() {
         }}
       />
 
-      <Navbar />
+
 
       {/* Light leak */}
       <div
@@ -213,7 +212,7 @@ export default function RiskPage() {
         </div>
       </section>
 
-      <Footer />
+
     </main>
   );
 }

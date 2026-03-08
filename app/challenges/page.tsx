@@ -1,7 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+
 import { PricingSection } from "@/components/sections/pricing-section";
 import { ComparisonTable } from "@/components/comparison-table";
 import { FAQSection } from "@/components/sections/faq-section";
@@ -35,7 +34,7 @@ export default function ChallengesPage() {
                 }}
             />
 
-            <Navbar />
+
 
             {/* Light leaks */}
             <div
@@ -200,7 +199,7 @@ export default function ChallengesPage() {
             <FAQSection />
             <CTASection />
 
-            <Footer />
+
         </main>
     );
 }

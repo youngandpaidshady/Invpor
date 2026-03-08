@@ -58,7 +58,7 @@ export function TradeTable({
             header: "Pair",
             sortable: true,
             render: (trade) => (
-                <span className="font-medium">{trade.symbol}</span>
+                <span className="font-mono text-[13px] tracking-wide text-white">{trade.symbol}</span>
             ),
         },
         {
@@ -67,9 +67,9 @@ export function TradeTable({
             sortable: true,
             render: (trade) => (
                 <span
-                    className={`text-xs px-2.5 py-1 font-medium ${trade.type === "buy"
-                        ? "bg-blue-500/10 text-blue-500"
-                        : "bg-orange-500/10 text-orange-500"
+                    className={`text-[10px] px-2.5 py-1 font-mono uppercase tracking-widest rounded ${trade.type === "buy"
+                        ? "bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/30"
+                        : "bg-[#F97316]/10 text-[#F97316] border border-[#F97316]/30"
                         }`}
                 >
                     {trade.type.toUpperCase()}
@@ -81,14 +81,14 @@ export function TradeTable({
             header: "Lots",
             sortable: true,
             render: (trade) => (
-                <span className="font-mono text-sm">{trade.lot_size}</span>
+                <span className="font-mono text-[13px] text-[#A0A0A0]">{trade.lot_size}</span>
             ),
         },
         {
             key: "status",
             header: "Status",
             render: (trade) => (
-                <span className="text-sm text-muted-foreground capitalize">
+                <span className="text-[11px] font-mono tracking-wider uppercase text-white/50">
                     {trade.status}
                 </span>
             ),
@@ -101,7 +101,7 @@ export function TradeTable({
                 const pnl = trade.profit_loss || 0;
                 return (
                     <span
-                        className={`font-mono font-medium ${pnl >= 0 ? "text-emerald-500" : "text-destructive"
+                        className={`font-mono text-[13px] ${pnl >= 0 ? "text-[#22C55E]" : "text-[#EF4444]"
                             }`}
                     >
                         {pnl >= 0 ? "+" : ""}${Math.abs(pnl).toFixed(2)}
@@ -115,7 +115,7 @@ export function TradeTable({
             sortable: true,
             className: "text-right",
             render: (trade) => (
-                <span className="text-sm text-muted-foreground">
+                <span className="text-[12px] font-mono text-[#A0A0A0]">
                     {trade.closed_at
                         ? format(new Date(trade.closed_at), "MMM d, HH:mm")
                         : "Open"}
@@ -125,13 +125,13 @@ export function TradeTable({
     ];
 
     return (
-        <div className={`p-6 lg:p-8 bg-card border border-border ${className}`}>
-            <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold font-serif">Recent Trades</h2>
+        <div className={`p-6 lg:p-8 bg-[#050505]/40 backdrop-blur-xl border border-white/[0.06] ${className}`}>
+            <div className="flex items-center justify-between mb-8">
+                <h2 className="text-[11px] font-mono tracking-[0.2em] text-[#C7A257] uppercase">Recent Trades</h2>
                 {showViewAll && (
                     <a
                         href="/dashboard/trades"
-                        className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                        className="text-[10px] font-mono tracking-widest uppercase text-[#A0A0A0] hover:text-[#C7A257] transition-colors"
                     >
                         View All History
                     </a>
